@@ -45,8 +45,8 @@ function Engine(endedCallback) {
 
 Engine.prototype.transition = function(state) {
   this.state = state;
-  $("#front").classList.remove("attract", "waiting", "playing", "game-over");
-  $("#front").classList.add(state);
+  document.body.classList.remove("attract", "waiting", "playing", "game-over");
+  document.body.classList.add(state);
 }
 
 Engine.prototype.start = function() {

@@ -1,18 +1,4 @@
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans-Regular'), url(fonts/OpenSans-Regular.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(fonts/OpenSans-Bold.ttf) format('truetype');
-}
-
-.sprite { background: url('images/sprite.png') no-repeat top left; width: 192px; height: 192px; }
+.sprite { background: url('../images/sprite.png') no-repeat top left; width: 192px; height: 192px; }
 .sprite.blank { background-position: 0 0; }
 .sprite.up { background-position: -193px 0; }
 .sprite.right { background-position: -386px 0; }
@@ -20,44 +6,14 @@
 .sprite.left { background-position: -772px 0; }
 .sprite.wait { background-position: -965px 0; }
 
-* {
-  font-family: 'Open Sans', sans-serif;
-  line-height: 1.4;
-  box-sizing: border-box;
-  user-select: none;
-}
-
 body {
-  margin: 0px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-#game-wrapper {
-  padding: 100px 0 50px 0;
-  background: linear-gradient(to bottom, #555, #333);
-}
-
-html, body, #game-wrapper {
-  height: 100%;
-}
-
-#front, #back {
-  margin: 0 auto;
   width: 800px;
   height: 400px;
   overflow: hidden;
   position: relative;
 }
 
-#front {
-  background-color: #fff;
-  color: #000;
-  border: 0;
-  border-radius: 2px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.27);
-}
-
-#front.attract #attract, #front.waiting #waiting, #front.playing #time-used, #front.playing #playing, #front.game-over #time-used, #front.game-over #game-over {
+body.attract #attract, body.waiting #waiting, body.playing #time-used, body.playing #playing, body.game-over #time-used, body.game-over #game-over {
   display: flex;
 }
 
@@ -141,12 +97,6 @@ html, body, #game-wrapper {
   outline-offset: -2px;
 }
 
-#settings {
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
-}
-
 #waiting {
   font-size: 40px;
   font-weight: bold;
@@ -168,40 +118,4 @@ html, body, #game-wrapper {
   font-size: 34px;
   font-weight: bold;
   line-height: 1.5;
-}
-
-#back {
-  display: none;
-  font-size: 14px;
-}
-
-#back-content {
-  padding: 25px;
-}
-
-#done {
-}
-
-.input-group {
-  margin-bottom: 1px;
-}
-
-#username, #crypt {
-  display: inline-block;
-  width: 100%;
-  font-size: 14px;
-}
-
-#description {
-  margin: 100px auto 0 auto;
-  padding: 20px;
-  width: 800px;
-  background: #eee;
-  border: 0;
-  border-radius: 2px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
-}
-
-#description p {
-  margin: 0 0 15px 0;
 }
