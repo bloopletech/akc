@@ -3,64 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>ArrowKeyControl</title>
-    <link rel="StyleSheet" type="text/css" href="ArrowKeyControl.css">
-    <script src="game.js"></script>
-    <script src="engine.js"></script>
-    <script src="ArrowKeyControl.js"></script>
+    <link rel="StyleSheet" type="text/css" href="css/common.css">
+    <link rel="StyleSheet" type="text/css" href="css/index.css">
+    <script src="js/index.js"></script>
   </head>
   <body>
     <div id="game-wrapper">
-      <div id="front">
-        <div id="attract" class="layer">
-          <div>
-            <a class="play">Play</a>
-          </div>
-          <div id="settings" class=""></div>
-        </div>
-        <div id="waiting" class="layer">
-          <div>Wait...</div>
-        </div>
-        <div id="time-used" class="layer"></div>
-        <div id="playing" class="layer">
-          <div id="out" class="sprite blank"></div>
-          <div id="score"></div>
-        </div>
-        <div id="game-over" class="layer">
-          <div id="results">
-            Game Over!<br>
-            Score: <span id="results-score"></span><br>
-            Rank: <span id="results-rank"></span><br>
-            Combo Streak: <span id="results-streak"></span>
-          </div>
-          <a class="play">Play</a>
-        </div>
+      <iframe id="game" src="game.html"></iframe>
       </div>
-      <div id="back" class="back">
-        <div id="back-content">
-          <div class="input-group">
-            <label for="netScoring">
-              <input type="checkbox" name="Checkbox" id="netScoring">
-              Internet Scoring
-            </label>
-          </div>
-          <div class="input-group">
-            <label for="username">Username:</label>
-            <input type="text" name="" value="" id="username">
-          </div>
-          <div class="input-group">
-            <label for="crypt">Password:</label>
-            <input type="text" name="" value="" id="crypt">
-          </div>
-          <button id="done">Done</button>
-        </div>
-      </div>
-      <div id="description">
-        <p>ArrowKeyControl is a reaction testing game that tests your speed and concentration.</p>
-        <p>You have to type what you see: up, down, left, or right arrow. Get it wrong and it's game over.</p>
-        <p>You have 1 second to hit the first key, and every time you hit a key, the time allowed to hit the next key
-          decreases. The game continues like this as long as you press each key fast enough;
-          too slow and the game ends.</p>
-      </div>
+    </div>
+    <div id="description">
+      <p>ArrowKeyControl is a reaction testing game that tests your speed and concentration.</p>
+      <p>You have to type what you see: up, down, left, or right arrow. Get it wrong and it's game over.</p>
+      <p>You have 1 second to hit the first key, and every time you hit a key, the time allowed to hit the next key
+        decreases. The game continues like this as long as you press each key fast enough;
+        too slow and the game ends.</p>
     </div>
   </body>
 </html>
