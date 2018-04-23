@@ -10,7 +10,6 @@ body {
   width: 800px;
   height: 400px;
   overflow: hidden;
-  position: relative;
 }
 
 body.attract #attract, body.waiting #waiting, body.playing #time-used, body.playing #playing, body.game-over #time-used, body.game-over #game-over {
