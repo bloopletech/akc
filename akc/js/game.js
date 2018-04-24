@@ -1,9 +1,9 @@
 var $;
-
+var engine;
 function init() {
   $ = document.querySelector.bind(document);
 
-  var engine = new Engine(function() {});
+  engine = new Engine(function() {});
 
   window.addEventListener("keydown", function(event) {
     engine.onKeyDown(event);

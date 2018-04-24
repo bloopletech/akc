@@ -12,25 +12,70 @@ body {
   overflow: hidden;
 }
 
-body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
+body.attract #attract, body.waiting #waiting, body.game-over #game-over {
   display: flex;
 }
 
 .layer {
   display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  width: 800px;
+  height: 400px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
 }
 
+body.playing #playing {
+  display: block;
+}
+
+body.playing #playing > * {
+  position: absolute;
+}
+
+#waiting {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.play {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #2e6da4;
+  border-radius: 4px;
+  background-color: #337ab7;
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.play:hover {
+  background-color: #286090;
+  border-color: #204d74;
+}
+
+.play:active {
+  background-color: #286090;
+  border-color: #204d74;
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+
+.play:focus {
+  background-color: #286090;
+  border-color: #122b40;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
 #time-remaining {
-  width: 100%;
+  top: 30px;
+  left: 30px;
+  right: 30px;
+  height: 40px;
 }
 
 #time-remaining-track {
@@ -72,52 +117,37 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   background: linear-gradient(to bottom, #C6CDD9, #42455A, #73788C, #4B4F65);
 }
 
-.play {
-  display: inline-block;
-  padding: 10px 20px;
-  border: 1px solid #2e6da4;
-  border-radius: 4px;
-  background-color: #337ab7;
-  font-size: 30px;
-  color: #fff;
-  text-align: center;
-  vertical-align: middle;
-  touch-action: manipulation;
-  cursor: pointer;
-}
-
-.play:hover {
-  background-color: #286090;
-  border-color: #204d74;
-}
-
-.play:active {
-  background-color: #286090;
-  border-color: #204d74;
-  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-}
-
-.play:focus {
-  background-color: #286090;
-  border-color: #122b40;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-#waiting {
-  font-size: 40px;
-  font-weight: bold;
-}
-
 #out {
-  margin-bottom: 20px;
+  top: 80px;
+  left: 304px;
 }
 
 #score {
+  left: 275px;
+  width: 250px;
+  bottom: 30px;
+  padding: 20px;
   text-align: center;
   font-size: 46px;
   font-weight: bold;
-  line-height: 1;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+
+#streak {
+  bottom: 30px;
+  left: 30px;
+  width: 100px;
+  padding: 10px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 }
 
 #results {

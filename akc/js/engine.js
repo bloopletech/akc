@@ -40,6 +40,7 @@ function Engine(endedCallback) {
     }
   };
   this.endedCallback = endedCallback;
+  this.alreadyPlayed = false;
   this.transition("attract");
 }
 
@@ -53,13 +54,14 @@ Engine.prototype.start = function() {
   this.transition("waiting");
   this.game.start();
 
-  setTimeout(this.postStarted.bind(this), 1500);
+  setTimeout(this.postStarted.bind(this), this.alreadyPlayed ? 500 : 1500);
 }
 
 Engine.prototype.postStarted = function() {
   if(this.state != "waiting") return;
   this.transition("playing");
-  $("#score").innerHTML = "0";
+  $("#score").textContent = "0";
+  $("#streak").textContent = "0";
 
   this.updateTimeUsed();
   this.startRound();
@@ -111,6 +113,7 @@ Engine.prototype.endRound = function(event) {
 
   var gameOver = this.game.roundEnded(this.CODES_MAP[event == undefined ? 0 : event.keyCode]);
   $("#score").textContent = this.nice(this.game.score);
+  $("#streak").textContent = this.game.streak;
 
   if(gameOver) this.gameOver();
   else this.startRound();
@@ -131,5 +134,6 @@ Engine.prototype.gameOver = function() {
   $("#results-streak").textContent = this.game.streak;
   this.transition("game-over");
 
+  this.alreadyPlayed = true;
   this.endedCallback(this.game.score);
 }
