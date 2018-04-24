@@ -8,17 +8,17 @@ Game.prototype.start = function() {
   this.streak = 0;
   this.startTime = null;
   this.direction = null;
+  this.pattern = this.generatePattern();
 }
 
-Game.prototype.nextDirection = function() {
-  var next = this.direction;
-  while(next == this.direction) next = this.DIRECTIONS[Math.floor(Math.random() * this.DIRECTIONS.length)];
-  return next;
-  //return this.DIRECTIONS[Math.floor(Math.random() * this.DIRECTIONS.length)];
+Game.prototype.generatePattern = function() {
+  var pattern = [];
+  for(var i = 0; i < 5; i++) pattern.push(this.randomDirection());
+  return pattern;
 }
 
-Game.prototype.timeUsed = function() {
-  return (Date.now() - this.startTime) / (this.allowedTime + 0.0);
+Game.prototype.randomDirection = function() {
+  return this.DIRECTIONS[Math.floor(Math.random() * this.DIRECTIONS.length)];;
 }
 
 Game.prototype.timeRemaining = function() {
@@ -26,7 +26,7 @@ Game.prototype.timeRemaining = function() {
 }
 
 Game.prototype.roundStarted = function() {
-  this.direction = this.nextDirection();
+  this.direction = this.pattern[this.streak % this.pattern.length];
   this.startTime = Date.now();
   return this.direction;
 }
@@ -44,7 +44,7 @@ Game.prototype.roundEnded = function(playerDirection) {
   if(diff <= (this.allowedTime * 0.3)) delta *= 2;
   this.score += delta;
 
-  if(this.streak % 5 == 0) {
+  if(this.streak % this.pattern.length == 0) {
     if(this.allowedTime >= 750) this.allowedTime -= 50;
     else if(this.allowedTime > 300) this.allowedTime -= 30;
   }
