@@ -21,6 +21,10 @@ Game.prototype.timeUsed = function() {
   return (Date.now() - this.startTime) / (this.allowedTime + 0.0);
 }
 
+Game.prototype.timeRemaining = function() {
+  return (this.allowedTime - (Date.now() - this.startTime)) / (this.allowedTime + 0.0);
+}
+
 Game.prototype.roundStarted = function() {
   this.direction = this.nextDirection();
   this.startTime = Date.now();
@@ -39,7 +43,11 @@ Game.prototype.roundEnded = function(playerDirection) {
   var delta = (this.allowedTime - diff) + (this.streak * 100);
   if(diff <= (this.allowedTime * 0.3)) delta *= 2;
   this.score += delta;
-  if((this.streak % 10 == 0) && (this.allowedTime > 300)) this.allowedTime -= 35;
+
+  if(this.streak % 5 == 0) {
+    if(this.allowedTime >= 750) this.allowedTime -= 50;
+    else if(this.allowedTime > 300) this.allowedTime -= 30;
+  }
 
   return false;
 }

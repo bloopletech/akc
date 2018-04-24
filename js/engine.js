@@ -91,14 +91,12 @@ Engine.prototype.scoreRank = function() {
 Engine.prototype.updateTimeUsed = function() {
   this.timeUsedUpdater = window.requestAnimationFrame(this.updateTimeUsed.bind(this));
 
-  var ratio = this.game.timeUsed();
-  if(ratio > 1) {
-    ratio = 1;
-  }
+  var ratio = this.game.timeRemaining();
+  if(ratio < 0) ratio = 0;
 
-  $("#time-used").style.width = (ratio * 100) + "%";
-  for(var i in this.RANKS) $("#time-used").classList.remove(this.RANKS[i].class);
-  $("#time-used").classList.add(this.scoreRank().class);
+  $("#time-remaining-track").style.width = (ratio * 100) + "%";
+  for(var i in this.RANKS) $("#time-remaining-track").classList.remove(this.RANKS[i].class);
+  $("#time-remaining-track").classList.add(this.scoreRank().class);
 }
 
 Engine.prototype.onKeyDown = function(event) {
