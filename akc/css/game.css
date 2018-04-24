@@ -12,7 +12,7 @@ body {
   overflow: hidden;
 }
 
-body.attract #attract, body.waiting #waiting, body.playing #time-used, body.playing #playing, body.game-over #time-used, body.game-over #game-over {
+body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
   display: flex;
 }
 
@@ -27,6 +27,14 @@ body.attract #attract, body.waiting #waiting, body.playing #time-used, body.play
   justify-content: center;
   flex-direction: column;
   text-align: center;
+}
+
+#time-remaining {
+  width: 100%;
+}
+
+#time-remaining-track {
+  height: 40px;
 }
 
 .unranked {
