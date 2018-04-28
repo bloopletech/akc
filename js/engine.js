@@ -96,7 +96,9 @@ Engine.prototype.updateTimeUsed = function() {
   var ratio = this.game.timeRemaining();
   if(ratio < 0) ratio = 0;
 
-  $("#time-remaining-track").style.width = (ratio * 100) + "%";
+  var c = 276.46;
+  $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
+
   for(var i in this.RANKS) $("#time-remaining-track").classList.remove(this.RANKS[i].class);
   $("#time-remaining-track").classList.add(this.scoreRank().class);
 }
