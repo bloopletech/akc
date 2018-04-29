@@ -68,8 +68,8 @@ Engine.prototype.postStarted = function() {
 }
 
 Engine.prototype.showDirection = function(direction) {
-  for(var i in this.DIRECTION_CLASSES) $("#out").classList.remove(this.DIRECTION_CLASSES[i]);
-  $("#out").classList.add(direction);
+  for(var i in this.DIRECTION_CLASSES) document.body.classList.remove(this.DIRECTION_CLASSES[i]);
+  document.body.classList.add(direction);
 }
 
 Engine.prototype.startRound = function() {
@@ -131,6 +131,7 @@ Engine.prototype.nice = function(num) {
 Engine.prototype.gameOver = function() {
   window.cancelAnimationFrame(this.timeUsedUpdater);
 
+  this.showDirection("blank");
   $("#results-score").textContent = this.nice(this.game.score);
   $("#results-rank").textContent = this.scoreRank().humanName;
   $("#results-streak").textContent = this.game.streak;

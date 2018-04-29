@@ -1,14 +1,9 @@
-.sprite { background: url('../images/sprite.png') no-repeat top left; width: 192px; height: 192px; }
-.sprite.blank { background-position: 0 0; }
-.sprite.up { background-position: -193px 0; }
-.sprite.right { background-position: -386px 0; }
-.sprite.down { background-position: -579px 0; }
-.sprite.left { background-position: -772px 0; }
-.sprite.wait { background-position: -965px 0; }
+body, .layer {
+  width: 800px;
+  height: 450px;
+}
 
 body {
-  width: 800px;
-  height: 400px;
   overflow: hidden;
 }
 
@@ -18,8 +13,6 @@ body.attract #attract, body.waiting #waiting, body.game-over #game-over {
 
 .layer {
   display: none;
-  width: 800px;
-  height: 400px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -114,23 +107,27 @@ body.playing #playing > * {
 }
 
 #time-remaining {
-  top: 20px;
+  top: 30px;
   left: 275px;
 }
 
 #time-remaining-track {
 }
 
-
-#out {
-  top: 49px;
+#up, #right, #down, #left {
+  display: none;
+  top: 59px;
   left: 304px;
+}
+
+body.up #up, body.right #right, body.down #down, body.left #left {
+  display: block;
 }
 
 #score {
   left: 275px;
   width: 250px;
-  bottom: 20px;
+  bottom: 30px;
   padding: 20px;
   text-align: center;
   font-size: 46px;
@@ -142,7 +139,7 @@ body.playing #playing > * {
 }
 
 #streak {
-  bottom: 20px;
+  bottom: 30px;
   left: 30px;
   width: 100px;
   padding: 10px;
