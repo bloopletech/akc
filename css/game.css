@@ -5,6 +5,7 @@ body, .layer {
 
 body {
   overflow: hidden;
+  font-size: 30px;
 }
 
 body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
@@ -30,7 +31,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   border: 1px solid #2e6da4;
   border-radius: 4px;
   background-color: #337ab7;
-  font-size: 30px;
   color: #fff;
   text-align: center;
   vertical-align: middle;
@@ -131,7 +131,6 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   margin-top: 30px;
   padding: 20px;
   text-align: center;
-  font-size: 46px;
   font-weight: bold;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
@@ -146,7 +145,6 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   width: 100px;
   padding: 10px;
   text-align: center;
-  font-size: 40px;
   font-weight: bold;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
@@ -156,7 +154,6 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 
 #results {
   margin-bottom: 40px;
-  font-size: 34px;
   font-weight: bold;
   line-height: 1.5;
 }
@@ -164,5 +161,16 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 @media screen and (min-width: 768px) {
   body, .layer {
     width: 800px;
+  }
+
+  #score {
+    font-size: 46px;
+  }
+
+  #streak {
+    font-size: 40px;
+  }
+
+  #results {
   }
 }
