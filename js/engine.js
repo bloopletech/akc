@@ -104,16 +104,25 @@ Engine.prototype.updateTimeUsed = function() {
 }
 
 Engine.prototype.onKeyDown = function(event) {
-  event.preventDefault();
-  if(this.state == "waiting") return;
-  if(this.state == "playing") this.endRound(this.CODES_MAP[event.keyCode]);
-  else if(event.keyCode == 32) this.start();
+  if(this.state == "waiting") {
+    event.preventDefault();
+  }
+  else if(this.state == "playing") {
+    event.preventDefault();
+    this.endRound(this.CODES_MAP[event.keyCode]);
+  }
+  else if(event.keyCode == 32) {
+    event.preventDefault();
+    this.start();
+  }
 }
 
 Engine.prototype.onClick = function(event) {
-  event.preventDefault();
-  if(this.state == "waiting") return;
-  if(this.state == "playing") {
+  if(this.state == "waiting") {
+    event.preventDefault();
+  }
+  else if(this.state == "playing") {
+    event.preventDefault();
     this.endRound(event.target.dataset.direction);
   }
 }
