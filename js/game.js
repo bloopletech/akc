@@ -5,13 +5,16 @@ function init() {
 
   engine = new Engine(function() {});
 
-  window.addEventListener("keydown", function(event) {
-    engine.onKeyDown(event);
-  });
-
-  window.addEventListener("click", function(event) {
-    engine.onClick(event);
-  });
+  if(window.innerWidth >= 768) {
+    window.addEventListener("keydown", function(event) {
+      engine.onKeyDown(event);
+    });
+  }
+  else {
+    window.addEventListener("click", function(event) {
+      engine.onClick(event);
+    });
+  }
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play")) engine.start();
