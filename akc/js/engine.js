@@ -106,14 +106,22 @@ Engine.prototype.updateTimeUsed = function() {
 Engine.prototype.onKeyDown = function(event) {
   event.preventDefault();
   if(this.state == "waiting") return;
-  if(this.state == "playing") this.endRound(event);
+  if(this.state == "playing") this.endRound(this.CODES_MAP[event.keyCode]);
   else if(event.keyCode == 32) this.start();
 }
 
-Engine.prototype.endRound = function(event) {
+Engine.prototype.onClick = function(event) {
+  event.preventDefault();
+  if(this.state == "waiting") return;
+  if(this.state == "playing") {
+    this.endRound(event.target.dataset.direction);
+  }
+}
+
+Engine.prototype.endRound = function(code) {
   window.clearTimeout(this.roundEndTimeout);
 
-  var gameOver = this.game.roundEnded(this.CODES_MAP[event == undefined ? 0 : event.keyCode]);
+  var gameOver = this.game.roundEnded(code);
   $("#score").textContent = this.nice(this.game.score);
   $("#streak").textContent = this.game.streak;
 

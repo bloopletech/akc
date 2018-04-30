@@ -1,5 +1,5 @@
 body, .layer {
-  width: 800px;
+  width: 100%;
   height: 450px;
 }
 
@@ -7,7 +7,7 @@ body {
   overflow: hidden;
 }
 
-body.attract #attract, body.waiting #waiting, body.game-over #game-over {
+body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
   display: flex;
 }
 
@@ -17,14 +17,6 @@ body.attract #attract, body.waiting #waiting, body.game-over #game-over {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-}
-
-body.playing #playing {
-  display: block;
-}
-
-body.playing #playing > * {
-  position: absolute;
 }
 
 #waiting {
@@ -106,28 +98,37 @@ body.playing #playing > * {
   /*background: linear-gradient(to bottom, #C6CDD9, #42455A, #73788C, #4B4F65);*/
 }
 
-#time-remaining {
-  top: 30px;
-  left: 275px;
+#playing {
+  position: relative;
 }
 
-#time-remaining-track {
+#play-field {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-top: 30px;
 }
 
 #up, #right, #down, #left {
   display: none;
-  top: 59px;
-  left: 304px;
+  position: absolute;
+  top: 29px;
+  left: 29px;
 }
 
 body.up #up, body.right #right, body.down #down, body.left #left {
   display: block;
 }
 
+#input {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 #score {
-  left: 275px;
   width: 250px;
-  bottom: 30px;
+  margin-top: 30px;
   padding: 20px;
   text-align: center;
   font-size: 46px;
@@ -139,7 +140,8 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 }
 
 #streak {
-  bottom: 30px;
+  position: absolute;
+  top: 30px;
   left: 30px;
   width: 100px;
   padding: 10px;
@@ -157,4 +159,10 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   font-size: 34px;
   font-weight: bold;
   line-height: 1.5;
+}
+
+@media screen and (min-width: 768px) {
+  body, .layer {
+    width: 800px;
+  }
 }

@@ -7,7 +7,11 @@ function init() {
 
   window.addEventListener("keydown", function(event) {
     engine.onKeyDown(event);
-  })
+  });
+
+  window.addEventListener("click", function(event) {
+    engine.onClick(event);
+  });
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play")) engine.start();
