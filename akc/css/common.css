@@ -5,8 +5,13 @@
   user-select: none;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
+  overflow: hidden;
   background-color: #fff;
   color: #000;
 
