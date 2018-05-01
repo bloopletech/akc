@@ -11,7 +11,7 @@ function init() {
     });
   }
   else {
-    window.addEventListener("click", function(event) {
+    window.addEventListener("touchend", function(event) {
       engine.onClick(event);
     });
   }
