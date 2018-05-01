@@ -108,11 +108,14 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   height: 250px;
 }
 
-#up, #right, #down, #left {
-  display: none;
+#out {
   position: absolute;
   top: 29px;
   left: 29px;
+}
+
+#up, #right, #down, #left {
+  display: none;
 }
 
 body.up #up, body.right #right, body.down #down, body.left #left {
