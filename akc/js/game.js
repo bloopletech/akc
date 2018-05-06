@@ -9,6 +9,9 @@ function init() {
     window.addEventListener("keydown", function(event) {
       engine.onKeyDown(event);
     });
+    window.addEventListener("keyup", function(event) {
+      engine.onKeyUp(event);
+    });
   }
   else {
     window.addEventListener("touchend", function(event) {
