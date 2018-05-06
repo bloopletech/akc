@@ -40,6 +40,8 @@ function Engine(endedCallback) {
     }
   };
   this.endedCallback = endedCallback;
+  this.currentKeyCode = null
+  this.grindStarted = null;
   this.alreadyPlayed = false;
   this.transition("attract");
 }
@@ -106,14 +108,45 @@ Engine.prototype.updateTimeUsed = function() {
 Engine.prototype.onKeyDown = function(event) {
   if(this.state == "waiting") {
     event.preventDefault();
+    return;
   }
-  else if(this.state == "playing") {
+
+  if(this.state == "playing") {
     event.preventDefault();
-    this.endRound(this.CODES_MAP[event.keyCode]);
+
+    if(!this.currentKeyCode) {
+      this.currentKeyCode = event.keyCode;
+      this.startGrind(event.keyCode);
+    }
+    else if(this.currentKeyCode != event.keyCode) {
+      this.endRound(null);
+    }
+
+    return;
   }
-  else if(event.keyCode == 32) {
+
+  if(event.keyCode == 32) {
     event.preventDefault();
     this.start();
+  }
+}
+
+Engine.prototype.onKeyUp = function(event) {
+  if(this.state == "waiting") {
+    event.preventDefault();
+    return;
+  }
+
+  if(this.state == "playing") {
+    if(!this.currentKeyCode || this.currentKeyCode != event.keyCode) {
+      this.endRound(null);
+      return;
+    }
+    else {
+      this.currentKeyCode = null;
+      this.endGrind(this.CODES_MAP[event.keyCode]);
+      return;
+    }
   }
 }
 
@@ -127,8 +160,24 @@ Engine.prototype.onClick = function(event) {
   }
 }
 
+Engine.prototype.startGrind = function(code) {
+  console.log("start grind: ", code);
+  this.grindStart = Date.now();
+}
+
+Engine.prototype.endGrind = function(code) {
+  console.log("end grind: ", code);
+  var grindDuration = Date.now() - this.grindStart;
+  console.log("duration: ", grindDuration);
+  this.grindStart = null;
+
+  this.endRound(code);
+}
+
+
 Engine.prototype.endRound = function(code) {
   window.clearTimeout(this.roundEndTimeout);
+  this.currentKeyCode = null;
 
   var gameOver = this.game.roundEnded(code);
   $("#score").textContent = this.nice(this.game.score);
