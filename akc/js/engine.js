@@ -77,7 +77,12 @@ Engine.prototype.showDirection = function(direction) {
 Engine.prototype.startRound = function() {
   this.showDirection(this.game.roundStarted());
 
-  this.roundEndTimeout = window.setTimeout(this.endRound.bind(this), this.game.allowedTime + 20);
+  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime + 20);
+}
+
+Engine.prototype.roundTimedOut = function() {
+  this.game.input();
+  this.endRound();
 }
 
 Engine.prototype.scoreRank = function() {
@@ -101,7 +106,7 @@ Engine.prototype.updateTimeUsed = function() {
   var c = 276.46;
   $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
 
-  if(this.grindStart) $("#time-remaining-track").classList.add("grind");
+  if(this.game.grinding) $("#time-remaining-track").classList.add("grind");
   else $("#time-remaining-track").classList.remove("grind");
 }
 
@@ -115,11 +120,17 @@ Engine.prototype.onKeyDown = function(event) {
     event.preventDefault();
 
     if(!this.currentKeyCode) {
+      if(!this.game.input(this.CODES_MAP[event.keyCode])) {
+        this.endRound();
+        return;
+      }
+
       this.currentKeyCode = event.keyCode;
-      this.startGrind(event.keyCode);
+      this.game.grindStarted();
     }
     else if(this.currentKeyCode != event.keyCode) {
-      this.endRound(null);
+      this.game.input();
+      this.endRound();
     }
 
     return;
@@ -139,12 +150,14 @@ Engine.prototype.onKeyUp = function(event) {
 
   if(this.state == "playing") {
     if(!this.currentKeyCode || this.currentKeyCode != event.keyCode) {
-      this.endRound(null);
+      this.game.input();
+      this.endRound();
       return;
     }
     else {
       this.currentKeyCode = null;
-      this.endGrind(this.CODES_MAP[event.keyCode]);
+      this.game.grindEnded();
+      this.endRound();
       return;
     }
   }
@@ -156,30 +169,16 @@ Engine.prototype.onClick = function(event) {
   }
   else if(this.state == "playing") {
     event.preventDefault();
-    this.endRound(event.target.dataset.direction);
+    this.game.input(event.target.dataset.direction);
+    this.endRound();
   }
 }
 
-Engine.prototype.startGrind = function(code) {
-  console.log("start grind: ", code);
-  this.grindStart = Date.now();
-}
-
-Engine.prototype.endGrind = function(code) {
-  console.log("end grind: ", code);
-  var grindDuration = Date.now() - this.grindStart;
-  console.log("duration: ", grindDuration);
-  this.grindStart = null;
-
-  this.endRound(code);
-}
-
-
-Engine.prototype.endRound = function(code) {
+Engine.prototype.endRound = function() {
   window.clearTimeout(this.roundEndTimeout);
   this.currentKeyCode = null;
 
-  var gameOver = this.game.roundEnded(code);
+  var gameOver = this.game.roundEnded();
   $("#score").textContent = this.nice(this.game.score);
   $("#streak").textContent = this.game.streak;
 
