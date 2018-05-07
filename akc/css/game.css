@@ -27,9 +27,9 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 .play {
   display: inline-block;
   padding: 10px 20px;
-  border: 1px solid #2e6da4;
+  border: 1px solid #2b308f;
   border-radius: 4px;
-  background-color: #337ab7;
+  background-color: #3137a3;
   color: #fff;
   text-align: center;
   vertical-align: middle;
@@ -38,19 +38,19 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 }
 
 .play:hover {
-  background-color: #286090;
-  border-color: #204d74;
+  background-color: #252a7c;
+  border-color: #1d2160;
 }
 
 .play:active {
-  background-color: #286090;
-  border-color: #204d74;
+  background-color: #252a7c;
+  border-color: #1d2160;
   box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
 }
 
 .play:focus {
-  background-color: #286090;
-  border-color: #122b40;
+  background-color: #252a7c;
+  border-color: #0e0f2d;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -105,6 +105,10 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   position: relative;
   width: 250px;
   height: 250px;
+}
+
+#time-remaining-track {
+  stroke: #3137a3;
 }
 
 #out {
