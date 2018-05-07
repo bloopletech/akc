@@ -101,8 +101,8 @@ Engine.prototype.updateTimeUsed = function() {
   var c = 276.46;
   $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
 
-  //for(var i in this.RANKS) $("#time-remaining-track").classList.remove(this.RANKS[i].class);
-  //$("#time-remaining-track").classList.add(this.scoreRank().class);
+  if(this.grindStart) $("#time-remaining-track").classList.add("grind");
+  else $("#time-remaining-track").classList.remove("grind");
 }
 
 Engine.prototype.onKeyDown = function(event) {

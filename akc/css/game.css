@@ -111,6 +111,10 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   stroke: #3137a3;
 }
 
+#time-remaining-track.grind {
+  stroke: #f7e36d;
+}
+
 #out {
   position: absolute;
   top: 29px;
