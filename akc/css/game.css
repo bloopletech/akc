@@ -112,7 +112,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 }
 
 #time-remaining-track.grind {
-  stroke: #f7e36d;
+  stroke: #ff8000;
 }
 
 #out {
