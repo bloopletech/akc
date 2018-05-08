@@ -40,8 +40,7 @@ function Engine(endedCallback) {
     }
   };
   this.endedCallback = endedCallback;
-  this.currentKeyCode = null
-  this.grindStarted = null;
+  this.currentKeyCode = null;
   this.alreadyPlayed = false;
   this.transition("attract");
 }
@@ -77,7 +76,8 @@ Engine.prototype.showDirection = function(direction) {
 Engine.prototype.startRound = function() {
   this.showDirection(this.game.roundStarted());
 
-  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime + 20);
+  this.currentKeyCode = null;
+  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), (this.game.allowedTime * 2) + 20);
 }
 
 Engine.prototype.roundTimedOut = function() {
