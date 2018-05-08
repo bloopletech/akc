@@ -67,7 +67,7 @@ Game.prototype.grindEnded = function() {
 }
 
 Game.prototype.roundEnded = function() {
-  var diff = this.timePassed();
+  var diff = Math.floor(this.timePassed());
   if(diff < 50 || diff > this.allowedTime || !this.correct) return true;
 
   this.streak++;
