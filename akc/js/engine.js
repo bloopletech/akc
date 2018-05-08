@@ -77,7 +77,7 @@ Engine.prototype.startRound = function() {
   this.showDirection(this.game.roundStarted());
 
   this.currentKeyCode = null;
-  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), (this.game.allowedTime * 2) + 20);
+  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime + 20);
 }
 
 Engine.prototype.roundTimedOut = function() {
@@ -101,7 +101,6 @@ Engine.prototype.updateTimeUsed = function() {
   this.timeUsedUpdater = window.requestAnimationFrame(this.updateTimeUsed.bind(this));
 
   var ratio = this.game.timeRemaining();
-  if(ratio < 0) ratio = 0;
 
   var c = 276.46;
   $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;

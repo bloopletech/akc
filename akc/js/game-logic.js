@@ -27,7 +27,7 @@ Game.prototype.randomDirection = function() {
 
 Game.prototype.timePassed = function() {
   if(this.grindStart) {
-    return ((Date.now() - this.grindStart) / 2.0) + (this.grindStart - this.startTime);
+    return ((Date.now() - this.grindStart) * 1.5) + (this.grindStart - this.startTime);
   }
   else {
     return Date.now() - this.startTime;
@@ -35,7 +35,10 @@ Game.prototype.timePassed = function() {
 }
 
 Game.prototype.timeRemaining = function() {
-  return (this.allowedTime - this.timePassed()) / (this.allowedTime + 0.0);
+  var time = (this.allowedTime - this.timePassed()) / (this.allowedTime + 0.0);
+  if(time < 0) return 0;
+  if(time > 1) return 1;
+  return time;
 }
 
 Game.prototype.roundStarted = function() {
