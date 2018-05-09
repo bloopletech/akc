@@ -31,7 +31,7 @@ body {
   }
 
   #game-wrapper {
-    width: 750px;
+    width: 768px;
     height: 450px;
   }
 
@@ -43,7 +43,7 @@ body {
   #description {
     margin: 100px auto 0 auto;
     padding: 20px;
-    width: 750px;
+    width: 768px;
     border-radius: 2px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
   }
