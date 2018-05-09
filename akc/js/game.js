@@ -14,8 +14,11 @@ function init() {
     });
   }
   else {
+    window.addEventListener("touchstart", function(event) {
+      engine.onTouchStart(event);
+    });
     window.addEventListener("touchend", function(event) {
-      engine.onClick(event);
+      engine.onTouchEnd(event);
     });
   }
 
