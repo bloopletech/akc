@@ -13,6 +13,7 @@ Game.prototype.start = function() {
   this.direction = null;
   this.pattern = this.generatePattern();
   this.correct = false;
+  this.highPrecisionTimer = (typeof window.performance == "object");
 }
 
 Game.prototype.generatePattern = function() {
@@ -25,12 +26,16 @@ Game.prototype.randomDirection = function() {
   return this.DIRECTIONS[Math.floor(Math.random() * this.DIRECTIONS.length)];;
 }
 
+Game.prototype.now = function() {
+  return this.highPrecisionTimer ? Math.round(performance.now()) : Date.now();
+}
+
 Game.prototype.timePassed = function() {
   if(this.grindStart) {
-    return ((Date.now() - this.grindStart) * 1.5) + (this.grindStart - this.startTime);
+    return ((this.now() - this.grindStart) * 1.5) + (this.grindStart - this.startTime);
   }
   else {
-    return Date.now() - this.startTime;
+    return this.now() - this.startTime;
   }
 }
 
@@ -43,7 +48,7 @@ Game.prototype.timeRemaining = function() {
 
 Game.prototype.roundStarted = function() {
   this.direction = this.pattern[this.streak % this.pattern.length];
-  this.startTime = Date.now();
+  this.startTime = this.now();
   this.correct = false;
   this.grinding = false;
   this.grindStart = null;
@@ -57,12 +62,12 @@ Game.prototype.input = function(playerDirection) {
 }
 
 Game.prototype.grindStarted = function() {
-  this.grindStart = Date.now();
+  this.grindStart = this.now();
   this.grinding = true;
 }
 
 Game.prototype.grindEnded = function() {
-  this.grindDuration += Date.now() - this.grindStart;
+  this.grindDuration += this.now() - this.grindStart;
   this.grinding = false;
 }
 
