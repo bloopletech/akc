@@ -41,6 +41,7 @@ function Engine(endedCallback) {
   };
   this.endedCallback = endedCallback;
   this.currentKeyCode = null;
+  this.currentTouchCode = null;
   this.alreadyPlayed = false;
   this.transition("attract");
 }
@@ -77,6 +78,7 @@ Engine.prototype.startRound = function() {
   this.showDirection(this.game.roundStarted());
 
   this.currentKeyCode = null;
+  this.currentTouchCode = null;
   this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime + 20);
 }
 
@@ -162,20 +164,62 @@ Engine.prototype.onKeyUp = function(event) {
   }
 }
 
-Engine.prototype.onClick = function(event) {
+Engine.prototype.onTouchStart = function(event) {
   if(this.state == "waiting") {
     event.preventDefault();
+    return;
   }
-  else if(this.state == "playing") {
+
+  if(this.state == "playing") {
     event.preventDefault();
-    this.game.input(event.target.dataset.direction);
-    this.endRound();
+
+    var code = event.target.dataset.direction;
+
+    if(!this.currentTouchCode) {
+      if(!this.game.input(code)) {
+        this.endRound();
+        return;
+      }
+
+      this.currentTouchCode = code;
+      this.game.grindStarted();
+    }
+    else if(this.currentTouchCode != code) {
+      this.game.input();
+      this.endRound();
+    }
+
+    return;
+  }
+}
+
+Engine.prototype.onTouchEnd = function(event) {
+  if(this.state == "waiting") {
+    event.preventDefault();
+    return;
+  }
+
+  if(this.state == "playing") {
+    var code = event.target.dataset.direction;
+
+    if(!this.currentTouchCode || this.currentTouchCode != code) {
+      this.game.input();
+      this.endRound();
+      return;
+    }
+    else {
+      this.currentTouchCode = null;
+      this.game.grindEnded();
+      this.endRound();
+      return;
+    }
   }
 }
 
 Engine.prototype.endRound = function() {
   window.clearTimeout(this.roundEndTimeout);
   this.currentKeyCode = null;
+  this.currentTouchCode = null;
 
   var gameOver = this.game.roundEnded();
   $("#score").textContent = this.nice(this.game.score);
