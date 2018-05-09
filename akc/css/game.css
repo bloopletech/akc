@@ -112,7 +112,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 }
 
 #time-remaining-track.grind {
-  stroke: #ff7500;
+  stroke: #ff8000;
 }
 
 #out {
@@ -166,7 +166,7 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 
 @media screen and (min-width: 768px) {
   body, .layer {
-    width: 750px;
+    width: 768px;
     height: 450px;
   }
 
