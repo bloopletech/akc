@@ -3,7 +3,7 @@ function Game() {
 }
 
 Game.prototype.start = function() {
-  this.allowedTime = 1500;
+  this.allowedTime = 1300;
   this.score = 0;
   this.streak = 0;
   this.startTime = null;
@@ -81,7 +81,8 @@ Game.prototype.roundEnded = function() {
   this.score += delta;
 
   if(this.streak % this.pattern.length == 0) {
-    if(this.allowedTime >= 750) this.allowedTime -= 50;
+    if(this.allowedTime >= 1000) this.allowedTime -= 70;
+    else if(this.allowedTime >= 750) this.allowedTime -= 50;
     else if(this.allowedTime > 300) this.allowedTime -= 30;
   }
 
