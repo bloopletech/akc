@@ -42,6 +42,7 @@ function Engine(endedCallback) {
   this.endedCallback = endedCallback;
   this.currentKeyCode = null;
   this.currentTouchCode = null;
+  this.preRoundStart = false;
   this.alreadyPlayed = false;
   this.transition("attract");
 }
@@ -75,10 +76,17 @@ Engine.prototype.showDirection = function(direction) {
 }
 
 Engine.prototype.startRound = function() {
-  this.showDirection(this.game.roundStarted());
-
   this.currentKeyCode = null;
   this.currentTouchCode = null;
+  this.preRoundStart = true;
+
+  setTimeout(this.postStartRound.bind(this), this.game.ROUND_DELAY);
+}
+
+Engine.prototype.postStartRound = function() {
+  this.showDirection(this.game.roundStarted());
+
+  this.preRoundStart = false;
   this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime + 20);
 }
 
@@ -112,7 +120,7 @@ Engine.prototype.updateTimeUsed = function() {
 }
 
 Engine.prototype.onKeyDown = function(event) {
-  if(this.state == "waiting") {
+  if(this.state == "waiting" || this.preRoundStart) {
     event.preventDefault();
     return;
   }
@@ -144,7 +152,7 @@ Engine.prototype.onKeyDown = function(event) {
 }
 
 Engine.prototype.onKeyUp = function(event) {
-  if(this.state == "waiting") {
+  if(this.state == "waiting" || this.preRoundStart) {
     event.preventDefault();
     return;
   }
@@ -165,7 +173,7 @@ Engine.prototype.onKeyUp = function(event) {
 }
 
 Engine.prototype.onTouchStart = function(event) {
-  if(this.state == "waiting") {
+  if(this.state == "waiting" || this.preRoundStart) {
     event.preventDefault();
     return;
   }
@@ -194,7 +202,7 @@ Engine.prototype.onTouchStart = function(event) {
 }
 
 Engine.prototype.onTouchEnd = function(event) {
-  if(this.state == "waiting") {
+  if(this.state == "waiting" || this.preRoundStart) {
     event.preventDefault();
     return;
   }
