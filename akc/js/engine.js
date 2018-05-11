@@ -1,7 +1,7 @@
-function Engine(endedCallback) {
-  this.CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
-  this.DIRECTION_CLASSES = ["left", "up", "right", "down"];
-  this.RANKS = {
+var Engine = function(endedCallback) {
+  var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
+  var DIRECTION_CLASSES = ["left", "up", "right", "down"];
+  var RANKS = {
     bronze: {
       minScore: 0,
       humanName: "Bronze",
@@ -38,220 +38,232 @@ function Engine(endedCallback) {
       class: "strontium"
     }
   };
-  this.endedCallback = endedCallback;
-  this.currentKeyCode = null;
-  this.currentTouchCode = null;
-  this.preRoundStart = false;
-  this.alreadyPlayed = false;
-  this.transition("attract");
-}
 
-Engine.prototype.transition = function(state) {
-  this.state = state;
-  document.body.classList.remove("attract", "waiting", "playing", "game-over");
-  document.body.classList.add(state);
-}
+  var game = null;
+  var state = null;
+  var currentKeyCode = null;
+  var currentTouchCode = null;
+  var preRoundStart = false;
+  var alreadyPlayed = false;
+  var roundEndTimeout = null;
 
-Engine.prototype.start = function() {
-  this.transition("waiting");
-  this.game = new Game();
-
-  setTimeout(this.postStarted.bind(this), this.alreadyPlayed ? 500 : 1500);
-}
-
-Engine.prototype.postStarted = function() {
-  if(this.state != "waiting") return;
-  this.transition("playing");
-  $("#score").textContent = "0";
-  $("#streak").textContent = "0";
-
-  this.updateTimeUsed();
-  this.startRound();
-}
-
-Engine.prototype.showDirection = function(direction) {
-  for(var i in this.DIRECTION_CLASSES) document.body.classList.remove(this.DIRECTION_CLASSES[i]);
-  document.body.classList.add(direction);
-}
-
-Engine.prototype.startRound = function() {
-  this.currentKeyCode = null;
-  this.currentTouchCode = null;
-  this.preRoundStart = true;
-
-  setTimeout(this.postStartRound.bind(this), this.game.ROUND_DELAY);
-}
-
-Engine.prototype.postStartRound = function() {
-  this.showDirection(this.game.roundStarted());
-
-  this.preRoundStart = false;
-  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime() + 20);
-}
-
-Engine.prototype.roundTimedOut = function() {
-  this.game.input();
-  this.endRound();
-}
-
-Engine.prototype.scoreRank = function() {
-  var score = this.game.score();
-
-  var currentRank = null;
-  for(var i in this.RANKS) {
-    var rank = this.RANKS[i];
-    if(score >= rank.minScore) currentRank = rank;
+  function transition(newState) {
+    state = newState;
+    document.body.classList.remove("attract", "waiting", "playing", "game-over");
+    document.body.classList.add(state);
   }
 
-  return currentRank;
-}
+  function start() {
+    transition("waiting");
+    game = new Game();
 
-Engine.prototype.updateTimeUsed = function() {
-  this.timeUsedUpdater = window.requestAnimationFrame(this.updateTimeUsed.bind(this));
-
-  var ratio = this.game.timeRemaining();
-
-  var c = 276.46;
-  $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
-
-  if(this.game.grinding()) $("#time-remaining-track").classList.add("grind");
-  else $("#time-remaining-track").classList.remove("grind");
-}
-
-Engine.prototype.onKeyDown = function(event) {
-  if(this.state == "waiting" || this.preRoundStart) {
-    event.preventDefault();
-    return;
+    setTimeout(postStarted.bind(this), alreadyPlayed ? 500 : 1500);
   }
 
-  if(this.state == "playing") {
-    event.preventDefault();
+  function postStarted() {
+    if(state != "waiting") return;
+    transition("playing");
+    $("#score").textContent = "0";
+    $("#streak").textContent = "0";
 
-    if(!this.currentKeyCode) {
-      if(!this.game.input(this.CODES_MAP[event.keyCode])) {
-        this.endRound();
-        return;
+    updateTimeUsed();
+    startRound();
+  }
+
+  function showDirection(direction) {
+    for(var i in DIRECTION_CLASSES) document.body.classList.remove(DIRECTION_CLASSES[i]);
+    document.body.classList.add(direction);
+  }
+
+  function startRound() {
+    currentKeyCode = null;
+    currentTouchCode = null;
+    preRoundStart = true;
+
+    setTimeout(postStartRound.bind(this), game.ROUND_DELAY);
+  }
+
+  function postStartRound() {
+    showDirection(game.roundStarted());
+
+    preRoundStart = false;
+    roundEndTimeout = window.setTimeout(roundTimedOut.bind(this), game.allowedTime() + 20);
+  }
+
+  function roundTimedOut() {
+    game.input();
+    endRound();
+  }
+
+  function scoreRank() {
+    var score = game.score();
+
+    var currentRank = null;
+    for(var i in RANKS) {
+      var rank = RANKS[i];
+      if(score >= rank.minScore) currentRank = rank;
+    }
+
+    return currentRank;
+  }
+
+  function updateTimeUsed() {
+    timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed.bind(this));
+
+    var ratio = game.timeRemaining();
+
+    var c = 276.46;
+    $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
+
+    if(game.grinding()) $("#time-remaining-track").classList.add("grind");
+    else $("#time-remaining-track").classList.remove("grind");
+  }
+
+  function onKeyDown(event) {
+    if(state == "waiting" || preRoundStart) {
+      event.preventDefault();
+      return;
+    }
+
+    if(state == "playing") {
+      event.preventDefault();
+
+      if(!currentKeyCode) {
+        if(!game.input(CODES_MAP[event.keyCode])) {
+          endRound();
+          return;
+        }
+
+        currentKeyCode = event.keyCode;
+        game.grindStarted();
+      }
+      else if(currentKeyCode != event.keyCode) {
+        game.input();
+        endRound();
       }
 
-      this.currentKeyCode = event.keyCode;
-      this.game.grindStarted();
-    }
-    else if(this.currentKeyCode != event.keyCode) {
-      this.game.input();
-      this.endRound();
-    }
-
-    return;
-  }
-
-  if(event.keyCode == 32) {
-    event.preventDefault();
-    this.start();
-  }
-}
-
-Engine.prototype.onKeyUp = function(event) {
-  if(this.state == "waiting" || this.preRoundStart) {
-    event.preventDefault();
-    return;
-  }
-
-  if(this.state == "playing") {
-    if(!this.currentKeyCode || this.currentKeyCode != event.keyCode) {
-      this.game.input();
-      this.endRound();
       return;
     }
-    else {
-      this.currentKeyCode = null;
-      this.game.grindEnded();
-      this.endRound();
-      return;
+
+    if(event.keyCode == 32) {
+      event.preventDefault();
+      start();
     }
   }
-}
 
-Engine.prototype.onTouchStart = function(event) {
-  if(this.state == "waiting" || this.preRoundStart) {
-    event.preventDefault();
-    return;
-  }
+  function onKeyUp(event) {
+    if(state == "waiting" || preRoundStart) {
+      event.preventDefault();
+      return;
+    }
 
-  if(this.state == "playing") {
-    event.preventDefault();
-
-    var code = event.target.dataset.direction;
-
-    if(!this.currentTouchCode) {
-      if(!this.game.input(code)) {
-        this.endRound();
+    if(state == "playing") {
+      if(!currentKeyCode || currentKeyCode != event.keyCode) {
+        game.input();
+        endRound();
         return;
       }
-
-      this.currentTouchCode = code;
-      this.game.grindStarted();
+      else {
+        currentKeyCode = null;
+        game.grindEnded();
+        endRound();
+        return;
+      }
     }
-    else if(this.currentTouchCode != code) {
-      this.game.input();
-      this.endRound();
-    }
-
-    return;
-  }
-}
-
-Engine.prototype.onTouchEnd = function(event) {
-  if(this.state == "waiting" || this.preRoundStart) {
-    event.preventDefault();
-    return;
   }
 
-  if(this.state == "playing") {
-    var code = event.target.dataset.direction;
-
-    if(!this.currentTouchCode || this.currentTouchCode != code) {
-      this.game.input();
-      this.endRound();
+  function onTouchStart(event) {
+    if(state == "waiting" || preRoundStart) {
+      event.preventDefault();
       return;
     }
-    else {
-      this.currentTouchCode = null;
-      this.game.grindEnded();
-      this.endRound();
+
+    if(state == "playing") {
+      event.preventDefault();
+
+      var code = event.target.dataset.direction;
+
+      if(!currentTouchCode) {
+        if(!game.input(code)) {
+          endRound();
+          return;
+        }
+
+        currentTouchCode = code;
+        game.grindStarted();
+      }
+      else if(currentTouchCode != code) {
+        game.input();
+        endRound();
+      }
+
       return;
     }
   }
-}
 
-Engine.prototype.endRound = function() {
-  window.clearTimeout(this.roundEndTimeout);
-  this.currentKeyCode = null;
-  this.currentTouchCode = null;
+  function onTouchEnd(event) {
+    if(state == "waiting" || preRoundStart) {
+      event.preventDefault();
+      return;
+    }
 
-  var gameOver = this.game.roundEnded();
-  $("#score").textContent = this.nice(this.game.score());
-  $("#streak").textContent = this.game.streak();
+    if(state == "playing") {
+      var code = event.target.dataset.direction;
 
-  if(gameOver) this.gameOver();
-  else this.startRound();
-}
+      if(!currentTouchCode || currentTouchCode != code) {
+        game.input();
+        endRound();
+        return;
+      }
+      else {
+        currentTouchCode = null;
+        game.grindEnded();
+        endRound();
+        return;
+      }
+    }
+  }
 
-Engine.prototype.nice = function(num) {
-	var x = num + '';
-	var rgx = /(\d+)(\d{3})/;
-	while(rgx.test(x)) x = x.replace(rgx, '$1' + ',' + '$2');
-	return x;
+  function endRound() {
+    window.clearTimeout(roundEndTimeout);
+    currentKeyCode = null;
+    currentTouchCode = null;
+
+    var isGameOver = game.roundEnded();
+    $("#score").textContent = nice(game.score());
+    $("#streak").textContent = game.streak();
+
+    if(isGameOver) gameOver();
+    else startRound();
+  }
+
+  function nice(num) {
+    var x = num + '';
+    var rgx = /(\d+)(\d{3})/;
+    while(rgx.test(x)) x = x.replace(rgx, '$1' + ',' + '$2');
+    return x;
+  }
+
+  function gameOver() {
+    window.cancelAnimationFrame(timeUsedUpdater);
+
+    showDirection("blank");
+    $("#results-score").textContent = nice(game.score());
+    $("#results-rank").textContent = scoreRank().humanName;
+    $("#results-streak").textContent = game.streak();
+    transition("game-over");
+
+    alreadyPlayed = true;
+    endedCallback(game.score());
+  }
+
+  transition("attract");
+
+  return {
+    start: start,
+    onKeyDown: onKeyDown,
+    onKeyUp: onKeyUp,
+    onTouchStart: onTouchStart,
+    onTouchEnd: onTouchEnd
+  }
 };
-
-Engine.prototype.gameOver = function() {
-  window.cancelAnimationFrame(this.timeUsedUpdater);
-
-  this.showDirection("blank");
-  $("#results-score").textContent = this.nice(this.game.score());
-  $("#results-rank").textContent = this.scoreRank().humanName;
-  $("#results-streak").textContent = this.game.streak();
-  this.transition("game-over");
-
-  this.alreadyPlayed = true;
-  this.endedCallback(this.game.score());
-}
