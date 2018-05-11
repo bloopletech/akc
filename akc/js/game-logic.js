@@ -1,5 +1,6 @@
 function Game() {
   this.DIRECTIONS = ["left", "up", "right", "down"];
+  this.ROUND_DELAY = 250;
 }
 
 Game.prototype.start = function() {
@@ -81,8 +82,7 @@ Game.prototype.roundEnded = function() {
   this.score += delta;
 
   if(this.streak % this.pattern.length == 0) {
-    if(this.allowedTime >= 1000) this.allowedTime -= 70;
-    else if(this.allowedTime >= 750) this.allowedTime -= 50;
+    if(this.allowedTime >= 750) this.allowedTime -= 50;
     else if(this.allowedTime > 300) this.allowedTime -= 30;
   }
 
