@@ -1,7 +1,6 @@
 function Engine(endedCallback) {
-  this.game = new Game();
   this.CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
-  this.DIRECTION_CLASSES = this.game.DIRECTIONS.concat("blank");
+  this.DIRECTION_CLASSES = ["left", "up", "right", "down"];
   this.RANKS = {
     bronze: {
       minScore: 0,
@@ -55,7 +54,7 @@ Engine.prototype.transition = function(state) {
 
 Engine.prototype.start = function() {
   this.transition("waiting");
-  this.game.start();
+  this.game = new Game();
 
   setTimeout(this.postStarted.bind(this), this.alreadyPlayed ? 500 : 1500);
 }
@@ -87,7 +86,7 @@ Engine.prototype.postStartRound = function() {
   this.showDirection(this.game.roundStarted());
 
   this.preRoundStart = false;
-  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime + 20);
+  this.roundEndTimeout = window.setTimeout(this.roundTimedOut.bind(this), this.game.allowedTime() + 20);
 }
 
 Engine.prototype.roundTimedOut = function() {
@@ -96,7 +95,7 @@ Engine.prototype.roundTimedOut = function() {
 }
 
 Engine.prototype.scoreRank = function() {
-  var score = this.game.score;
+  var score = this.game.score();
 
   var currentRank = null;
   for(var i in this.RANKS) {
@@ -115,7 +114,7 @@ Engine.prototype.updateTimeUsed = function() {
   var c = 276.46;
   $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
 
-  if(this.game.grinding) $("#time-remaining-track").classList.add("grind");
+  if(this.game.grinding()) $("#time-remaining-track").classList.add("grind");
   else $("#time-remaining-track").classList.remove("grind");
 }
 
@@ -230,8 +229,8 @@ Engine.prototype.endRound = function() {
   this.currentTouchCode = null;
 
   var gameOver = this.game.roundEnded();
-  $("#score").textContent = this.nice(this.game.score);
-  $("#streak").textContent = this.game.streak;
+  $("#score").textContent = this.nice(this.game.score());
+  $("#streak").textContent = this.game.streak();
 
   if(gameOver) this.gameOver();
   else this.startRound();
@@ -248,11 +247,11 @@ Engine.prototype.gameOver = function() {
   window.cancelAnimationFrame(this.timeUsedUpdater);
 
   this.showDirection("blank");
-  $("#results-score").textContent = this.nice(this.game.score);
+  $("#results-score").textContent = this.nice(this.game.score());
   $("#results-rank").textContent = this.scoreRank().humanName;
-  $("#results-streak").textContent = this.game.streak;
+  $("#results-streak").textContent = this.game.streak();
   this.transition("game-over");
 
   this.alreadyPlayed = true;
-  this.endedCallback(this.game.score);
+  this.endedCallback(this.game.score());
 }

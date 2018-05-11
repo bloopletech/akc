@@ -1,90 +1,110 @@
-function Game() {
-  this.DIRECTIONS = ["left", "up", "right", "down"];
-  this.ROUND_DELAY = 250;
-}
+var Game = function() {
+  var DIRECTIONS = ["left", "up", "right", "down"];
+  var ROUND_DELAY = 250;
 
-Game.prototype.start = function() {
-  this.allowedTime = 1300;
-  this.score = 0;
-  this.streak = 0;
-  this.startTime = null;
-  this.grinding = false;
-  this.grindStart = null;
-  this.grindDuration = 0;
-  this.direction = null;
-  this.pattern = this.generatePattern();
-  this.correct = false;
-  this.highPrecisionTimer = (typeof window.performance == "object");
-}
-
-Game.prototype.generatePattern = function() {
-  var pattern = [];
-  for(var i = 0; i < 5; i++) pattern.push(this.randomDirection());
-  return pattern;
-}
-
-Game.prototype.randomDirection = function() {
-  return this.DIRECTIONS[Math.floor(Math.random() * this.DIRECTIONS.length)];;
-}
-
-Game.prototype.now = function() {
-  return this.highPrecisionTimer ? Math.round(performance.now()) : Date.now();
-}
-
-Game.prototype.timePassed = function() {
-  if(this.grindStart) {
-    return ((this.now() - this.grindStart) * 1.5) + (this.grindStart - this.startTime);
-  }
-  else {
-    return this.now() - this.startTime;
-  }
-}
-
-Game.prototype.timeRemaining = function() {
-  var time = (this.allowedTime - this.timePassed()) / (this.allowedTime + 0.0);
-  if(time < 0) return 0;
-  if(time > 1) return 1;
-  return time;
-}
-
-Game.prototype.roundStarted = function() {
-  this.direction = this.pattern[this.streak % this.pattern.length];
-  this.startTime = this.now();
-  this.correct = false;
-  this.grinding = false;
-  this.grindStart = null;
-  this.grindDuration = 0;
-  return this.direction;
-}
-
-Game.prototype.input = function(playerDirection) {
-  this.correct = playerDirection == this.direction;
-  return this.correct;
-}
-
-Game.prototype.grindStarted = function() {
-  this.grindStart = this.now();
-  this.grinding = true;
-}
-
-Game.prototype.grindEnded = function() {
-  this.grindDuration += this.now() - this.grindStart;
-  this.grinding = false;
-}
-
-Game.prototype.roundEnded = function() {
-  var diff = Math.floor(this.timePassed());
-  if(diff < 50 || diff > this.allowedTime || !this.correct) return true;
-
-  this.streak++;
-  var delta = (this.allowedTime - diff) + (this.grindDuration * 5) + (this.streak * 100);
-  if(diff <= (this.allowedTime * 0.3)) delta *= 2;
-  this.score += delta;
-
-  if(this.streak % this.pattern.length == 0) {
-    if(this.allowedTime >= 750) this.allowedTime -= 50;
-    else if(this.allowedTime > 300) this.allowedTime -= 30;
+  function randomDirection() {
+    return DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];;
   }
 
-  return false;
-}
+  function generatePattern() {
+    var pattern = [];
+    for(var i = 0; i < 5; i++) pattern.push(randomDirection());
+    return pattern;
+  }
+
+  var allowedTime = 1300;
+  var score = 0;
+  var streak = 0;
+  var startTime = null;
+  var grinding = false;
+  var grindStart = null;
+  var grindDuration = 0;
+  var direction = null;
+  var pattern = generatePattern();
+  var correct = false;
+  var highPrecisionTimer = (typeof window.performance == "object");
+
+  function now() {
+    return highPrecisionTimer ? Math.round(performance.now()) : Date.now();
+  }
+
+  function timePassed() {
+    if(grindStart) {
+      return ((now() - grindStart) * 1.5) + (grindStart - startTime);
+    }
+    else {
+      return now() - startTime;
+    }
+  }
+
+  function timeRemaining() {
+    var time = (allowedTime - timePassed()) / (allowedTime + 0.0);
+    if(time < 0) return 0;
+    if(time > 1) return 1;
+    return time;
+  }
+
+  function roundStarted() {
+    direction = pattern[streak % pattern.length];
+    startTime = now();
+    correct = false;
+    grinding = false;
+    grindStart = null;
+    grindDuration = 0;
+    return direction;
+  }
+
+  function input(playerDirection) {
+    correct = playerDirection == direction;
+    return correct;
+  }
+
+  function grindStarted() {
+    grindStart = now();
+    grinding = true;
+  }
+
+  function grindEnded() {
+    grindDuration += now() - grindStart;
+    grinding = false;
+  }
+
+  function roundEnded() {
+    var diff = Math.floor(timePassed());
+    if(diff < 50 || diff > allowedTime || !correct) return true;
+
+    streak++;
+    var delta = (allowedTime - diff) + (grindDuration * 5) + (streak * 100);
+    if(diff <= (allowedTime * 0.3)) delta *= 2;
+    score += delta;
+
+    if(streak % pattern.length == 0) {
+      if(allowedTime >= 750) allowedTime -= 50;
+      else if(allowedTime > 300) allowedTime -= 30;
+    }
+
+    return false;
+  }
+
+  return {
+    ROUND_DELAY: ROUND_DELAY,
+    allowedTime: function() {
+      return allowedTime;
+    },
+    grinding: function() {
+      return grinding;
+    },
+    score: function() {
+      return score;
+    },
+    streak: function() {
+      return streak;
+    },
+    roundStarted: roundStarted,
+    input: input,
+    timeRemaining: timeRemaining,
+    grindStarted: grindStarted,
+    grindEnded: grindEnded,
+    roundEnded: roundEnded
+  };
+};
