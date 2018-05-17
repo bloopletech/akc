@@ -43,7 +43,6 @@ var Engine = function(endedCallback) {
   var state = null;
   var currentKeyCode = null;
   var currentTouchCode = null;
-  var preRoundStart = false;
   var alreadyPlayed = false;
   var roundEndTimeout = null;
 
@@ -64,7 +63,7 @@ var Engine = function(endedCallback) {
     if(state != "waiting") return;
     transition("playing");
     $("#score").textContent = "0";
-    $("#streak").textContent = "0";
+    updateStack();
 
     updateTimeUsed();
     startRound();
@@ -76,19 +75,14 @@ var Engine = function(endedCallback) {
   }
 
   function startRound() {
-    currentKeyCode = null;
-    currentTouchCode = null;
-    preRoundStart = true;
-
-    setTimeout(postStartRound.bind(this), game.ROUND_DELAY);
-  }
-
-  function postStartRound() {
     showDirection(game.roundStarted());
 
-    preRoundStart = false;
+    currentKeyCode = null;
+    currentTouchCode = null;
+
     roundEndTimeout = window.setTimeout(roundTimedOut.bind(this), game.allowedTime() + 20);
   }
+
 
   function roundTimedOut() {
     game.input();
@@ -120,7 +114,7 @@ var Engine = function(endedCallback) {
   }
 
   function onKeyDown(event) {
-    if(state == "waiting" || preRoundStart) {
+    if(state == "waiting") {
       event.preventDefault();
       return;
     }
@@ -152,7 +146,7 @@ var Engine = function(endedCallback) {
   }
 
   function onKeyUp(event) {
-    if(state == "waiting" || preRoundStart) {
+    if(state == "waiting") {
       event.preventDefault();
       return;
     }
@@ -173,7 +167,7 @@ var Engine = function(endedCallback) {
   }
 
   function onTouchStart(event) {
-    if(state == "waiting" || preRoundStart) {
+    if(state == "waiting") {
       event.preventDefault();
       return;
     }
@@ -202,7 +196,7 @@ var Engine = function(endedCallback) {
   }
 
   function onTouchEnd(event) {
-    if(state == "waiting" || preRoundStart) {
+    if(state == "waiting") {
       event.preventDefault();
       return;
     }
@@ -224,6 +218,13 @@ var Engine = function(endedCallback) {
     }
   }
 
+  function updateStack() {
+    var stack = game.stack() + 1;
+    var content = "";
+    for(var i = 0; i < stack; i++) content += "🔥";
+    $("#stack").textContent = content;
+  }
+
   function endRound() {
     window.clearTimeout(roundEndTimeout);
     currentKeyCode = null;
@@ -231,7 +232,7 @@ var Engine = function(endedCallback) {
 
     var isGameOver = game.roundEnded();
     $("#score").textContent = nice(game.score());
-    $("#streak").textContent = game.streak();
+    updateStack();
 
     if(isGameOver) gameOver();
     else startRound();
