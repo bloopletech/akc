@@ -8,7 +8,7 @@ var Game = function() {
 
   function generatePattern() {
     var pattern = [];
-    for(var i = 0; i < 5; i++) pattern.push(randomDirection());
+    for(var i = 0; i < 6; i++) pattern.push(randomDirection());
     return pattern;
   }
 
@@ -44,8 +44,12 @@ var Game = function() {
     return time;
   }
 
+  function stack() {
+    return streak % pattern.length;
+  }
+
   function roundStarted() {
-    direction = pattern[streak % pattern.length];
+    direction = pattern[stack()];
     startTime = now();
     correct = false;
     grinding = false;
@@ -78,7 +82,7 @@ var Game = function() {
     if(diff <= (allowedTime * 0.3)) delta *= 2;
     score += delta;
 
-    if(streak % pattern.length == 0) {
+    if(stack() == 0) {
       if(allowedTime >= 750) allowedTime -= 50;
       else if(allowedTime > 300) allowedTime -= 30;
     }
@@ -105,6 +109,7 @@ var Game = function() {
     timeRemaining: timeRemaining,
     grindStarted: grindStarted,
     grindEnded: grindEnded,
-    roundEnded: roundEnded
+    roundEnded: roundEnded,
+    stack: stack
   };
 };
