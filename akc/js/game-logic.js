@@ -1,14 +1,32 @@
 var Game = function() {
   var DIRECTIONS = ["left", "up", "right", "down"];
-  var ROUND_DELAY = 250;
+  var PATTERN_LENGTH = 6;
+  var MAX_DUPE_LENGTH = 2;
 
   function randomDirection() {
     return DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];;
   }
 
   function generatePattern() {
-    var pattern = [];
-    for(var i = 0; i < 6; i++) pattern.push(randomDirection());
+    var pattern = null;
+
+    do {
+      pattern = [];
+      for(var i = 0; i < PATTERN_LENGTH; i++) pattern.push(randomDirection());
+
+      var dupes = false;
+      for(var i = MAX_DUPE_LENGTH; i < pattern.length; i++) {
+        var sliced = pattern.slice(i - MAX_DUPE_LENGTH, i + 1);
+
+        dupes = sliced.every(function(value) {
+          return value == sliced[0];
+        });
+
+        if(dupes) break;
+      }
+    }
+    while(dupes);
+
     return pattern;
   }
 
@@ -46,6 +64,10 @@ var Game = function() {
 
   function stack() {
     return streak % pattern.length;
+  }
+
+  function maxStacks() {
+    return stack() == (pattern.length - 1);
   }
 
   function roundStarted() {
@@ -91,7 +113,6 @@ var Game = function() {
   }
 
   return {
-    ROUND_DELAY: ROUND_DELAY,
     allowedTime: function() {
       return allowedTime;
     },
@@ -104,12 +125,13 @@ var Game = function() {
     streak: function() {
       return streak;
     },
+    stack: stack,
+    maxStacks: maxStacks,
     roundStarted: roundStarted,
     input: input,
     timeRemaining: timeRemaining,
     grindStarted: grindStarted,
     grindEnded: grindEnded,
-    roundEnded: roundEnded,
-    stack: stack
+    roundEnded: roundEnded
   };
 };
