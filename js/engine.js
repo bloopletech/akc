@@ -221,7 +221,8 @@ var Engine = function(endedCallback) {
   function updateStack() {
     var stack = game.stack() + 1;
     var content = "";
-    for(var i = 0; i < stack; i++) content += "🔥";
+    var emoji = game.maxStacks() ? "❤️" : "🖤";
+    for(var i = 0; i < stack; i++) content += emoji;
     $("#stack").textContent = content;
   }
 
