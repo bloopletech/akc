@@ -25,25 +25,25 @@ body {
   margin: 0 0 15px 0;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 500px) {
   body {
     padding: 100px 0 50px 0;
   }
 
   #game-wrapper {
-    width: 768px;
+    width: 500px;
     height: 450px;
   }
 
   #game {
-    border-radius: 2px;
+    border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.27);
   }
 
   #description {
     margin: 100px auto 0 auto;
     padding: 20px;
-    width: 768px;
+    width: 500px;
     border-radius: 2px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
   }

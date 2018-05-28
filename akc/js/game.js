@@ -5,7 +5,7 @@ function init() {
 
   engine = new Engine(function() {});
 
-  if(window.innerWidth >= 768) {
+  if(window.parent.innerWidth >= 500) {
     window.addEventListener("keydown", function(event) {
       engine.onKeyDown(event);
     });

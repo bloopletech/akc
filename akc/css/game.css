@@ -151,9 +151,9 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   line-height: 1.5;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 500px) {
   body, .layer {
-    width: 768px;
+    width: 500px;
     height: 450px;
   }
 
