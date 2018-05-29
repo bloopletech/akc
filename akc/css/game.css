@@ -154,7 +154,7 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 @media screen and (min-width: 500px) {
   body, .layer {
     width: 500px;
-    height: 450px;
+    height: 500px;
   }
 
   #input {
