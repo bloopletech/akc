@@ -133,6 +133,10 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   margin-top: 15px;
 }
 
+#stack {
+  margin-top: 15px;
+}
+
 #score {
   width: 250px;
   margin-top: 15px;
@@ -151,10 +155,10 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   line-height: 1.5;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 460px) {
   body, .layer {
-    width: 500px;
-    height: 500px;
+    width: 460px;
+    height: 460px;
   }
 
   #input {
@@ -162,7 +166,6 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   }
 
   #score {
-    margin-top: 30px;
     font-size: 46px;
   }
 

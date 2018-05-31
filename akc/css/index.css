@@ -25,14 +25,14 @@ body {
   margin: 0 0 15px 0;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 460px) {
   body {
     padding: 100px 0 50px 0;
   }
 
   #game-wrapper {
-    width: 500px;
-    height: 500px;
+    width: 460px;
+    height: 460px;
   }
 
   #game {
@@ -43,7 +43,7 @@ body {
   #description {
     margin: 100px auto 0 auto;
     padding: 20px;
-    width: 500px;
+    width: 460px;
     border-radius: 2px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.27);
   }
