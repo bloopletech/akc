@@ -3,7 +3,14 @@ body {
   font-size: 30px;
 }
 
+iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 #game {
+  z-index: 1;
   height: 100%;
   background-color: #fff;
 }
