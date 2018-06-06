@@ -30,7 +30,7 @@ var Game = function() {
     return pattern;
   }
 
-  var allowedTime = 1100;
+  var allowedTime = 1200;
   var score = 0;
   var streak = 0;
   var startTime = null;
