@@ -4,7 +4,7 @@ var Game = function() {
   var MAX_DUPE_LENGTH = 2;
 
   function randomDirection() {
-    return DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];;
+    return DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];
   }
 
   function generatePattern() {
