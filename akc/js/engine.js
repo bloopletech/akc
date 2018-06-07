@@ -39,6 +39,7 @@ function engine() {
     }
   };
 
+  var $ = document.querySelector.bind(document);
   var game = null;
   var state = null;
   var currentKeyCode = null;
@@ -258,23 +259,13 @@ function engine() {
     alreadyPlayed = true;
   }
 
-  window.$ = document.querySelector.bind(document);
-
   if(window.innerWidth >= 460) {
-    window.addEventListener("keydown", function(event) {
-      onKeyDown(event);
-    });
-    window.addEventListener("keyup", function(event) {
-      onKeyUp(event);
-    });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
   }
   else {
-    window.addEventListener("touchstart", function(event) {
-      onTouchStart(event);
-    });
-    window.addEventListener("touchend", function(event) {
-      onTouchEnd(event);
-    });
+    window.addEventListener("touchstart", onTouchStart);
+    window.addEventListener("touchend", onTouchEnd);
   }
 
   document.body.addEventListener("click", function(e) {
