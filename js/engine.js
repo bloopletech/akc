@@ -1,4 +1,4 @@
-var Engine = function(endedCallback) {
+function engine() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
   var DIRECTION_CLASSES = ["left", "up", "right", "down"];
   var RANKS = {
@@ -256,50 +256,34 @@ var Engine = function(endedCallback) {
     transition("game-over");
 
     alreadyPlayed = true;
-    endedCallback(game.score());
   }
 
-  function init() {
-    window.$ = document.querySelector.bind(document);
+  window.$ = document.querySelector.bind(document);
 
-    var engine = new Engine(function() {});
-
-    if(window.innerWidth >= 460) {
-      window.addEventListener("keydown", function(event) {
-        engine.onKeyDown(event);
-      });
-      window.addEventListener("keyup", function(event) {
-        engine.onKeyUp(event);
-      });
-    }
-    else {
-      window.addEventListener("touchstart", function(event) {
-        engine.onTouchStart(event);
-      });
-      window.addEventListener("touchend", function(event) {
-        engine.onTouchEnd(event);
-      });
-    }
-
-    document.body.addEventListener("click", function(e) {
-      if(e.target.matches(".play")) engine.start();
-      else if(e.target.matches("#settings")) showBack;
-      else if(e.target.matches("#done")) showFront;
+  if(window.innerWidth >= 460) {
+    window.addEventListener("keydown", function(event) {
+      onKeyDown(event);
     });
-
-    transition("attract");
+    window.addEventListener("keyup", function(event) {
+      onKeyUp(event);
+    });
+  }
+  else {
+    window.addEventListener("touchstart", function(event) {
+      onTouchStart(event);
+    });
+    window.addEventListener("touchend", function(event) {
+      onTouchEnd(event);
+    });
   }
 
-  return {
-    init: init,
-    start: start,
-    onKeyDown: onKeyDown,
-    onKeyUp: onKeyUp,
-    onTouchStart: onTouchStart,
-    onTouchEnd: onTouchEnd
-  }
+  document.body.addEventListener("click", function(e) {
+    if(e.target.matches(".play")) start();
+    else if(e.target.matches("#settings")) showBack;
+    else if(e.target.matches("#done")) showFront;
+  });
+
+  transition("attract");
 };
 
-document.addEventListener("DOMContentLoaded", function() {
-  (new Engine()).init();
-});
+document.addEventListener("DOMContentLoaded", engine);
