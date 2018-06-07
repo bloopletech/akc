@@ -56,6 +56,7 @@ function engine() {
   function start() {
     transition("waiting");
     game = new Game();
+    if(playerReady) player.playVideo();
 
     setTimeout(postStarted.bind(this), alreadyPlayed ? 500 : 1500);
   }
@@ -254,6 +255,7 @@ function engine() {
     $("#results-rank").textContent = scoreRank().humanName;
     $("#results-streak").textContent = game.streak();
     transition("game-over");
+    if(playerReady) player.pauseVideo();
 
     alreadyPlayed = true;
   }
