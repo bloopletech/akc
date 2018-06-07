@@ -259,9 +259,39 @@ var Engine = function(endedCallback) {
     endedCallback(game.score());
   }
 
-  transition("attract");
+  function init() {
+    window.$ = document.querySelector.bind(document);
+
+    var engine = new Engine(function() {});
+
+    if(window.innerWidth >= 460) {
+      window.addEventListener("keydown", function(event) {
+        engine.onKeyDown(event);
+      });
+      window.addEventListener("keyup", function(event) {
+        engine.onKeyUp(event);
+      });
+    }
+    else {
+      window.addEventListener("touchstart", function(event) {
+        engine.onTouchStart(event);
+      });
+      window.addEventListener("touchend", function(event) {
+        engine.onTouchEnd(event);
+      });
+    }
+
+    document.body.addEventListener("click", function(e) {
+      if(e.target.matches(".play")) engine.start();
+      else if(e.target.matches("#settings")) showBack;
+      else if(e.target.matches("#done")) showFront;
+    });
+
+    transition("attract");
+  }
 
   return {
+    init: init,
     start: start,
     onKeyDown: onKeyDown,
     onKeyUp: onKeyUp,
@@ -269,3 +299,7 @@ var Engine = function(endedCallback) {
     onTouchEnd: onTouchEnd
   }
 };
+
+document.addEventListener("DOMContentLoaded", function() {
+  (new Engine()).init();
+});
