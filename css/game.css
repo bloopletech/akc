@@ -150,8 +150,11 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 
 #results {
   margin-bottom: 40px;
-  font-weight: bold;
   line-height: 1.5;
+}
+
+#results-score, #results-rank, #results-streak {
+  font-weight: bold;
 }
 
 iframe {
