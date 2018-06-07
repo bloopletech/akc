@@ -84,7 +84,6 @@ function engine() {
     roundEndTimeout = window.setTimeout(roundTimedOut.bind(this), game.allowedTime() + 20);
   }
 
-
   function roundTimedOut() {
     game.input();
     endRound();
