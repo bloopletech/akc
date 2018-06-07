@@ -10,10 +10,13 @@ html, body {
 }
 
 body {
+  min-height: 100%;
+}
+
+body {
   margin: 0;
   background-color: #fff;
   color: #000;
 
-  touch-action: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
