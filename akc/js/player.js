@@ -96,9 +96,20 @@ var Player = (function() {
 
   var youtube;
   var youtubeReady = false;
+  var videoId = VIDEO_IDS[Math.floor(Math.random() * VIDEO_IDS.length)];
 
-  function randomVideoId() {
-    return VIDEO_IDS[Math.floor(Math.random() * VIDEO_IDS.length)];
+  function lastStartKey() {
+    return "player." + videoId + ".lastStart";
+  }
+
+  function getLastStart() {
+    var lastStart = localStorage[lastStartKey()];
+    return lastStart ? parseFloat(lastStart) : 0;
+  }
+
+  function setLastStart(time) {
+    if(time == null) delete localStorage[lastStartKey()];
+    else localStorage[lastStartKey()] = time;
   }
 
   function play() {
@@ -106,12 +117,15 @@ var Player = (function() {
   }
 
   function pause() {
-    if(youtubeReady) youtube.pauseVideo();
+    if(youtubeReady) {
+      youtube.pauseVideo();
+      if(youtube.getPlayerState() != YT.PlayerState.ENDED) setLastStart(youtube.getCurrentTime());
+    }
   }
 
   window.onYouTubeIframeAPIReady = function() {
     youtube = new YT.Player('video', {
-      videoId: randomVideoId(),
+      videoId: videoId,
       playerVars: {
         autoplay: 0,
         disablekb: 1,
@@ -122,13 +136,17 @@ var Player = (function() {
       events: {
         onReady: function() {
           youtubeReady = true;
+          youtube.seekTo(getLastStart(), true);
+          youtube.pauseVideo();
+        },
+        onStateChange: function(event) {
+          if(event.data == YT.PlayerState.ENDED) setLastStart(null);
         }
       }
     });
   }
 
   return {
-    randomVideoId: randomVideoId,
     play: play,
     pause: pause
   };
