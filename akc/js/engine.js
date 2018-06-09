@@ -62,8 +62,7 @@ function engine() {
   function postStarted() {
     if(state != "waiting") return;
     transition("playing");
-    $("#score").textContent = "0";
-    updateStack();
+    renderInfo();
 
     updateTimeUsed();
     startRound();
@@ -109,12 +108,9 @@ function engine() {
     else $("#time-remaining-track").classList.remove("grind");
   }
 
-  function updateStack() {
-    var stack = game.stack() + 1;
-    var content = "";
-    var emoji = game.maxStacks() ? "❤️" : "🖤";
-    for(var i = 0; i < stack; i++) content += emoji;
-    $("#stack").textContent = content;
+  function renderInfo() {
+    $("#score").textContent = nice(game.score());
+    $("#stack").textContent = game.maxStacks() - game.stack();
   }
 
   function endRound() {
@@ -122,8 +118,7 @@ function engine() {
     input.clear();
 
     var isGameOver = game.roundEnded();
-    $("#score").textContent = nice(game.score());
-    updateStack();
+    renderInfo();
 
     if(isGameOver) gameOver();
     else startRound();
