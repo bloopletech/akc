@@ -48,10 +48,10 @@ var Game = function() {
 
   function timePassed() {
     if(grindStart) {
-      return ((now() - grindStart) * 1.5) + (grindStart - startTime);
+      return Math.floor(((now() - grindStart) * 1.5) + (grindStart - startTime));
     }
     else {
-      return now() - startTime;
+      return Math.floor(now() - startTime);
     }
   }
 
@@ -95,14 +95,18 @@ var Game = function() {
     grinding = false;
   }
 
+  function delta(diff) {
+    var delta = (allowedTime - diff) + (grindDuration * 10) + ((streak + 1) * 100);
+    if(diff <= (allowedTime * 0.3)) delta *= 2;
+    return delta;
+  }
+
   function roundEnded() {
-    var diff = Math.floor(timePassed());
+    var diff = timePassed();
     if(diff < 50 || diff > allowedTime || !correct) return true;
 
+    score += delta(diff);
     streak++;
-    var delta = (allowedTime - diff) + (grindDuration * 5) + (streak * 100);
-    if(diff <= (allowedTime * 0.3)) delta *= 2;
-    score += delta;
 
     if(stack() == 0) {
       if(allowedTime >= 750) allowedTime -= 50;
@@ -129,9 +133,11 @@ var Game = function() {
     maxStacks: maxStacks,
     roundStarted: roundStarted,
     input: input,
+    timePassed: timePassed,
     timeRemaining: timeRemaining,
     grindStarted: grindStarted,
     grindEnded: grindEnded,
-    roundEnded: roundEnded
+    roundEnded: roundEnded,
+    delta: delta
   };
 };
