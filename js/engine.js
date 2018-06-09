@@ -1,5 +1,4 @@
 function engine() {
-  var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
   var DIRECTION_CLASSES = ["left", "up", "right", "down"];
   var RANKS = {
     bronze: {
@@ -41,9 +40,8 @@ function engine() {
 
   var $ = document.querySelector.bind(document);
   var game = null;
+  var input = null;
   var state = null;
-  var currentKeyCode = null;
-  var currentTouchCode = null;
   var alreadyPlayed = false;
   var roundEndTimeout = null;
 
@@ -58,7 +56,7 @@ function engine() {
     game = new Game();
     Player.play();
 
-    setTimeout(postStarted.bind(this), alreadyPlayed ? 500 : 1500);
+    setTimeout(postStarted, alreadyPlayed ? 500 : 1500);
   }
 
   function postStarted() {
@@ -78,11 +76,8 @@ function engine() {
 
   function startRound() {
     showDirection(game.roundStarted());
-
-    currentKeyCode = null;
-    currentTouchCode = null;
-
-    roundEndTimeout = window.setTimeout(roundTimedOut.bind(this), game.allowedTime() + 20);
+    input.clear();
+    roundEndTimeout = window.setTimeout(roundTimedOut, game.allowedTime() + 20);
   }
 
   function roundTimedOut() {
@@ -103,7 +98,7 @@ function engine() {
   }
 
   function updateTimeUsed() {
-    timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed.bind(this));
+    timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
     var ratio = game.timeRemaining();
 
@@ -112,111 +107,6 @@ function engine() {
 
     if(game.grinding()) $("#time-remaining-track").classList.add("grind");
     else $("#time-remaining-track").classList.remove("grind");
-  }
-
-  function onKeyDown(event) {
-    if(state == "waiting") {
-      event.preventDefault();
-      return;
-    }
-
-    if(state == "playing") {
-      event.preventDefault();
-
-      if(!currentKeyCode) {
-        if(!game.input(CODES_MAP[event.keyCode])) {
-          endRound();
-          return;
-        }
-
-        currentKeyCode = event.keyCode;
-        game.grindStarted();
-      }
-      else if(currentKeyCode != event.keyCode) {
-        game.input();
-        endRound();
-      }
-
-      return;
-    }
-
-    if(event.keyCode == 32) {
-      event.preventDefault();
-      start();
-    }
-  }
-
-  function onKeyUp(event) {
-    if(state == "waiting") {
-      event.preventDefault();
-      return;
-    }
-
-    if(state == "playing") {
-      if(!currentKeyCode || currentKeyCode != event.keyCode) {
-        game.input();
-        endRound();
-        return;
-      }
-      else {
-        currentKeyCode = null;
-        game.grindEnded();
-        endRound();
-        return;
-      }
-    }
-  }
-
-  function onTouchStart(event) {
-    if(state == "waiting") {
-      event.preventDefault();
-      return;
-    }
-
-    if(state == "playing") {
-      event.preventDefault();
-
-      var code = event.target.dataset.direction;
-
-      if(!currentTouchCode) {
-        if(!game.input(code)) {
-          endRound();
-          return;
-        }
-
-        currentTouchCode = code;
-        game.grindStarted();
-      }
-      else if(currentTouchCode != code) {
-        game.input();
-        endRound();
-      }
-
-      return;
-    }
-  }
-
-  function onTouchEnd(event) {
-    if(state == "waiting") {
-      event.preventDefault();
-      return;
-    }
-
-    if(state == "playing") {
-      var code = event.target.dataset.direction;
-
-      if(!currentTouchCode || currentTouchCode != code) {
-        game.input();
-        endRound();
-        return;
-      }
-      else {
-        currentTouchCode = null;
-        game.grindEnded();
-        endRound();
-        return;
-      }
-    }
   }
 
   function updateStack() {
@@ -229,8 +119,7 @@ function engine() {
 
   function endRound() {
     window.clearTimeout(roundEndTimeout);
-    currentKeyCode = null;
-    currentTouchCode = null;
+    input.clear();
 
     var isGameOver = game.roundEnded();
     $("#score").textContent = nice(game.score());
@@ -260,19 +149,15 @@ function engine() {
     alreadyPlayed = true;
   }
 
-  if(window.innerWidth >= 460) {
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keyup", onKeyUp);
-  }
-  else {
-    window.addEventListener("touchstart", onTouchStart);
-    window.addEventListener("touchend", onTouchEnd);
-  }
-
-  document.body.addEventListener("click", function(e) {
-    if(e.target.matches(".play")) start();
-    else if(e.target.matches("#settings")) showBack;
-    else if(e.target.matches("#done")) showFront;
+  input = inputEngine({
+    state: function() {
+      return state;
+    },
+    game: function() {
+      return game;
+    },
+    start: start,
+    endRound: endRound
   });
 
   transition("attract");
