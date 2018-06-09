@@ -67,7 +67,7 @@ var Game = function() {
   }
 
   function maxStacks() {
-    return stack() == (pattern.length - 1);
+    return pattern.length;
   }
 
   function roundStarted() {
