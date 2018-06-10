@@ -107,7 +107,7 @@ function engine() {
     if(game.grinding()) $("#time-remaining-track").classList.add("grind");
     else $("#time-remaining-track").classList.remove("grind");
 
-    if(game.grinding()) $("#score").textContent = nice(game.score() + game.delta(game.timePassed()));
+    $("#score").textContent = nice(game.score() + game.delta(game.timePassed()));
   }
 
   function renderInfo() {
