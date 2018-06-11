@@ -95,9 +95,9 @@ var Game = function() {
     grinding = false;
   }
 
-  function delta(diff) {
-    var delta = (allowedTime - diff) + (grindDuration * 10) + ((streak + 1) * 100);
-    if(diff <= (allowedTime * 0.3)) delta *= 2;
+  function delta(time) {
+    var delta = (allowedTime - time) + (grindDuration * 10) + ((streak + 1) * 100);
+    if((grindStart != null ? grindStart : time) <= (allowedTime * 0.3)) delta *= 2;
     return delta;
   }
 
