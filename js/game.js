@@ -36,7 +36,6 @@ var Game = function() {
   var startTime = null;
   var grinding = false;
   var grindStart = null;
-  var grindDuration = 0;
   var direction = null;
   var pattern = generatePattern();
   var correct = false;
@@ -76,7 +75,6 @@ var Game = function() {
     correct = false;
     grinding = false;
     grindStart = null;
-    grindDuration = 0;
     return direction;
   }
 
@@ -90,13 +88,12 @@ var Game = function() {
     grinding = true;
   }
 
-  function grindEnded() {
-    grindDuration += now() - grindStart;
-    grinding = false;
+  function grindDuration() {
+    return grindStart ? (now() - grindStart) : 0;
   }
 
   function delta(time) {
-    var delta = (allowedTime - time) + (grindDuration * 10) + ((streak + 1) * 100);
+    var delta = (allowedTime - time) + (grindDuration() * 3) + ((streak + 1) * 100);
     if((grindStart != null ? grindStart : time) <= (allowedTime * 0.3)) delta *= 2;
     return delta;
   }
@@ -136,7 +133,6 @@ var Game = function() {
     timePassed: timePassed,
     timeRemaining: timeRemaining,
     grindStarted: grindStarted,
-    grindEnded: grindEnded,
     roundEnded: roundEnded,
     delta: delta
   };

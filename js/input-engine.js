@@ -53,7 +53,6 @@ function inputEngine(engine) {
       }
       else {
         currentKeyCode = null;
-        game().grindEnded();
         endRound();
         return;
       }
@@ -105,7 +104,6 @@ function inputEngine(engine) {
       }
       else {
         currentTouchCode = null;
-        game().grindEnded();
         endRound();
         return;
       }
