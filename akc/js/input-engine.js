@@ -126,6 +126,7 @@ function inputEngine(engine) {
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play")) engine.start();
+    if(e.target.closest("#player-status")) engine.updatePlayerStatus();
   });
 
   return {
