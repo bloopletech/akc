@@ -23,6 +23,7 @@ body {
 #game {
   width: 100%;
   height: 100%;
+  position: relative;
   background-color: #fff;
 }
 
@@ -192,6 +193,20 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 
 #results-score, #results-rank, #results-streak {
   font-weight: bold;
+}
+
+#player-status {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+#player-status .disabled, #player-status .enabled {
+  display: none;
+}
+
+#player-status.disabled .disabled, #player-status.enabled .enabled {
+  display: block;
 }
 
 iframe {

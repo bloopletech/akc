@@ -146,6 +146,16 @@ function engine() {
     alreadyPlayed = true;
   }
 
+  function showPlayerStatus() {
+    $("#player-status").classList.remove("enabled", "disabled");
+    $("#player-status").classList.add(Player.getEnabled() ? "enabled" : "disabled");
+  }
+
+  function updatePlayerStatus() {
+    Player.setEnabled(!Player.getEnabled());
+    showPlayerStatus();
+  }
+
   input = inputEngine({
     state: function() {
       return state;
@@ -154,9 +164,11 @@ function engine() {
       return game;
     },
     start: start,
-    endRound: endRound
+    endRound: endRound,
+    updatePlayerStatus: updatePlayerStatus
   });
 
+  showPlayerStatus();
   transition("attract");
 };
 

@@ -95,8 +95,27 @@ var Player = (function() {
   var VIDEO_IDS = CLOUDX_VIDEO_IDS.concat(XEFOX_VIDEO_IDS);
 
   var youtube;
+  var youtubeInited = false;
   var youtubeReady = false;
   var videoId = VIDEO_IDS[Math.floor(Math.random() * VIDEO_IDS.length)];
+
+  function enabledKey() {
+    return "player.enabled";
+  }
+
+  function getEnabled() {
+    var enabled = localStorage[enabledKey()];
+    var rv = enabled ? enabled == "true" : true;
+    console.log("getEnabled returning ", rv);
+    return rv;
+  }
+
+  function setEnabled(enabled) {
+    console.log("setEnabled with ", enabled);
+    if(!enabled) pause();
+    localStorage[enabledKey()] = enabled;
+    if(enabled && !youtubeInited) initYoutube();
+  }
 
   function lastStartKey() {
     return "player." + videoId + ".lastStart";
@@ -113,14 +132,25 @@ var Player = (function() {
   }
 
   function play() {
-    if(youtubeReady) youtube.playVideo();
+    console.log("play called");
+    if(getEnabled() && youtubeReady) youtube.playVideo();
   }
 
   function pause() {
-    if(youtubeReady) {
+    console.log("pause called");
+    if(getEnabled() && youtubeReady) {
       youtube.pauseVideo();
       if(youtube.getPlayerState() != YT.PlayerState.ENDED) setLastStart(youtube.getCurrentTime());
     }
+  }
+
+  function initYoutube() {
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    youtubeInited = true;
   }
 
   window.onYouTubeIframeAPIReady = function() {
@@ -146,7 +176,11 @@ var Player = (function() {
     });
   }
 
+  if(getEnabled()) initYoutube();
+
   return {
+    getEnabled: getEnabled,
+    setEnabled: setEnabled,
     play: play,
     pause: pause
   };
