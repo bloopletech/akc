@@ -105,13 +105,10 @@ var Player = (function() {
 
   function getEnabled() {
     var enabled = localStorage[enabledKey()];
-    var rv = enabled ? enabled == "true" : true;
-    console.log("getEnabled returning ", rv);
-    return rv;
+    return enabled ? enabled == "true" : true;
   }
 
   function setEnabled(enabled) {
-    console.log("setEnabled with ", enabled);
     if(!enabled) pause();
     localStorage[enabledKey()] = enabled;
     if(enabled && !youtubeInited) initYoutube();
@@ -132,12 +129,10 @@ var Player = (function() {
   }
 
   function play() {
-    console.log("play called");
     if(getEnabled() && youtubeReady) youtube.playVideo();
   }
 
   function pause() {
-    console.log("pause called");
     if(getEnabled() && youtubeReady) {
       youtube.pauseVideo();
       if(youtube.getPlayerState() != YT.PlayerState.ENDED) setLastStart(youtube.getCurrentTime());
