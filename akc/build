@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# --skip-absolute-urls => otherwise will inline YouTube API JS
+# --nosvg => otherwise will strip HTML IDs off of SVG elements
+inliner --skip-absolute-urls --nosvg index.html > dist.html
