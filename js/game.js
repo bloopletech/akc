@@ -55,6 +55,10 @@ var Game = function() {
   }
 
   function timeRemaining() {
+    return allowedTime - timePassed();
+  }
+
+  function timeRemainingRatio() {
     var time = (allowedTime - timePassed()) / (allowedTime + 0.0);
     if(time < 0) return 0;
     if(time > 1) return 1;
@@ -92,6 +96,14 @@ var Game = function() {
     return grindStart ? (now() - grindStart) : 0;
   }
 
+  function grindRatio() {
+    if(!grindStart) return 0;
+    var ratio = ((now() - grindStart) * 1.5) / (allowedTime - (grindStart - startTime));
+    if(ratio < 0) return 0;
+    if(ratio > 1) return 1;
+    return ratio;
+  }
+
   function delta(time) {
     var delta = (allowedTime - time) + (grindDuration() * 3) + ((streak + 1) * 100);
     if((grindStart != null ? grindStart : time) <= (allowedTime * 0.3)) delta *= 2;
@@ -114,9 +126,6 @@ var Game = function() {
   }
 
   return {
-    allowedTime: function() {
-      return allowedTime;
-    },
     grinding: function() {
       return grinding;
     },
@@ -132,8 +141,10 @@ var Game = function() {
     input: input,
     timePassed: timePassed,
     timeRemaining: timeRemaining,
+    timeRemainingRatio: timeRemainingRatio,
     grindStarted: grindStarted,
     roundEnded: roundEnded,
-    delta: delta
+    delta: delta,
+    grindRatio: grindRatio
   };
 };
