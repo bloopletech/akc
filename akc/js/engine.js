@@ -104,8 +104,8 @@ function engine() {
     var c = 276.46;
     $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
 
-    if(game.grinding()) $("#time-remaining-track").classList.add("grind");
-    else $("#time-remaining-track").classList.remove("grind");
+    if(game.grinding()) $("#play-field").classList.add("grind");
+    else $("#play-field").classList.remove("grind");
 
     $("#score").textContent = nice(game.score() + game.delta(game.timePassed()));
   }

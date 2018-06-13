@@ -127,7 +127,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   stroke: #3137a3;
 }
 
-#time-remaining-track.grind {
+#play-field.grind #time-remaining-track {
   stroke: #ff8000;
 }
 
@@ -135,6 +135,11 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   position: absolute;
   top: 29px;
   left: 29px;
+  fill: #000000;
+}
+
+#play-field.grind #out {
+  fill: #ff8000;
 }
 
 #up, #right, #down, #left {
