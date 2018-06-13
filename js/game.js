@@ -106,7 +106,7 @@ var Game = function() {
 
   function delta(time) {
     var delta = (allowedTime - time) + (grindDuration() * 3) + ((streak + 1) * 100);
-    if((grindStart != null ? grindStart : time) <= (allowedTime * 0.3)) delta *= 2;
+    if((grindStart != null ? (grindStart - startTime) : time) <= (allowedTime * 0.3)) delta *= 2;
     return delta;
   }
 
