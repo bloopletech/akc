@@ -43,7 +43,6 @@ function engine() {
   var input = null;
   var state = null;
   var alreadyPlayed = false;
-  var roundEndTimeout = null;
 
   function transition(newState) {
     state = newState;
@@ -64,8 +63,8 @@ function engine() {
     transition("playing");
     renderInfo();
 
-    updateTimeUsed();
     startRound();
+    updateTimeUsed();
   }
 
   function showDirection(direction) {
@@ -76,7 +75,6 @@ function engine() {
   function startRound() {
     showDirection(game.roundStarted());
     input.clear();
-    roundEndTimeout = window.setTimeout(roundTimedOut, game.allowedTime() + 20);
   }
 
   function roundTimedOut() {
@@ -99,7 +97,7 @@ function engine() {
   function updateTimeUsed() {
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    var ratio = game.timeRemaining();
+    var ratio = game.timeRemainingRatio();
 
     var c = 276.46;
     $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
@@ -107,7 +105,11 @@ function engine() {
     if(game.grinding()) $("#play-field").classList.add("grind");
     else $("#play-field").classList.remove("grind");
 
+    $("#out").style.transform = "scale(" + ((game.grindRatio() * 0.4) + 1) + ")";
+
     $("#score").textContent = nice(game.score() + game.delta(game.timePassed()));
+
+    if(game.timeRemaining() < 0) roundTimedOut();
   }
 
   function renderInfo() {
@@ -116,7 +118,6 @@ function engine() {
   }
 
   function endRound() {
-    window.clearTimeout(roundEndTimeout);
     input.clear();
 
     var isGameOver = game.roundEnded();
