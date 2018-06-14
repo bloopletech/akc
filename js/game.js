@@ -1,6 +1,6 @@
 var Game = function() {
   var DIRECTIONS = ["left", "up", "right", "down"];
-  var PATTERN_LENGTH = 6;
+  var PATTERN_LENGTH = 10;
   var MAX_DUPE_LENGTH = 2;
 
   function randomDirection() {
@@ -118,7 +118,7 @@ var Game = function() {
     streak++;
 
     if(stack() == 0) {
-      if(allowedTime >= 750) allowedTime -= 50;
+      if(allowedTime >= 750) allowedTime -= 70;
       else if(allowedTime > 300) allowedTime -= 30;
     }
 
