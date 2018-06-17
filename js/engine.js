@@ -46,7 +46,7 @@ function engine() {
   var alreadyPlayed = false;
 
   function timeNow() {
-    return highPrecisionTimer ? Math.round(performance.now()) : Date.now();
+    return highPrecisionTimer ? performance.now() : Date.now();
   }
 
   function transition(newState) {
@@ -168,7 +168,6 @@ function engine() {
     game: function() {
       return game;
     },
-    timeNow: timeNow,
     start: start,
     endRound: endRound,
     updatePlayerStatus: updatePlayerStatus
