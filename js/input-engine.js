@@ -42,21 +42,15 @@ function inputEngine(engine) {
     }
 
     if(state() == "playing") {
-      if(!currentCode || currentCode != code) {
-        game().input();
-        endRound(event.timeStamp);
-      }
-      else {
-        currentCode = null;
-        endRound(event.timeStamp);
-      }
+      if(!currentCode || currentCode != code) game().input();
+      else currentCode = null;
+
+      endRound(event.timeStamp);
     }
   }
 
   function onKeyDown(event) {
-    var code = CODES_MAP[event.keyCode];
-
-    if(onStart(event, code)) return;
+    if(onStart(event, CODES_MAP[event.keyCode])) return;
 
     if(event.keyCode == 32 || event.keyCode == 13) {
       event.preventDefault();
@@ -65,21 +59,15 @@ function inputEngine(engine) {
   }
 
   function onKeyUp(event) {
-    var code = CODES_MAP[event.keyCode];
-
-    onEnd(event, code);
+    onEnd(event, CODES_MAP[event.keyCode]);
   }
 
   function onTouchStart(event) {
-    var code = event.target.dataset.direction;
-
-    onStart(event, code);
+    onStart(event, event.target.dataset.direction);
   }
 
   function onTouchEnd(event) {
-    var code = event.target.dataset.direction;
-
-    onEnd(event, code);
+    onEnd(event, event.target.dataset.direction);
   }
 
   function clear() {
