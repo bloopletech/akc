@@ -34,32 +34,26 @@ var Game = function() {
   var score = 0;
   var streak = 0;
   var startTime = null;
-  var grinding = false;
   var grindStart = null;
   var direction = null;
   var pattern = generatePattern();
   var correct = false;
-  var highPrecisionTimer = (typeof window.performance == "object");
 
-  function now() {
-    return highPrecisionTimer ? Math.round(performance.now()) : Date.now();
-  }
-
-  function timePassed() {
+  function timePassed(now) {
     if(grindStart) {
-      return Math.floor(((now() - grindStart) * 1.5) + (grindStart - startTime));
+      return Math.floor(((now - grindStart) * 1.5) + (grindStart - startTime));
     }
     else {
-      return Math.floor(now() - startTime);
+      return Math.floor(now - startTime);
     }
   }
 
-  function timeRemaining() {
-    return allowedTime - timePassed();
+  function timeRemaining(now) {
+    return allowedTime - timePassed(now);
   }
 
-  function timeRemainingRatio() {
-    var time = (allowedTime - timePassed()) / (allowedTime + 0.0);
+  function timeRemainingRatio(now) {
+    var time = (allowedTime - timePassed(now)) / (allowedTime + 0.0);
     if(time < 0) return 0;
     if(time > 1) return 1;
     return time;
@@ -73,11 +67,10 @@ var Game = function() {
     return pattern.length;
   }
 
-  function roundStarted() {
+  function roundStarted(now) {
     direction = pattern[stack()];
-    startTime = now();
+    startTime = now;
     correct = false;
-    grinding = false;
     grindStart = null;
     return direction;
   }
@@ -87,34 +80,33 @@ var Game = function() {
     return correct;
   }
 
-  function grindStarted() {
-    grindStart = now();
-    grinding = true;
+  function grindStarted(now) {
+    grindStart = now;
   }
 
-  function grindDuration() {
-    return grindStart ? (now() - grindStart) : 0;
+  function grindDuration(now) {
+    return grindStart ? (now - grindStart) : 0;
   }
 
-  function grindRatio() {
+  function grindRatio(now) {
     if(!grindStart) return 0;
-    var ratio = ((now() - grindStart) * 1.5) / (allowedTime - (grindStart - startTime));
+    var ratio = ((now - grindStart) * 1.5) / (allowedTime - (grindStart - startTime));
     if(ratio < 0) return 0;
     if(ratio > 1) return 1;
     return ratio;
   }
 
-  function delta(time) {
-    var delta = (allowedTime - time) + (grindDuration() * 3) + ((streak + 1) * 100);
-    if((grindStart != null ? (grindStart - startTime) : time) <= (allowedTime * 0.3)) delta *= 2;
+  function delta(now) {
+    var delta = (allowedTime - timePassed(now)) + (grindDuration(now) * 3) + ((streak + 1) * 100);
+    if((grindStart != null ? (grindStart - startTime) : timePassed(now)) <= (allowedTime * 0.3)) delta *= 2;
     return delta;
   }
 
-  function roundEnded() {
-    var diff = timePassed();
+  function roundEnded(now) {
+    var diff = timePassed(now);
     if(diff < 50 || diff > allowedTime || !correct) return true;
 
-    score += delta(diff);
+    score += delta(now);
     streak++;
 
     if(stack() == 0) {
@@ -127,7 +119,7 @@ var Game = function() {
 
   return {
     grinding: function() {
-      return grinding;
+      return !!grindStart;
     },
     score: function() {
       return score;
@@ -139,7 +131,6 @@ var Game = function() {
     maxStacks: maxStacks,
     roundStarted: roundStarted,
     input: input,
-    timePassed: timePassed,
     timeRemaining: timeRemaining,
     timeRemainingRatio: timeRemainingRatio,
     grindStarted: grindStarted,

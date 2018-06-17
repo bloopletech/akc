@@ -39,10 +39,15 @@ function engine() {
   };
 
   var $ = document.querySelector.bind(document);
+  var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
   var input = null;
   var state = null;
   var alreadyPlayed = false;
+
+  function timeNow() {
+    return highPrecisionTimer ? Math.round(performance.now()) : Date.now();
+  }
 
   function transition(newState) {
     state = newState;
@@ -73,13 +78,8 @@ function engine() {
   }
 
   function startRound() {
-    showDirection(game.roundStarted());
+    showDirection(game.roundStarted(timeNow()));
     input.clear();
-  }
-
-  function roundTimedOut() {
-    game.input();
-    endRound();
   }
 
   function scoreRank() {
@@ -95,9 +95,10 @@ function engine() {
   }
 
   function updateTimeUsed() {
+    var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    var ratio = game.timeRemainingRatio();
+    var ratio = game.timeRemainingRatio(now);
 
     var c = 276.46;
     $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
@@ -105,11 +106,14 @@ function engine() {
     if(game.grinding()) $("#play-field").classList.add("grind");
     else $("#play-field").classList.remove("grind");
 
-    $("#out").style.transform = "scale(" + ((game.grindRatio() * 0.4) + 1) + ")";
+    $("#out").style.transform = "scale(" + ((game.grindRatio(now) * 0.4) + 1) + ")";
 
-    $("#score").textContent = nice(game.score() + game.delta(game.timePassed()));
+    $("#score").textContent = nice(game.score() + game.delta(now));
 
-    if(game.timeRemaining() < 0) roundTimedOut();
+    if(game.timeRemaining(now) < 0) {
+      game.input();
+      endRound(now);
+    }
   }
 
   function renderInfo() {
@@ -117,10 +121,10 @@ function engine() {
     $("#stack").textContent = game.maxStacks() - game.stack();
   }
 
-  function endRound() {
+  function endRound(now) {
     input.clear();
 
-    var isGameOver = game.roundEnded();
+    var isGameOver = game.roundEnded(now);
     renderInfo();
 
     if(isGameOver) gameOver();
@@ -164,6 +168,7 @@ function engine() {
     game: function() {
       return game;
     },
+    timeNow: timeNow,
     start: start,
     endRound: endRound,
     updatePlayerStatus: updatePlayerStatus

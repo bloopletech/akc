@@ -8,6 +8,8 @@ function inputEngine(engine) {
   var endRound = engine.endRound;
 
   function onKeyDown(event) {
+    var now = engine.timeNow();
+
     if(state() == "waiting") {
       event.preventDefault();
       return;
@@ -18,16 +20,16 @@ function inputEngine(engine) {
 
       if(!currentKeyCode) {
         if(!game().input(CODES_MAP[event.keyCode])) {
-          endRound();
+          endRound(now);
           return;
         }
 
         currentKeyCode = event.keyCode;
-        game().grindStarted();
+        game().grindStarted(now);
       }
       else if(currentKeyCode != event.keyCode) {
         game().input();
-        endRound();
+        endRound(now);
       }
 
       return;
@@ -40,6 +42,8 @@ function inputEngine(engine) {
   }
 
   function onKeyUp(event) {
+    var now = engine.timeNow();
+
     if(state() == "waiting") {
       event.preventDefault();
       return;
@@ -48,18 +52,20 @@ function inputEngine(engine) {
     if(state() == "playing") {
       if(!currentKeyCode || currentKeyCode != event.keyCode) {
         game().input();
-        endRound();
+        endRound(now);
         return;
       }
       else {
         currentKeyCode = null;
-        endRound();
+        endRound(now);
         return;
       }
     }
   }
 
   function onTouchStart(event) {
+    var now = engine.timeNow();
+
     if(state() == "waiting") {
       event.preventDefault();
       return;
@@ -72,16 +78,16 @@ function inputEngine(engine) {
 
       if(!currentTouchCode) {
         if(!game().input(code)) {
-          endRound();
+          endRound(now);
           return;
         }
 
         currentTouchCode = code;
-        game().grindStarted();
+        game().grindStarted(now);
       }
       else if(currentTouchCode != code) {
         game().input();
-        endRound();
+        endRound(now);
       }
 
       return;
@@ -89,6 +95,8 @@ function inputEngine(engine) {
   }
 
   function onTouchEnd(event) {
+    var now = engine.timeNow();
+
     if(state() == "waiting") {
       event.preventDefault();
       return;
@@ -99,12 +107,12 @@ function inputEngine(engine) {
 
       if(!currentTouchCode || currentTouchCode != code) {
         game().input();
-        endRound();
+        endRound(now);
         return;
       }
       else {
         currentTouchCode = null;
-        endRound();
+        endRound(now);
         return;
       }
     }
