@@ -6,7 +6,7 @@ function inputEngine(engine) {
   var game = engine.game;
   var endRound = engine.endRound;
 
-  function onStart(now, event, code) {
+  function onStart(event, code) {
     if(state() == "waiting") {
       event.preventDefault();
       return true;
@@ -17,16 +17,16 @@ function inputEngine(engine) {
 
       if(!currentCode) {
         if(!game().input(code)) {
-          endRound(now);
+          endRound(event.timeStamp);
           return true;
         }
 
         currentCode = code;
-        game().grindStarted(now);
+        game().grindStarted(event.timeStamp);
       }
       else if(currentCode != code) {
         game().input();
-        endRound(now);
+        endRound(event.timeStamp);
       }
 
       return true;
@@ -35,7 +35,7 @@ function inputEngine(engine) {
     return false;
   }
 
-  function onEnd(now, event, code) {
+  function onEnd(event, code) {
     if(state() == "waiting") {
       event.preventDefault();
       return;
@@ -44,20 +44,19 @@ function inputEngine(engine) {
     if(state() == "playing") {
       if(!currentCode || currentCode != code) {
         game().input();
-        endRound(now);
+        endRound(event.timeStamp);
       }
       else {
         currentCode = null;
-        endRound(now);
+        endRound(event.timeStamp);
       }
     }
   }
 
   function onKeyDown(event) {
-    var now = engine.timeNow();
     var code = CODES_MAP[event.keyCode];
 
-    if(onStart(now, event, code)) return;
+    if(onStart(event, code)) return;
 
     if(event.keyCode == 32 || event.keyCode == 13) {
       event.preventDefault();
@@ -66,24 +65,21 @@ function inputEngine(engine) {
   }
 
   function onKeyUp(event) {
-    var now = engine.timeNow();
     var code = CODES_MAP[event.keyCode];
 
-    onEnd(now, event, code);
+    onEnd(event, code);
   }
 
   function onTouchStart(event) {
-    var now = engine.timeNow();
     var code = event.target.dataset.direction;
 
-    onStart(now, event, code);
+    onStart(event, code);
   }
 
   function onTouchEnd(event) {
-    var now = engine.timeNow();
     var code = event.target.dataset.direction;
 
-    onEnd(now, event, code);
+    onEnd(event, code);
   }
 
   function clear() {

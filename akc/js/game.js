@@ -41,10 +41,10 @@ var Game = function() {
 
   function timePassed(now) {
     if(grindStart) {
-      return Math.floor(((now - grindStart) * 1.5) + (grindStart - startTime));
+      return ((now - grindStart) * 1.5) + (grindStart - startTime);
     }
     else {
-      return Math.floor(now - startTime);
+      return now - startTime;
     }
   }
 
@@ -99,7 +99,7 @@ var Game = function() {
   function delta(now) {
     var delta = (allowedTime - timePassed(now)) + (grindDuration(now) * 3) + ((streak + 1) * 100);
     if((grindStart != null ? (grindStart - startTime) : timePassed(now)) <= (allowedTime * 0.3)) delta *= 2;
-    return delta;
+    return Math.floor(delta);
   }
 
   function roundEnded(now) {
