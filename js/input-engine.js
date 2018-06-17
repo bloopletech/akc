@@ -1,39 +1,63 @@
 function inputEngine(engine) {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
 
-  var currentKeyCode = null;
-  var currentTouchCode = null;
+  var currentCode = null;
   var state = engine.state;
   var game = engine.game;
   var endRound = engine.endRound;
 
-  function onKeyDown(event) {
-    var now = engine.timeNow();
+  function onStart(now, event, code) {
+    if(state() == "waiting") {
+      event.preventDefault();
+      return true;
+    }
 
+    if(state() == "playing") {
+      event.preventDefault();
+
+      if(!currentCode) {
+        if(!game().input(code)) {
+          endRound(now);
+          return true;
+        }
+
+        currentCode = code;
+        game().grindStarted(now);
+      }
+      else if(currentCode != code) {
+        game().input();
+        endRound(now);
+      }
+
+      return true;
+    }
+
+    return false;
+  }
+
+  function onEnd(now, event, code) {
     if(state() == "waiting") {
       event.preventDefault();
       return;
     }
 
     if(state() == "playing") {
-      event.preventDefault();
-
-      if(!currentKeyCode) {
-        if(!game().input(CODES_MAP[event.keyCode])) {
-          endRound(now);
-          return;
-        }
-
-        currentKeyCode = event.keyCode;
-        game().grindStarted(now);
-      }
-      else if(currentKeyCode != event.keyCode) {
+      if(!currentCode || currentCode != code) {
         game().input();
         endRound(now);
       }
-
-      return;
+      else {
+        currentCode = null;
+        endRound(now);
+      }
     }
+  }
+
+  function onKeyDown(event) {
+    var now = engine.timeNow();
+    var code = CODES_MAP[event.keyCode];
+
+    if(onStart(now, event, code)) return;
 
     if(event.keyCode == 32 || event.keyCode == 13) {
       event.preventDefault();
@@ -43,84 +67,27 @@ function inputEngine(engine) {
 
   function onKeyUp(event) {
     var now = engine.timeNow();
+    var code = CODES_MAP[event.keyCode];
 
-    if(state() == "waiting") {
-      event.preventDefault();
-      return;
-    }
-
-    if(state() == "playing") {
-      if(!currentKeyCode || currentKeyCode != event.keyCode) {
-        game().input();
-        endRound(now);
-        return;
-      }
-      else {
-        currentKeyCode = null;
-        endRound(now);
-        return;
-      }
-    }
+    onEnd(now, event, code);
   }
 
   function onTouchStart(event) {
     var now = engine.timeNow();
+    var code = event.target.dataset.direction;
 
-    if(state() == "waiting") {
-      event.preventDefault();
-      return;
-    }
-
-    if(state() == "playing") {
-      event.preventDefault();
-
-      var code = event.target.dataset.direction;
-
-      if(!currentTouchCode) {
-        if(!game().input(code)) {
-          endRound(now);
-          return;
-        }
-
-        currentTouchCode = code;
-        game().grindStarted(now);
-      }
-      else if(currentTouchCode != code) {
-        game().input();
-        endRound(now);
-      }
-
-      return;
-    }
+    onStart(now, event, code);
   }
 
   function onTouchEnd(event) {
     var now = engine.timeNow();
+    var code = event.target.dataset.direction;
 
-    if(state() == "waiting") {
-      event.preventDefault();
-      return;
-    }
-
-    if(state() == "playing") {
-      var code = event.target.dataset.direction;
-
-      if(!currentTouchCode || currentTouchCode != code) {
-        game().input();
-        endRound(now);
-        return;
-      }
-      else {
-        currentTouchCode = null;
-        endRound(now);
-        return;
-      }
-    }
+    onEnd(now, event, code);
   }
 
   function clear() {
-    currentKeyCode = null;
-    currentTouchCode = null;
+    currentCode = null;
   }
 
   if(window.innerWidth >= 460) {
