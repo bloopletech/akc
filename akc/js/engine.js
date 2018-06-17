@@ -39,6 +39,12 @@ function engine() {
   };
 
   var $ = document.querySelector.bind(document);
+  var $timeRemainingTrack = $("#time-remaining-track");
+  var $playField = $("#play-field");
+  var $out = $("#out");
+  var $score = $("#score");
+  var $stack = $("#stack");
+
   var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
   var input = null;
@@ -101,14 +107,14 @@ function engine() {
     var ratio = game.timeRemainingRatio(now);
 
     var c = 276.46;
-    $("#time-remaining-track").style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
+    $timeRemainingTrack.style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
 
-    if(game.grinding()) $("#play-field").classList.add("grind");
-    else $("#play-field").classList.remove("grind");
+    if(game.grinding()) $playField.classList.add("grind");
+    else $playField.classList.remove("grind");
 
-    $("#out").style.transform = "scale(" + ((game.grindRatio(now) * 0.4) + 1) + ")";
+    $out.style.transform = "scale(" + ((game.grindRatio(now) * 0.4) + 1) + ")";
 
-    $("#score").textContent = nice(game.score() + game.delta(now));
+    $score.textContent = nice(game.score() + game.delta(now));
 
     if(game.timeRemaining(now) < 0) {
       game.input();
@@ -117,8 +123,8 @@ function engine() {
   }
 
   function renderInfo() {
-    $("#score").textContent = nice(game.score());
-    $("#stack").textContent = game.maxStacks() - game.stack();
+    $score.textContent = nice(game.score());
+    $stack.textContent = game.maxStacks() - game.stack();
   }
 
   function endRound(now) {
