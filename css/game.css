@@ -155,6 +155,10 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   touch-action: none;
 }
 
+#status {
+  margin-top: 20px;
+}
+
 #info {
   display: flex;
   align-items: center;
