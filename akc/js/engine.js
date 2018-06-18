@@ -80,27 +80,25 @@ function engine() {
       return true;
     }
 
-    if(state == "playing") {
-      event.preventDefault();
+    if(state != "playing") return false;
 
-      if(!currentCode) {
-        if(!game.input(code)) {
-          endRound(event.timeStamp);
-          return true;
-        }
+    event.preventDefault();
 
-        currentCode = code;
-        game.grindStarted(event.timeStamp);
-      }
-      else if(currentCode != code) {
-        game.input();
+    if(!currentCode) {
+      if(!game.input(code)) {
         endRound(event.timeStamp);
+        return true;
       }
 
-      return true;
+      currentCode = code;
+      game.grindStarted(event.timeStamp);
+    }
+    else if(currentCode != code) {
+      game.input();
+      endRound(event.timeStamp);
     }
 
-    return false;
+    return true;
   }
 
   function onEnd(event, code) {
@@ -111,8 +109,6 @@ function engine() {
 
     if(state == "playing") {
       if(!currentCode || currentCode != code) game.input();
-      else currentCode = null;
-
       endRound(event.timeStamp);
     }
   }
