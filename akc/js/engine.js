@@ -1,42 +1,5 @@
 function engine() {
   var DIRECTION_CLASSES = ["left", "up", "right", "down"];
-  var RANKS = {
-    bronze: {
-      minScore: 0,
-      humanName: "Bronze",
-      class: "bronze"
-    },
-    silver: {
-      minScore: 50000,
-      humanName: "Silver",
-      class: "silver"
-    },
-    gold: {
-      minScore: 80000,
-      humanName: "Gold",
-      class: "gold"
-    },
-    platinum: {
-      minScore: 100000,
-      humanName: "Platinum",
-      class: "platinum"
-    },
-    diamond: {
-      minScore: 1100000,
-      humanName: "Diamond",
-      class: "diamond"
-    },
-    vanadium: {
-      minScore: 120000,
-      humanName: "Vanadium",
-      class: "vanadium"
-    },
-    strontium: {
-      minScore: 130000,
-      humanName: "Strontium",
-      class: "strontium"
-    }
-  };
 
   var $ = document.querySelector.bind(document);
   var $timeRemainingTrack = $("#time-remaining-track");
@@ -88,18 +51,6 @@ function engine() {
     input.clear();
   }
 
-  function scoreRank() {
-    var score = game.score();
-
-    var currentRank = null;
-    for(var i in RANKS) {
-      var rank = RANKS[i];
-      if(score >= rank.minScore) currentRank = rank;
-    }
-
-    return currentRank;
-  }
-
   function updateTimeUsed() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
@@ -149,7 +100,7 @@ function engine() {
 
     showDirection("blank");
     $("#results-score").textContent = nice(game.score());
-    $("#results-rank").textContent = scoreRank().humanName;
+    $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak();
     transition("game-over");
     Player.pause();
