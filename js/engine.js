@@ -1,5 +1,6 @@
 function engine() {
   var DIRECTION_CLASSES = ["left", "up", "right", "down"];
+  var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
 
   var $ = document.querySelector.bind(document);
   var $timeRemainingTrack = $("#time-remaining-track");
@@ -10,7 +11,7 @@ function engine() {
 
   var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
-  var input = null;
+  var currentCode = null;
   var state = null;
   var alreadyPlayed = false;
 
@@ -48,7 +49,7 @@ function engine() {
 
   function startRound() {
     showDirection(game.roundStarted(timeNow()));
-    input.clear();
+    currentCode = null;
   }
 
   function updateTimeUsed() {
@@ -73,13 +74,77 @@ function engine() {
     }
   }
 
+  function onStart(event, code) {
+    if(state == "waiting") {
+      event.preventDefault();
+      return true;
+    }
+
+    if(state == "playing") {
+      event.preventDefault();
+
+      if(!currentCode) {
+        if(!game.input(code)) {
+          endRound(event.timeStamp);
+          return true;
+        }
+
+        currentCode = code;
+        game.grindStarted(event.timeStamp);
+      }
+      else if(currentCode != code) {
+        game.input();
+        endRound(event.timeStamp);
+      }
+
+      return true;
+    }
+
+    return false;
+  }
+
+  function onEnd(event, code) {
+    if(state == "waiting") {
+      event.preventDefault();
+      return;
+    }
+
+    if(state == "playing") {
+      if(!currentCode || currentCode != code) game.input();
+      else currentCode = null;
+
+      endRound(event.timeStamp);
+    }
+  }
+
+  function onKeyDown(event) {
+    if(onStart(event, CODES_MAP[event.keyCode])) return;
+
+    if(event.keyCode == 32 || event.keyCode == 13) {
+      event.preventDefault();
+      start();
+    }
+  }
+
+  function onKeyUp(event) {
+    onEnd(event, CODES_MAP[event.keyCode]);
+  }
+
+  function onTouchStart(event) {
+    onStart(event, event.target.dataset.direction);
+  }
+
+  function onTouchEnd(event) {
+    onEnd(event, event.target.dataset.direction);
+  }
+
   function renderInfo() {
     $score.textContent = nice(game.score());
     $stack.textContent = game.maxStacks() - game.stack();
   }
 
   function endRound(now) {
-    input.clear();
+    currentCode = null;
 
     var isGameOver = game.roundEnded(now);
     renderInfo();
@@ -118,16 +183,18 @@ function engine() {
     showPlayerStatus();
   }
 
-  input = inputEngine({
-    state: function() {
-      return state;
-    },
-    game: function() {
-      return game;
-    },
-    start: start,
-    endRound: endRound,
-    updatePlayerStatus: updatePlayerStatus
+  if(window.innerWidth >= 460) {
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+  }
+  else {
+    window.addEventListener("touchstart", onTouchStart);
+    window.addEventListener("touchend", onTouchEnd);
+  }
+
+  document.body.addEventListener("click", function(e) {
+    if(e.target.matches(".play")) start();
+    if(e.target.closest("#player-status")) updatePlayerStatus();
   });
 
   showPlayerStatus();
