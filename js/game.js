@@ -1,6 +1,5 @@
 var Game = function() {
   var DIRECTIONS = ["left", "up", "right", "down"];
-  var PATTERN_LENGTH = 10;
   var MAX_DUPE_LENGTH = 2;
 
   function randomDirection() {
@@ -12,7 +11,7 @@ var Game = function() {
 
     do {
       pattern = [];
-      for(var i = 0; i < PATTERN_LENGTH; i++) pattern.push(randomDirection());
+      for(var i = 0; i < 5; i++) pattern.push(randomDirection());
 
       var dupes = false;
       for(var i = MAX_DUPE_LENGTH; i < pattern.length; i++) {
@@ -35,9 +34,24 @@ var Game = function() {
   var streak = 0;
   var startTime = null;
   var grindStart = null;
+  var stack = 0;
+  var cycles = 0;
   var direction = null;
   var pattern = generatePattern();
   var correct = false;
+
+  function nextDirection() {
+    var next = pattern[stack];
+
+    stack++;
+    if(stack >= pattern.length) {
+      stack = 0;
+      cycles++;
+      if(cycles % 2 == 0) pattern.push(randomDirection());
+    }
+
+    return next;
+  }
 
   function timePassed(now) {
     if(grindStart) {
@@ -59,16 +73,12 @@ var Game = function() {
     return time;
   }
 
-  function stack() {
-    return streak % pattern.length;
-  }
-
   function maxStacks() {
     return pattern.length;
   }
 
   function roundStarted(now) {
-    direction = pattern[stack()];
+    direction = nextDirection();
     startTime = now;
     correct = false;
     grindStart = null;
@@ -109,8 +119,8 @@ var Game = function() {
     score += delta(now);
     streak++;
 
-    if(stack() == 0) {
-      if(allowedTime >= 750) allowedTime -= 70;
+    if(stack == 0) {
+      if(allowedTime >= 750) allowedTime -= 60;
       else if(allowedTime > 300) allowedTime -= 30;
     }
 
@@ -127,7 +137,9 @@ var Game = function() {
     streak: function() {
       return streak;
     },
-    stack: stack,
+    stack: function() {
+      return stack;
+    },
     maxStacks: maxStacks,
     roundStarted: roundStarted,
     input: input,
