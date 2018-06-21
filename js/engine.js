@@ -58,13 +58,13 @@ function engine() {
 
     var ratio = game.timeRemainingRatio(now);
 
-    var c = 276.46;
+    var c = 285.88;
     $timeRemainingTrack.style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
 
     if(game.grinding()) $playField.classList.add("grind");
     else $playField.classList.remove("grind");
 
-    $out.style.transform = "scale(" + ((game.grindRatio(now) * 0.4) + 1) + ")";
+    $out.style.transform = "scale(" + ((game.grindRatio(now) * 0.9) + 1) + ")";
 
     $score.textContent = nice(game.score() + game.delta(now));
 

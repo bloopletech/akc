@@ -119,8 +119,8 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 
 #play-field {
   position: relative;
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
 }
 
 #time-remaining-track {
@@ -133,8 +133,8 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 
 #out {
   position: absolute;
-  top: 29px;
-  left: 29px;
+  top: 54px;
+  left: 54px;
   fill: #000000;
 }
 
@@ -162,7 +162,7 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   flex-direction: row;
   position: relative;
 
-  width: 250px;
+  width: 300px;
   margin-top: 20px;
   text-align: center;
   font-weight: bold;
@@ -237,7 +237,7 @@ iframe {
   #game {
     z-index: 1;
     width: 460px;
-    height: 460px;
+    height: 500px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,.7);
   }
