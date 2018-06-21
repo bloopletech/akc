@@ -151,7 +151,7 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 }
 
 #input {
-  margin-top: 20px;
+  margin-top: 30px;
   touch-action: none;
 }
 
@@ -163,7 +163,7 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   position: relative;
 
   width: 300px;
-  margin-top: 20px;
+  margin-top: 30px;
   text-align: center;
   font-weight: bold;
   background-color: #f5f5f5;
