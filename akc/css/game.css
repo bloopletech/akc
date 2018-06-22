@@ -119,8 +119,13 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 
 #play-field {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
+}
+
+#time-remaining {
+  width: 100%;
+  height: 100%;
 }
 
 #time-remaining-track {
@@ -133,8 +138,8 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 
 #out {
   position: absolute;
-  top: 54px;
-  left: 54px;
+  top: 29px;
+  left: 29px;
   fill: #000000;
 }
 
@@ -151,6 +156,11 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 }
 
 #input {
+  display: none;
+}
+
+body.touch #input {
+  display: block;
   margin-top: 30px;
   touch-action: none;
 }
@@ -162,7 +172,7 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   flex-direction: row;
   position: relative;
 
-  width: 300px;
+  width: 250px;
   margin-top: 30px;
   text-align: center;
   font-weight: bold;
@@ -228,12 +238,6 @@ iframe {
     background: linear-gradient(to bottom, #555, #333);
   }
 
-  iframe {
-    position: absolute;
-    left: 0;
-    height: 100%;
-  }
-
   #game {
     z-index: 1;
     width: 460px;
@@ -242,11 +246,23 @@ iframe {
     box-shadow: 0 5px 15px rgba(0,0,0,.7);
   }
 
-  #input {
-    display: none;
+  body.touch #game {
+    height: 700px;
+  }
+
+  #play-field {
+    position: relative;
+    width: 300px;
+    height: 300px;
+  }
+
+  #out {
+    top: 54px;
+    left: 54px;
   }
 
   #info {
+    width: 300px;
     font-size: 40px;
   }
 
@@ -255,5 +271,11 @@ iframe {
   }
 
   #results {
+  }
+
+  iframe {
+    position: absolute;
+    left: 0;
+    height: 100%;
   }
 }
