@@ -9,6 +9,7 @@ function engine() {
   var $score = $("#score");
   var $stack = $("#stack");
 
+  var arrowRatio = window.innerWidth >= 460 ? 0.9 : 0.6;
   var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
   var currentCode = null;
@@ -64,7 +65,7 @@ function engine() {
     if(game.grinding()) $playField.classList.add("grind");
     else $playField.classList.remove("grind");
 
-    $out.style.transform = "scale(" + ((game.grindRatio(now) * 0.9) + 1) + ")";
+    $out.style.transform = "scale(" + ((game.grindRatio(now) * arrowRatio) + 1) + ")";
 
     $score.textContent = nice(game.score() + game.delta(now));
 
@@ -179,14 +180,20 @@ function engine() {
     showPlayerStatus();
   }
 
-  if(window.innerWidth >= 460) {
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keyup", onKeyUp);
-  }
-  else {
+  function touchDevice() {
+    document.body.classList.add("touch");
+
+    window.removeEventListener("keydown", onKeyDown);
+    window.removeEventListener("keyup", onKeyUp);
     window.addEventListener("touchstart", onTouchStart);
     window.addEventListener("touchend", onTouchEnd);
+    $(".play").removeEventListener("touchstart", touchDevice);
   }
+
+  $(".play").addEventListener("touchstart", touchDevice);
+
+  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("keyup", onKeyUp);
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play")) start();
