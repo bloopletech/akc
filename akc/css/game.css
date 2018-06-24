@@ -75,6 +75,12 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   outline-offset: -2px;
 }
 
+.play.disabled {
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.65;
+}
+
 .unranked {
   stroke: #555555;
 }
