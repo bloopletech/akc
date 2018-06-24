@@ -72,7 +72,7 @@ function engine() {
     }
   }
 
-  function onStart(event, code) {
+  function onInputStart(event, code) {
     if(state == "waiting") {
       event.preventDefault();
       return true;
@@ -99,7 +99,7 @@ function engine() {
     return true;
   }
 
-  function onEnd(event, code) {
+  function onInputEnd(event, code) {
     if(state == "waiting") {
       event.preventDefault();
       return;
@@ -112,7 +112,7 @@ function engine() {
   }
 
   function onKeyDown(event) {
-    if(onStart(event, CODES_MAP[event.keyCode])) return;
+    if(onInputStart(event, CODES_MAP[event.keyCode])) return;
 
     if(event.keyCode == 32 || event.keyCode == 13) {
       event.preventDefault();
@@ -121,15 +121,15 @@ function engine() {
   }
 
   function onKeyUp(event) {
-    onEnd(event, CODES_MAP[event.keyCode]);
+    onInputEnd(event, CODES_MAP[event.keyCode]);
   }
 
   function onTouchStart(event) {
-    onStart(event, event.target.dataset.direction);
+    onInputStart(event, event.target.dataset.direction);
   }
 
   function onTouchEnd(event) {
-    onEnd(event, event.target.dataset.direction);
+    onInputEnd(event, event.target.dataset.direction);
   }
 
   function renderInfo() {
