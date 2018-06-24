@@ -201,7 +201,6 @@ function engine() {
   });
 
   showPlayerStatus();
-  transition("attract");
 };
 
 document.addEventListener("DOMContentLoaded", engine);
