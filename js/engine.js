@@ -14,7 +14,6 @@ function engine() {
   var game = null;
   var currentCode = null;
   var state = null;
-  var alreadyPlayed = false;
 
   function timeNow() {
     return highPrecisionTimer ? performance.now() : Date.now();
@@ -31,16 +30,14 @@ function engine() {
     game = new Game();
     Player.play();
 
-    setTimeout(postStarted, alreadyPlayed ? 500 : 1500);
-  }
+    setTimeout(function() {
+      if(state != "waiting") return;
+      transition("playing");
+      renderInfo();
 
-  function postStarted() {
-    if(state != "waiting") return;
-    transition("playing");
-    renderInfo();
-
-    startRound();
-    updateTimeUsed();
+      startRound();
+      updateTimeUsed();
+    }, 1500);
   }
 
   function showDirection(direction) {
@@ -167,7 +164,10 @@ function engine() {
     transition("game-over");
     Player.pause();
 
-    alreadyPlayed = true;
+    $("#game-over .play").classList.add("disabled");
+    setTimeout(function() {
+      $("#game-over .play").classList.remove("disabled");
+    }, 1000);
   }
 
   function showPlayerStatus() {
@@ -196,7 +196,7 @@ function engine() {
   window.addEventListener("keyup", onKeyUp);
 
   document.body.addEventListener("click", function(e) {
-    if(e.target.matches(".play")) start();
+    if(e.target.matches(".play:not(.disabled)")) start();
     if(e.target.closest("#player-status")) updatePlayerStatus();
   });
 
