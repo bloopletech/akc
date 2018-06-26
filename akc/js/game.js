@@ -11,7 +11,7 @@ var Game = function() {
 
     do {
       pattern = [];
-      for(var i = 0; i < 5; i++) pattern.push(randomDirection());
+      for(var i = 0; i < 7; i++) pattern.push(randomDirection());
 
       var dupes = false;
       for(var i = MAX_DUPE_LENGTH; i < pattern.length; i++) {
