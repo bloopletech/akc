@@ -1,0 +1,36 @@
+#modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#modal {
+  display: none;
+  max-height: 100%;
+  padding: 20px;
+  overflow: auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.7);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+body.modal-open #modal-backdrop {
+  display: flex;
+}
+
+body.modal-open #modal {
+  display: block;
+}
