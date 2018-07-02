@@ -116,7 +116,7 @@ function engine() {
 
     if(event.keyCode == 32 || event.keyCode == 13) {
       event.preventDefault();
-      start();
+      if(!$("#game-over .play").matches(".disabled")) start();
     }
   }
 
