@@ -14,8 +14,7 @@ body {
   min-height: 100%;
   background-color: #fff;
   color: #000;
-  text-align: center;
-  font-size: 30px;
+  font-size: 16px;
 
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -26,6 +25,8 @@ body {
   padding: 20px 0;
   position: relative;
   background-color: #fff;
+  text-align: center;
+  font-size: 30px;
 }
 
 body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
@@ -233,23 +234,29 @@ td {
   font-weight: bold;
 }
 
-#player-status {
+#attribution-link {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  font-size: 16px;
+}
+
+#music-status {
   position: absolute;
   right: 15px;
   bottom: 15px;
 }
 
-#player-status .disabled, #player-status .enabled {
+#music-status .disabled, #music-status .enabled {
   display: none;
 }
 
-#player-status.disabled .disabled, #player-status.enabled .enabled {
+#music-status.disabled .disabled, #music-status.enabled .enabled {
   display: block;
 }
 
-iframe {
-  height: 400px;
-  width: 100%;
+#attribution {
+  display: none;
 }
 
 @media screen and (min-width: 460px) {
@@ -305,11 +312,5 @@ iframe {
 
   #input {
     margin-top: 30px;
-  }
-
-  iframe {
-    position: absolute;
-    left: 0;
-    height: 100%;
   }
 }

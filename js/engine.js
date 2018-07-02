@@ -28,7 +28,7 @@ function engine() {
   function start() {
     transition("waiting");
     game = new Game();
-    Player.play();
+    Music.play();
 
     setTimeout(function() {
       if(state != "waiting") return;
@@ -162,7 +162,7 @@ function engine() {
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak();
     transition("game-over");
-    Player.pause();
+    Music.pause();
 
     $("#game-over .play").classList.add("disabled");
     setTimeout(function() {
@@ -170,14 +170,14 @@ function engine() {
     }, 1000);
   }
 
-  function showPlayerStatus() {
-    $("#player-status").classList.remove("enabled", "disabled");
-    $("#player-status").classList.add(Player.getEnabled() ? "enabled" : "disabled");
+  function showMusicStatus() {
+    $("#music-status").classList.remove("enabled", "disabled");
+    $("#music-status").classList.add(Music.getEnabled() ? "enabled" : "disabled");
   }
 
-  function updatePlayerStatus() {
-    Player.setEnabled(!Player.getEnabled());
-    showPlayerStatus();
+  function updateMusicStatus() {
+    Music.setEnabled(!Music.getEnabled());
+    showMusicStatus();
   }
 
   function touchDevice() {
@@ -197,10 +197,14 @@ function engine() {
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play:not(.disabled)")) start();
-    if(e.target.closest("#player-status")) updatePlayerStatus();
+    if(e.target.closest("#music-status")) updateMusicStatus();
+    if(e.target.closest("#attribution-link")) {
+      event.preventDefault();
+      Modal.show($("#attribution").innerHTML);
+    }
   });
 
-  showPlayerStatus();
+  showMusicStatus();
 };
 
 document.addEventListener("DOMContentLoaded", engine);
