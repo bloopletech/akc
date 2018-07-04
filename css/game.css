@@ -218,12 +218,13 @@ body.touch #input {
 }
 
 #results {
-  margin: 40px 0;
+  margin-bottom: 40px;
   padding: 20px 25px;
   background-color: #fff;
 }
 
 table {
+  margin-top: 40px;
   border-collapse: collapse;
   border: none;
   text-align: left;
