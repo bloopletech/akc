@@ -27,7 +27,7 @@ function engine() {
 
   function start() {
     transition("waiting");
-    game = new Game();
+    game = new Game(document.body.classList.contains("touch"));
     Player.play();
 
     setTimeout(function() {
