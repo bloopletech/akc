@@ -1,4 +1,4 @@
-var Game = function() {
+var Game = function(touch) {
   var DIRECTIONS = ["left", "up", "right", "down"];
   var MAX_DUPE_LENGTH = 2;
 
@@ -29,7 +29,7 @@ var Game = function() {
     return pattern;
   }
 
-  var allowedTime = 1200;
+  var allowedTime = touch ? 1500 : 1200;
   var score = 0;
   var streak = 0;
   var startTime = null;
