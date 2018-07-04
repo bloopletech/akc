@@ -34,24 +34,25 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 
 .layer {
   display: none;
+  position: relative;
   height: 100%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
 }
 
-#attract {
-  justify-content: flex-end;
-}
-
 #waiting {
-  justify-content: center;
   font-size: 40px;
   font-weight: bold;
 }
 
 .play {
   display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100px;
+  margin-left: -50px;
   padding: 10px 20px;
   border: 1px solid #2b308f;
   border-radius: 4px;
@@ -127,6 +128,10 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 .vanadium {
   stroke: #73788C;
   /*background: linear-gradient(to bottom, #C6CDD9, #42455A, #73788C, #4B4F65);*/
+}
+
+#playing {
+  justify-content: space-between;
 }
 
 #play-field {
@@ -287,11 +292,12 @@ td {
     height: 700px;
   }
 
-  .layer {
-    justify-content: center;
+  .play {
+    position: static;
+    margin-left: 0;
   }
 
-  #attract {
+  #playing {
     justify-content: center;
   }
 
