@@ -27,8 +27,8 @@ function engine() {
 
   function start() {
     transition("waiting");
-    game = new Game();
-    Music.play();
+    game = new Game(document.body.classList.contains("touch"));
+    Player.play();
 
     setTimeout(function() {
       if(state != "waiting") return;
