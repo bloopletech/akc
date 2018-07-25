@@ -1,3 +1,5 @@
+"use strict";
+
 window.Ranks = (function() {
   var RANKS = {
     bronze: {
