@@ -1,4 +1,4 @@
-var Ranks = (function() {
+window.Ranks = (function() {
   var RANKS = {
     bronze: {
       minScore: 0,

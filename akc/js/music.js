@@ -1,4 +1,4 @@
-var Music = (function() {
+window.Music = (function() {
   var player;
   var playerInited = false;
 
