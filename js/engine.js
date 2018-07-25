@@ -1,3 +1,5 @@
+"use strict";
+
 function engine() {
   var DIRECTION_CLASSES = ["left", "up", "right", "down"];
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
@@ -14,6 +16,7 @@ function engine() {
   var game = null;
   var currentCode = null;
   var state = null;
+  var timeUsedUpdater = null;
 
   function timeNow() {
     return highPrecisionTimer ? performance.now() : Date.now();

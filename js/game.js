@@ -1,3 +1,5 @@
+"use strict";
+
 window.Game = function(touch) {
   var DIRECTIONS = ["left", "up", "right", "down"];
   var MAX_DUPE_LENGTH = 2;

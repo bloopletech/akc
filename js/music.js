@@ -1,3 +1,5 @@
+"use strict";
+
 window.Music = (function() {
   var player;
   var playerInited = false;

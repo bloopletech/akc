@@ -1,3 +1,5 @@
+"use strict";
+
 function modal() {
   window.Modal = (function() {
     var $ = document.querySelector.bind(document);
