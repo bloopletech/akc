@@ -1,6 +1,6 @@
 "use strict";
 
-function modal() {
+window.modal = function() {
   window.Modal = (function() {
     var $ = document.querySelector.bind(document);
 
