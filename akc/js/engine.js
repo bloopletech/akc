@@ -1,6 +1,6 @@
 "use strict";
 
-function engine() {
+window.engine = function() {
   var DIRECTION_CLASSES = ["left", "up", "right", "down"];
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down" };
 
