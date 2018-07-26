@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
+# yarn global add inliner, requires NodeJS & yarn installed
 # --nosvg => otherwise will strip HTML IDs off of SVG elements
 inliner --nosvg index.html > dist/index.html
 # -a => archive mode, i.e. copy recursuvely and preserve permissions etc.
