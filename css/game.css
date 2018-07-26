@@ -154,7 +154,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   position: absolute;
   top: 29px;
   left: 29px;
-  fill: #000;
 }
 
 #play-field.grind #out {
