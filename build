@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
-# --skip-absolute-urls => otherwise will inline YouTube API JS
+set -e
+
 # --nosvg => otherwise will strip HTML IDs off of SVG elements
-inliner --skip-absolute-urls --nosvg index.html > dist.html
+inliner --nosvg index.html > dist/index.html
+# -a => archive mode, i.e. copy recursuvely and preserve permissions etc.
+# --del => if we delete a file from the source, also delete it from the destination, so we clean up old files
+# --ignore-missing-args => if one of the source directories is missing, just skip it
+# Listing the source directories without a slash is intentional.
+# It tells rsync to create e.g. dist/music and put the contents of music into dist/music.
+rsync -a --del --ignore-missing-args music images dist
