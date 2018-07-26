@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+git checkout build
+git merge master
+./build
+git add dist
+git commit -m "Build"
+git push flynn master
+git checkout master
