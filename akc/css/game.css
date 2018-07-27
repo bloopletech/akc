@@ -243,10 +243,15 @@ td {
 }
 
 #attribution-link {
+  display: none;
   position: absolute;
   left: 15px;
   bottom: 15px;
   font-size: 16px;
+}
+
+body.attract #attribution-link, body.game-over #attribution-link {
+  display: block;
 }
 
 #music-status {
@@ -259,7 +264,8 @@ td {
   display: none;
 }
 
-#music-status.disabled .disabled, #music-status.enabled .enabled {
+body.attract #music-status.disabled .disabled, body.attract #music-status.enabled .enabled,
+ body.game-over #music-status.disabled .disabled, body.game-over #music-status.enabled .enabled {
   display: block;
 }
 
