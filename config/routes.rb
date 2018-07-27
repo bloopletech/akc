@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :scores
+  resources :users, only: [:create]
+
+  resources :scores, only: [:index]
+
+  namespace :my do
+    resources :scores, only: [:index, :create]
+  end
 end
