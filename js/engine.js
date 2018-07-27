@@ -171,6 +171,8 @@ window.engine = function() {
     setTimeout(function() {
       $("#game-over .play").classList.remove("disabled");
     }, 1000);
+
+    Api.submitScore(game.score());
   }
 
   function showMusicStatus() {
