@@ -19,8 +19,9 @@ window.Api = (function() {
     };
 
     http.setRequestHeader("Accept", "application/json");
-    http.setRequestHeader("Content-Type", "application/json");
-    if(options.token != null) http.setRequestHeader("Authorization", "token " + options.token);
+    http.setRequestHeader("Content-Type", "text/plain");
+
+    if(options.token != null && options.data) options.data.access_token = options.token;
 
     if(options.data) http.send(JSON.stringify(options.data));
     else http.send();
