@@ -15,6 +15,6 @@ class My::ScoresController < My::BaseController
 
   private
   def score_params
-    params.require(:score).permit(:value)
+    params.require(:score).permit(:value, :streak, :rank)
   end
 end
