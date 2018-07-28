@@ -35,13 +35,13 @@ window.Api = (function() {
     });
   }
 
-  function submitScore(value, success) {
+  function submitScore(value, streak, rank, success) {
     User.withToken(function(token) {
       request({
         type: "POST",
         url: endpoint + "my/scores",
         token: token,
-        data: { "score": { "value": value } },
+        data: { "score": { "value": value, "streak": streak, "rank": rank } },
         success: success
       });
     });
