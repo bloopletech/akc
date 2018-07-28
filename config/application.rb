@@ -17,6 +17,8 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative "../lib/override_cors_middleware"
+
 module AkcApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -38,5 +40,7 @@ module AkcApi
         resource '*', headers: :any, methods: :any
       end
     end
+
+    config.middleware.insert_before(ActionDispatch::Static, OverrideCorsMiddleware)
   end
 end
