@@ -1,11 +1,10 @@
 "use strict";
 
 window.Game = function(touch) {
-  var DIRECTIONS = ["left", "up", "right", "down"];
   var MAX_DUPE_LENGTH = 2;
 
   function randomDirection() {
-    return DIRECTIONS[Math.floor(Math.random() * DIRECTIONS.length)];
+    return Game.DIRECTIONS[Math.floor(Math.random() * Game.DIRECTIONS.length)];
   }
 
   function generatePattern() {
@@ -153,3 +152,5 @@ window.Game = function(touch) {
     grindRatio: grindRatio
   };
 };
+
+window.Game.DIRECTIONS = ["left", "up", "right", "down"];

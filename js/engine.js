@@ -1,7 +1,6 @@
 "use strict";
 
 window.engine = function() {
-  var DIRECTION_CLASSES = ["left", "up", "right", "down"];
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   var $ = document.querySelector.bind(document);
@@ -44,7 +43,7 @@ window.engine = function() {
   }
 
   function showDirection(direction) {
-    for(var i in DIRECTION_CLASSES) document.body.classList.remove(DIRECTION_CLASSES[i]);
+    for(var i in Game.DIRECTIONS) document.body.classList.remove(Game.DIRECTIONS[i]);
     document.body.classList.add(direction);
   }
 
