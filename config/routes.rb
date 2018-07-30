@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'root#index'
+
   resources :users, only: [:create]
 
   resources :scores, only: [:index]
