@@ -14,6 +14,9 @@ body {
   min-height: 100%;
   background-color: #fff;
   color: #000;
+  background-image: url("../images/bg.jpg");
+  background-size: cover;
+  background-position: center;
   font-size: 16px;
 
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -143,7 +146,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 #time-remaining {
   width: 100%;
   height: 100%;
-  stroke: #000;
+  stroke: #3137a3;
 }
 
 #play-field.grind #time-remaining-track {
@@ -216,8 +219,6 @@ body.touch #input {
 
 #results {
   margin-bottom: 40px;
-  padding: 20px 25px;
-  background-color: #fff;
 }
 
 table {
@@ -279,7 +280,6 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: linear-gradient(to bottom, #555, #333);
   }
 
   #game {
@@ -287,8 +287,6 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
     width: 460px;
     height: 500px;
     padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,.7);
   }
 
@@ -328,9 +326,5 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
 
   #input {
     margin-top: 30px;
-  }
-
-  #results {
-    padding: 0;
   }
 }
