@@ -287,7 +287,6 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
     width: 460px;
     height: 500px;
     padding: 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,.7);
   }
 
   body.touch #game {
