@@ -9,4 +9,4 @@ inliner --nosvg index.html > dist/index.html
 # --ignore-missing-args => if one of the source directories is missing, just skip it
 # Listing the source directories without a slash is intentional.
 # It tells rsync to create e.g. dist/music and put the contents of music into dist/music.
-rsync -a --del --ignore-missing-args music images dist
+rsync -a --del --ignore-missing-args music dist
