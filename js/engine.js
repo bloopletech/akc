@@ -161,8 +161,7 @@ window.engine = function() {
 
     showDirection("blank");
     $("#results-score").textContent = nice(game.score());
-    var rank = Ranks.scoreRank(game.score()).humanName
-    $("#results-rank").textContent = rank;
+    $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak();
     transition("game-over");
     Music.pause();
@@ -172,7 +171,7 @@ window.engine = function() {
       $("#game-over .play").classList.remove("disabled");
     }, 1000);
 
-    Api.submitScore(game.score(), game.streak(), rank);
+    Api.submitScore(game);
   }
 
   function showMusicStatus() {

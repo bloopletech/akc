@@ -35,13 +35,20 @@ window.Api = (function() {
     });
   }
 
-  function submitScore(value, streak, rank, success) {
+  function submitScore(game, success) {
+    var scoreData = {
+      "mode": game.touch() ? "touch" : "keyboard",
+      "value": game.score(),
+      "streak": game.streak(),
+      "rank": Ranks.scoreRank(game.score()).humanName
+    };
+
     User.withToken(function(token) {
       request({
         type: "POST",
         url: endpoint + "my/scores",
         token: token,
-        data: { "score": { "value": value, "streak": streak, "rank": rank } },
+        data: { "score": scoreData },
         success: success
       });
     });

@@ -129,6 +129,9 @@ window.Game = function(touch) {
   }
 
   return {
+    touch: function() {
+      return touch;
+    },
     grinding: function() {
       return !!grindStart;
     },
