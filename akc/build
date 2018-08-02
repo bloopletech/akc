@@ -3,10 +3,12 @@ set -e
 
 # yarn global add inliner, requires NodeJS & yarn installed
 # --nosvg => otherwise will strip HTML IDs off of SVG elements
-inliner --nosvg index.html > dist/index.html
+# --noimages => otherwise will inline all images, even if they are huge and not really base64-friendly
+# sed command fixes image URLs in the CSS so that they are relative to the page URL
+inliner --nosvg --noimages index.html | sed -e 's/url("..\//url("/g' > dist/index.html
 # -a => archive mode, i.e. copy recursuvely and preserve permissions etc.
 # --del => if we delete a file from the source, also delete it from the destination, so we clean up old files
 # --ignore-missing-args => if one of the source directories is missing, just skip it
 # Listing the source directories without a slash is intentional.
 # It tells rsync to create e.g. dist/music and put the contents of music into dist/music.
-rsync -a --del --ignore-missing-args music dist
+rsync -a --del --ignore-missing-args music images dist
