@@ -56,7 +56,7 @@ window.Game = function(touch) {
 
   function timePassed(now) {
     if(grindStart) {
-      return ((now - grindStart) * 1.5) + (grindStart - startTime);
+      return ((now - grindStart) * 2) + (grindStart - startTime);
     }
     else {
       return now - startTime;
