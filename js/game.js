@@ -54,9 +54,13 @@ window.Game = function(touch) {
     return next;
   }
 
+  function grindTime(now) {
+    return ((now - grindStart) * 2);
+  }
+
   function timePassed(now) {
     if(grindStart) {
-      return ((now - grindStart) * 2) + (grindStart - startTime);
+      return grindTime(now) + (grindStart - startTime);
     }
     else {
       return now - startTime;
@@ -101,7 +105,7 @@ window.Game = function(touch) {
 
   function grindRatio(now) {
     if(!grindStart) return 0;
-    var ratio = ((now - grindStart) * 2) / (allowedTime - (grindStart - startTime));
+    var ratio = grindTime(now) / (allowedTime - (grindStart - startTime));
     if(ratio < 0) return 0;
     if(ratio > 1) return 1;
     return ratio;
