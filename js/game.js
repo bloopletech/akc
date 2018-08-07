@@ -78,8 +78,6 @@ window.Game = function(touch) {
     return time;
   }
 
-
-
   function roundStarted(now) {
     direction = nextDirection();
     startTime = now;
