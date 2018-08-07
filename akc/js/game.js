@@ -107,9 +107,13 @@ window.Game = function(touch) {
     return ratio;
   }
 
+  function isFlame(now) {
+    return grindStart && ((grindStart - startTime) <= (allowedTime * 0.3));
+  }
+
   function delta(now) {
-    var delta = (allowedTime - timePassed(now)) + (grindDuration(now) * 3) + ((streak + 1) * 100);
-    if((grindStart != null ? (grindStart - startTime) : timePassed(now)) <= (allowedTime * 0.3)) delta *= 2;
+    var delta = (grindDuration(now) * 5) + (streak * 100);
+    if(isFlame(now)) delta *= 3;
     return Math.floor(delta);
   }
 
@@ -144,7 +148,7 @@ window.Game = function(touch) {
     stack: function() {
       return stack;
     },
-    function maxStacks() {
+    maxStacks: function() {
       return pattern.length;
     },
     roundStarted: roundStarted,
