@@ -101,7 +101,7 @@ window.Game = function(touch) {
 
   function grindRatio(now) {
     if(!grindStart) return 0;
-    var ratio = ((now - grindStart) * 1.5) / (allowedTime - (grindStart - startTime));
+    var ratio = ((now - grindStart) * 2) / (allowedTime - (grindStart - startTime));
     if(ratio < 0) return 0;
     if(ratio > 1) return 1;
     return ratio;
