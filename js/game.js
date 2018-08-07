@@ -78,9 +78,7 @@ window.Game = function(touch) {
     return time;
   }
 
-  function maxStacks() {
-    return pattern.length;
-  }
+
 
   function roundStarted(now) {
     direction = nextDirection();
@@ -148,7 +146,9 @@ window.Game = function(touch) {
     stack: function() {
       return stack;
     },
-    maxStacks: maxStacks,
+    function maxStacks() {
+      return pattern.length;
+    },
     roundStarted: roundStarted,
     input: input,
     timeRemaining: timeRemaining,
