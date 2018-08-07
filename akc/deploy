@@ -3,7 +3,7 @@ set -e
 
 ./build
 cd dist
-#You must have already initialised a git repo inside dist, that is configured with the origin remote pointing to flynn.
+#You must have already initialised a git repo inside dist, that is configured with the origin remote pointing to dokku.
 git add -A
 git commit -m "Build"
 git pull origin master
