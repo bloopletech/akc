@@ -30,7 +30,8 @@ window.Game = function(touch) {
     return pattern;
   }
 
-  var allowedTime = touch ? 1500 : 1200;
+  var initialAllowedTime = touch ? 1500 : 1200;
+  var allowedTime = initialAllowedTime;
   var score = 0;
   var streak = 0;
   var startTime = null;
@@ -107,12 +108,18 @@ window.Game = function(touch) {
     return ratio;
   }
 
+  function reactionTime() {
+    return grindStart - startTime;
+  }
+
   function isFlame(now) {
-    return grindStart && ((grindStart - startTime) <= (allowedTime * 0.3));
+    return grindStart && (reactionTime() <= (allowedTime * 0.3));
   }
 
   function delta(now) {
-    var delta = (grindDuration(now) * 5) + (streak * 100);
+    if(!grindStart) return 0;
+
+    var delta = (initialAllowedTime - reactionTime()) + (grindDuration(now) * 3) + (streak * 100);
     if(isFlame(now)) delta *= 3;
     return Math.floor(delta);
   }
