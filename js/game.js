@@ -30,7 +30,7 @@ window.Game = function(touch) {
     return pattern;
   }
 
-  var initialAllowedTime = touch ? 1500 : 1200;
+  var initialAllowedTime = 1200;
   var allowedTime = initialAllowedTime;
   var score = 0;
   var streak = 0;
