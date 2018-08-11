@@ -36,6 +36,7 @@ window.Game = function(touch) {
   var streak = 0;
   var startTime = null;
   var grindStart = null;
+  var combo = null;
   var stack = 0;
   var cycles = 0;
   var direction = null;
@@ -68,6 +69,15 @@ window.Game = function(touch) {
     }
   }
 
+  function finishTime() {
+    if(grindStart) {
+      return grindStart + (((startTime + allowedTime) - grindStart) / 2.0);
+    }
+    else {
+      return startTime + allowedTime;
+    }
+  }
+
   function timeRemaining(now) {
     return allowedTime - timePassed(now);
   }
@@ -84,6 +94,7 @@ window.Game = function(touch) {
     startTime = now;
     correct = false;
     grindStart = null;
+    combo = null;
     return direction;
   }
 
@@ -112,6 +123,10 @@ window.Game = function(touch) {
     return grindStart - startTime;
   }
 
+  function comboed() {
+    combo = true;
+  }
+
   function isFlame(now) {
     return grindStart && (reactionTime() <= (allowedTime * 0.3));
   }
@@ -121,6 +136,7 @@ window.Game = function(touch) {
 
     var delta = (initialAllowedTime - reactionTime()) + (grindDuration(now) * 3) + (streak * 100);
     if(isFlame(now)) delta *= 3;
+    if(combo) delta *= 2;
     return Math.floor(delta);
   }
 
@@ -163,6 +179,8 @@ window.Game = function(touch) {
     timeRemaining: timeRemaining,
     timeRemainingRatio: timeRemainingRatio,
     grindStarted: grindStarted,
+    finishTime: finishTime,
+    comboed: comboed,
     roundEnded: roundEnded,
     delta: delta,
     grindRatio: grindRatio
