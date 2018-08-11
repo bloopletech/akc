@@ -37,7 +37,7 @@ window.engine = function() {
       transition("playing");
       renderInfo();
 
-      startRound();
+      startRound(timeNow());
       updateTimeUsed();
     }, 1500);
   }
@@ -68,8 +68,19 @@ window.engine = function() {
 
     $score.textContent = nice(game.score() + game.delta(now));
 
-    if(game.timeRemaining(now) < 0) {
-      game.input();
+    if(game.timeRemaining(now) < 0) onTimeUsed(now);
+  }
+
+  function onTimeUsed(now) {
+    var code = currentCode;
+    endRound(game.finishTime());
+    currentCode = code;
+
+    if(game.input(code)) {
+      game.grindStarted(now);
+      game.comboed();
+    }
+    else {
       endRound(now);
     }
   }
@@ -146,7 +157,7 @@ window.engine = function() {
     renderInfo();
 
     if(isGameOver) gameOver();
-    else startRound();
+    else startRound(now);
   }
 
   function nice(num) {
