@@ -1,33 +1,30 @@
 "use strict";
 
 window.Game = function(touch) {
-  var MAX_DUPE_LENGTH = 2;
+  var MAX_DUPE_LENGTH = 3;
 
   function randomDirection() {
     return Game.DIRECTIONS[Math.floor(Math.random() * Game.DIRECTIONS.length)];
   }
 
-  function generatePattern() {
-    var pattern = null;
+  function addDirection(pattern) {
+    while(true) {
+      pattern.push(randomDirection());
 
-    do {
-      pattern = [];
-      for(var i = 0; i < 7; i++) pattern.push(randomDirection());
+      var sliced = pattern.slice(-(MAX_DUPE_LENGTH + 1));
+      if(sliced.length < MAX_DUPE_LENGTH) return;
 
-      var dupes = false;
-      for(var i = MAX_DUPE_LENGTH; i < pattern.length; i++) {
-        var sliced = pattern.slice(i - MAX_DUPE_LENGTH, i + 1);
+      var dupes = sliced.every(function(value) {
+        return value == sliced[0];
+      });
 
-        dupes = sliced.every(function(value) {
-          return value == sliced[0];
-        });
-
-        if(dupes) break;
-      }
+      if(dupes) pattern.pop();
+      else return;
     }
-    while(dupes);
+  }
 
-    return pattern;
+  function addDirections(pattern, count) {
+    for(var i = 0; i < count; i++) addDirection(pattern);
   }
 
   var initialAllowedTime = 1200;
@@ -40,7 +37,8 @@ window.Game = function(touch) {
   var stack = 0;
   var cycles = 0;
   var direction = null;
-  var pattern = generatePattern();
+  var pattern = [];
+  addDirections(pattern, 7);
   var correct = false;
 
   function nextDirection() {
@@ -50,7 +48,7 @@ window.Game = function(touch) {
     if(stack >= pattern.length) {
       stack = 0;
       cycles++;
-      if(cycles % 2 == 0) pattern.push(randomDirection());
+      if(cycles % 2 == 0) addDirection(pattern);
     }
 
     return next;
