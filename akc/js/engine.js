@@ -68,7 +68,7 @@ window.engine = function() {
 
     $score.textContent = nice(game.score() + game.delta(now));
 
-    if(game.timeRemaining(now) < 0) onTimeUsed(now);
+    if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
 
   function onTimeUsed(now) {
