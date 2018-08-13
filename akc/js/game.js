@@ -48,7 +48,7 @@ window.Game = function(touch) {
     if(stack >= pattern.length) {
       stack = 0;
       cycles++;
-      if(cycles % 2 == 0) addDirection(pattern);
+      if(cycles % 3 == 0) addDirections(pattern, 2);
     }
 
     return next;
