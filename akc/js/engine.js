@@ -74,6 +74,9 @@ window.engine = function() {
   function onTimeUsed(now) {
     var code = currentCode;
     endRound(game.finishTime());
+
+    if(state != "playing") return;
+
     currentCode = code;
 
     if(game.input(code)) {
