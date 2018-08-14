@@ -10,3 +10,7 @@ inliner --nosvg index.html > dist/index.html
 # Listing the source directories without a slash is intentional.
 # It tells rsync to create e.g. dist/music and put the contents of music into dist/music.
 rsync -a --del --ignore-missing-args music dist
+# yarn global add sw-precache, requires NodeJS & yarn installed
+# --root => use the built version of the site
+# --maximumFileSizeToCacheInBytes => otherwise will skip audio files, size here is 20MB
+sw-precache --root=dist --maximumFileSizeToCacheInBytes=20971520
