@@ -228,6 +228,12 @@ body.touch #input {
   margin-bottom: 40px;
 }
 
+#results * {
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 table {
   margin-top: 40px;
   border-collapse: collapse;
