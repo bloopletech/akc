@@ -154,11 +154,22 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 #time-remaining {
   width: 100%;
   height: 100%;
-  stroke: #3137a3;
 }
 
-#play-field.grind #time-remaining-track {
-  stroke: #ff8000;
+#time-remaining-track.fire {
+  stroke: #449d44;
+}
+
+#time-remaining-track.neutral {
+  stroke: #31b0d5;
+}
+
+#time-remaining-track.warning {
+  stroke: #ec971f;
+}
+
+#time-remaining-track.danger {
+  stroke: #c9302c;
 }
 
 #out {
