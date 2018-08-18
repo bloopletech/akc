@@ -156,22 +156,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   height: 100%;
 }
 
-#time-remaining-track.fire {
-  stroke: #449d44;
-}
-
-#time-remaining-track.neutral {
-  stroke: #31b0d5;
-}
-
-#time-remaining-track.warning {
-  stroke: #ec971f;
-}
-
-#time-remaining-track.danger {
-  stroke: #c9302c;
-}
-
 #out {
   position: absolute;
   top: 29px;

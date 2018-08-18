@@ -2,7 +2,6 @@
 
 window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
-  var RATIO_STATES = ["fire", "neutral", "warning", "danger"];
 
   var $ = document.querySelector.bind(document);
   var $timeRemainingTrack = $("#time-remaining-track");
@@ -53,17 +52,6 @@ window.engine = function() {
     currentCode = null;
   }
 
-  function showRatioState(ratio) {
-    for(var i in RATIO_STATES) $timeRemainingTrack.classList.remove(RATIO_STATES[i]);
-
-    var state = "fire";
-    if(ratio <= 0.7) state = "neutral";
-    if(ratio <= 0.3) state = "warning";
-    if(ratio <= 0.1) state = "danger";
-
-    $timeRemainingTrack.classList.add(state);
-  }
-
   function updateTimeUsed() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
@@ -72,8 +60,6 @@ window.engine = function() {
 
     var c = 285.88;
     $timeRemainingTrack.style.strokeDashoffset = ((100 - (ratio * 100)) / 100) * c;
-
-    showRatioState(ratio);
 
     if(game.grinding()) $playField.classList.add("grind");
     else $playField.classList.remove("grind");
