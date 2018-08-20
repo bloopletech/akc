@@ -3,7 +3,6 @@
 window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
-  var $ = document.querySelector.bind(document);
   var $timeRemainingTrack = $("#time-remaining-track");
   var $playField = $("#play-field");
   var $out = $("#out");

@@ -1,36 +1,31 @@
 "use strict";
 
-window.modal = function() {
-  window.Modal = (function() {
-    var $ = document.querySelector.bind(document);
+window.Modal = (function() {
+  function show(content) {
+    $("#modal-content").innerHTML = content;
+    $("body").classList.add("modal-open");
+    position();
+  }
 
-    function show(content) {
-      $("#modal-content").innerHTML = content;
-      document.querySelector("body").classList.add("modal-open");
-      position();
-    }
+  function position() {
+    var modal = $("#modal");
+    modal.style.top = ((window.innerHeight - modal.offsetHeight) / 2) + "px";
+  }
 
-    function position() {
-      var modal = $("#modal");
-      modal.style.top = ((window.innerHeight - modal.offsetHeight) / 2) + "px";
-    }
+  function hide() {
+    $("body").classList.remove("modal-open");
+  }
 
-    function hide() {
-      document.querySelector("body").classList.remove("modal-open");
-    }
-
+  document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("resize", position);
 
-    document.body.addEventListener("click", function(e) {
+    $("body").addEventListener("click", function(e) {
       if(e.target.matches("#modal-backdrop")) hide();
     });
+  });
 
-    return {
-      show: show,
-      position: position,
-      hide: hide
-    }
-  })();
-}
-
-document.addEventListener("DOMContentLoaded", modal);
+  return {
+    show: show,
+    hide: hide
+  };
+})();
