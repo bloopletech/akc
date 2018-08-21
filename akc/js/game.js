@@ -186,3 +186,4 @@ window.Game = function(touch) {
 };
 
 window.Game.DIRECTIONS = ["left", "up", "right", "down"];
+window.Game.SCORING_VERSION = 1;
