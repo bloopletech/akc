@@ -6,16 +6,18 @@
     <meta content='true' name='HandheldFriendly'>
     <meta content='width=device-width, height=device-height, user-scalable=no, viewport-fit=cover' name='viewport'>
     <link rel="stylesheet" type="text/css" href="css/game.css">
-    <link rel="stylesheet" type="text/css" href="css/modal.css">
-    <script src="js/dom.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/support/modal.css">
+    <link rel="stylesheet" type="text/css" href="css/support/panel.css">
+    <script src="js/support/dom.js"></script>
+    <script src="js/support/modal.js"></script>
+    <script src="js/support/panel.js"></script>
+    <script src="js/support/swr.js"></script>
     <script src="js/game.js"></script>
     <script src="js/ranks.js"></script>
     <script src="js/music.js"></script>
-    <script src="js/modal.js"></script>
     <script src="js/engine.js"></script>
     <script src="js/api/api.js"></script>
     <script src="js/api/user.js"></script>
-    <script src="js/swr.js"></script>
   </head>
   <body class="attract">
     <div id="game">
@@ -92,6 +94,12 @@
       Music: "<a href="http://freemusicarchive.org/music/Audiobinger/~/City_Lights_1859">City Lights</a>" by <a href="http://freemusicarchive.org/music/Audiobinger/">Audiobinger</a><br>
       From the <a href="https://freemusicarchive.org/">Free Music Archive</a><br>
       <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY NC</a>
+    </div>
+    <div id="panel-backdrop">
+      <div id="panel">
+        <span id="panel-close">×</span>
+        <div id="panel-content"></div>
+      </div>
     </div>
     <div id="modal-backdrop">
       <div id="modal">
