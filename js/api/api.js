@@ -46,7 +46,7 @@ window.Api = (function() {
 
   function submitScore(game, success) {
     var scoreData = {
-      "scoringVersion": Game.SCORING_VERSION,
+      "scoring_version": Game.SCORING_VERSION,
       "mode": game.touch() ? "touch" : "keyboard",
       "value": game.score(),
       "streak": game.streak(),
