@@ -62,7 +62,7 @@ window.engine = function() {
 
     $out.style.transform = "scale(" + ((game.grindRatio(now) * arrowRatio) + 1) + ")";
 
-    $score.textContent = nice(game.score() + game.delta(now));
+    $score.textContent = formatNumber(game.score() + game.delta(now));
 
     if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
@@ -145,7 +145,7 @@ window.engine = function() {
   }
 
   function renderInfo() {
-    $score.textContent = nice(game.score());
+    $score.textContent = formatNumber(game.score());
     $stack.textContent = game.maxStacks() - game.stack();
   }
 
@@ -159,18 +159,11 @@ window.engine = function() {
     else startRound(now);
   }
 
-  function nice(num) {
-    var x = num + '';
-    var rgx = /(\d+)(\d{3})/;
-    while(rgx.test(x)) x = x.replace(rgx, '$1' + ',' + '$2');
-    return x;
-  }
-
   function gameOver() {
     window.cancelAnimationFrame(timeUsedUpdater);
 
     showDirection("blank");
-    $("#results-score").textContent = nice(game.score());
+    $("#results-score").textContent = formatNumber(game.score());
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak();
     transition("game-over");

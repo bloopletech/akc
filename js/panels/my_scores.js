@@ -42,8 +42,8 @@ window.Panels.MyScores = (function() {
   function renderScore(score) {
     return `
       <tr>
-        <td>${e(score.value)}</td>
-        <td>${e(score.streak)}</td>
+        <td>${e(formatNumber(score.value))}</td>
+        <td>${e(formatNumber(score.streak))}</td>
         <td>${e(score.rank)}</td>
         <td>${e(formatTimestamp(score.created_at))}</td>
       </tr>`;
