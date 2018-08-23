@@ -230,10 +230,13 @@ body.touch #input {
 }
 
 table {
-  margin-top: 40px;
   border-collapse: collapse;
   border: none;
   text-align: left;
+}
+
+#results table {
+  margin-top: 40px;
 }
 
 th, td {

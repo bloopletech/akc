@@ -6,10 +6,21 @@ window.Api = (function() {
   else if(location.host == "akc.dokku.bloople.net") endpoint = "https://akc-api.dokku.bloople.net";
   else endpoint = "http://localhost:3000/";
 
+  function serialize(params) {
+    return "?" + Object.keys(params).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`).join('&');
+  }
+
   function request(options) {
     var http = new XMLHttpRequest();
+    var requestType = options.type || "GET";
+    var url = options.url;
 
-    http.open(options.type || "GET", options.url);
+    var data = options.data || {};
+    if(options.token != null) data.access_token = options.token;
+
+    if(requestType == "GET") url += serialize(data);
+
+    http.open(requestType, url);
 
     http.onreadystatechange = function() {
       if(http.readyState === 4 && http.status === 200) {
@@ -21,9 +32,7 @@ window.Api = (function() {
     http.setRequestHeader("Accept", "application/json");
     http.setRequestHeader("Content-Type", "text/plain");
 
-    if(options.token != null && options.data) options.data.access_token = options.token;
-
-    if(options.data) http.send(JSON.stringify(options.data));
+    if(requestType != "GET" && data != {}) http.send(JSON.stringify(data));
     else http.send();
   }
 
@@ -54,8 +63,19 @@ window.Api = (function() {
     });
   }
 
+  function myScores(success) {
+    User.withToken(function(token) {
+      request({
+        url: endpoint + "my/scores",
+        token: token,
+        success: success
+      });
+    });
+  }
+
   return {
     createUser: createUser,
-    submitScore: submitScore
+    submitScore: submitScore,
+    myScores: myScores
   };
 })();
