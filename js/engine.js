@@ -206,7 +206,7 @@ window.engine = function() {
     if(e.target.matches(".play:not(.disabled)")) start();
     if(e.target.closest("#music-status")) updateMusicStatus();
     if(e.target.closest("#attribution-link")) {
-      event.preventDefault();
+      e.preventDefault();
       Modal.show($("#attribution").innerHTML);
     }
   });
