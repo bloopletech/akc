@@ -1,8 +1,16 @@
 "use strict";
 
+window.formatNumber = function(num) {
+  var x = num + '';
+  var rgx = /(\d+)(\d{3})/;
+  while(rgx.test(x)) x = x.replace(rgx, '$1' + ',' + '$2');
+  return x;
+};
+
 window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
+  window.$ = document.querySelector.bind(document);
   var $timeRemainingTrack = $("#time-remaining-track");
   var $playField = $("#play-field");
   var $out = $("#out");
