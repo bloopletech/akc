@@ -17,7 +17,6 @@ window.engine = function() {
   var $score = $("#score");
   var $stack = $("#stack");
 
-  var arrowRatio = window.innerWidth >= 460 ? 0.9 : 0.6;
   var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
   var currentCode = null;
@@ -63,12 +62,12 @@ window.engine = function() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 285.88);
+    $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 866.32);
 
     if(game.grinding()) $playField.classList.add("grind");
     else $playField.classList.remove("grind");
 
-    $out.style.transform = "scale(" + ((game.grindRatio(now) * arrowRatio) + 1) + ")";
+    $out.style.transform = "scale(" + ((game.grindRatio(now) * 0.66) + 1) + ")";
 
     $score.textContent = formatNumber(game.score() + game.delta(now));
 
