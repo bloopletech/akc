@@ -6,7 +6,7 @@ window.engine = function() {
   window.$ = document.querySelector.bind(document);
   var $timeRemainingTrack = $("#time-remaining-track");
   var $playField = $("#play-field");
-  var $out = $("#out");
+  var $grindRatio = $("#grind-ratio");
   var $score = $("#score");
   var $stack = $("#stack");
 
@@ -57,10 +57,7 @@ window.engine = function() {
 
     $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 866.32);
 
-    if(game.grinding()) $playField.classList.add("grind");
-    else $playField.classList.remove("grind");
-
-    $out.style.transform = "scale(" + ((game.grindRatio(now) * 0.66) + 1) + ")";
+    $grindRatio.style.r = game.grindRatio(now) * 126;
 
     $score.textContent = (game.score() + game.delta(now)).toLocaleString();
 
