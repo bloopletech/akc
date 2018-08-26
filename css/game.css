@@ -156,14 +156,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   height: 100%;
 }
 
-#out {
-  transform-origin: 50% 50%;
-}
-
-#play-field.grind #out {
-  fill: #ff8000;
-}
-
 #up, #right, #down, #left {
   display: none;
 }
