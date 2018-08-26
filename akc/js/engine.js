@@ -1,12 +1,5 @@
 "use strict";
 
-window.formatNumber = function(num) {
-  var x = num + '';
-  var rgx = /(\d+)(\d{3})/;
-  while(rgx.test(x)) x = x.replace(rgx, '$1' + ',' + '$2');
-  return x;
-};
-
 window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
@@ -69,7 +62,7 @@ window.engine = function() {
 
     $out.style.transform = "scale(" + ((game.grindRatio(now) * 0.66) + 1) + ")";
 
-    $score.textContent = formatNumber(game.score() + game.delta(now));
+    $score.textContent = (game.score() + game.delta(now)).toLocaleString();
 
     if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
@@ -152,8 +145,8 @@ window.engine = function() {
   }
 
   function renderInfo() {
-    $score.textContent = formatNumber(game.score());
-    $stack.textContent = game.maxStacks() - game.stack();
+    $score.textContent = game.score().toLocaleString();
+    $stack.textContent = (game.maxStacks() - game.stack()).toLocaleString();
   }
 
   function endRound(now) {
@@ -170,9 +163,9 @@ window.engine = function() {
     window.cancelAnimationFrame(timeUsedUpdater);
 
     showDirection("blank");
-    $("#results-score").textContent = formatNumber(game.score());
+    $("#results-score").textContent = game.score().toLocaleString();
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
-    $("#results-streak").textContent = game.streak();
+    $("#results-streak").textContent = game.streak().toLocaleString();
     transition("game-over");
     Music.pause();
 
