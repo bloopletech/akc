@@ -4,9 +4,10 @@ window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   window.$ = document.querySelector.bind(document);
-  var $timeRemainingTrack = $("#time-remaining-track");
   var $playField = $("#play-field");
   var $grindRatio = $("#grind-ratio");
+  var $stackTrack = $("#stack-track");
+  var $timeRemainingTrack = $("#time-remaining-track");
   var $score = $("#score");
   var $stack = $("#stack");
 
@@ -56,9 +57,9 @@ window.engine = function() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 1443.87);
+    $grindRatio.style.r = game.grindRatio(now) * 224;
 
-    $grindRatio.style.r = game.grindRatio(now) * 210;
+    $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 1482.83);
 
     $score.textContent = (game.score() + game.delta(now)).toLocaleString();
 
@@ -145,6 +146,7 @@ window.engine = function() {
   function renderInfo() {
     $score.textContent = game.score().toLocaleString();
     $stack.textContent = (game.maxStacks() - game.stack()).toLocaleString();
+    $stackTrack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1350.88);
   }
 
   function endRound(now) {
