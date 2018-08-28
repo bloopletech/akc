@@ -64,6 +64,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   width: 100px;
   margin-left: -50px;
   padding: 10px 20px;
+  z-index: 1;
   border: 1px solid #2b308f;
   border-radius: 4px;
   background-color: #3137a3;
