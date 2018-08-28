@@ -24,6 +24,7 @@ window.engine = function() {
     state = newState;
     document.body.classList.remove("attract", "waiting", "playing", "game-over");
     document.body.classList.add(state);
+    layout();
   }
 
   function start() {
@@ -207,6 +208,13 @@ window.engine = function() {
       Modal.show($("#attribution").innerHTML);
     }
   });
+
+  function layout() {
+    $playField.style.width = $playField.clientHeight + "px";
+  }
+
+  window.addEventListener("resize", layout);
+  layout();
 
   showMusicStatus();
 };
