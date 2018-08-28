@@ -56,9 +56,9 @@ window.engine = function() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 866.32);
+    $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 1443.87);
 
-    $grindRatio.style.r = game.grindRatio(now) * 126;
+    $grindRatio.style.r = game.grindRatio(now) * 210;
 
     $score.textContent = (game.score() + game.delta(now)).toLocaleString();
 
@@ -210,9 +210,9 @@ window.engine = function() {
   });
 
   function layout() {
-    var width = $playField.clientHeight + "px";
-    $playField.style.width = width;
-    $("#info").style.width = width;
+    $playField.style.width = "0";
+    $playField.style.width = ($playField.clientHeight - $("#info-wrapper").clientHeight) + "px";
+    $("#info").style.width = $playField.clientWidth + "px";
   }
 
   window.addEventListener("resize", layout);

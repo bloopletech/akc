@@ -33,23 +33,25 @@
       </div>
       <div id="playing" class="layer">
         <div id="play-field">
-          <svg id="time-remaining" viewBox="0 0 300 300">
-            <circle id="grind-ratio" cx="-150" cy="150" transform="rotate(-90)" r="0" fill="#ffef00"/>
-            <circle cx="-150" cy="150" transform="rotate(-90)" r="137.88" fill="none" stroke="#449d44" stroke-width="24.24" stroke-dasharray="866.32"/>
-            <circle cx="-150" cy="150" transform="rotate(-90)" r="137.88" fill="none" stroke="#31b0d5" stroke-width="24.24" stroke-dasharray="866.32" stroke-dashoffset="259.9"/>
-            <circle cx="-150" cy="150" transform="rotate(-90)" r="137.88" fill="none" stroke="#ec971f" stroke-width="24.24" stroke-dasharray="866.32" stroke-dashoffset="606.42"/>
-            <circle cx="-150" cy="150" transform="rotate(-90)" r="137.88" fill="none" stroke="#c9302c" stroke-width="24.24" stroke-dasharray="866.32" stroke-dashoffset="779.69"/>
-            <circle id="time-remaining-track" cx="-150" cy="150" transform="rotate(-90)" r="137.88" fill="none" stroke="#000" stroke-width="24.24" stroke-dasharray="866.32" stroke-dashoffset="866.32" stroke-opacity="0.6"/>
-            <path id="up" d="M80 150l12 12 49-48v106h18V114l49 48 12-12-70-70z"/>
-            <path id="right" d="M150 80l-12 12 48 49H80v18h106l-48 49 12 12 70-70z"/>
-            <path id="down" d="M220 150l-12-12-49 48V80h-18v106l-49-48-12 12 70 70z"/>
-            <path id="left" d="M220 141H114l48-49-12-12-70 70 70 70 12-12-48-49h106z"/>
+          <svg id="time-remaining" viewBox="0 0 500 500">
+            <circle id="grind-ratio" cx="-250" cy="250" transform="rotate(-90)" r="0" fill="#ffef00"/>
+            <circle cx="-250" cy="250" transform="rotate(-90)" r="229.8" fill="none" stroke="#449d44" stroke-width="40" stroke-dasharray="1443.87"/>
+            <circle cx="-250" cy="250" transform="rotate(-90)" r="229.8" fill="none" stroke="#31b0d5" stroke-width="40" stroke-dasharray="1443.87" stroke-dashoffset="433.16"/>
+            <circle cx="-250" cy="250" transform="rotate(-90)" r="229.8" fill="none" stroke="#ec971f" stroke-width="40" stroke-dasharray="1443.87" stroke-dashoffset="1010.71"/>
+            <circle cx="-250" cy="250" transform="rotate(-90)" r="229.8" fill="none" stroke="#c9302c" stroke-width="40" stroke-dasharray="1443.87" stroke-dashoffset="1299.48"/>
+            <circle id="time-remaining-track" cx="-250" cy="250" transform="rotate(-90)" r="229.8" fill="none" stroke="#000" stroke-width="40" stroke-dasharray="1443.87" stroke-dashoffset="1443.87" stroke-opacity="0.6"/>
+            <path id="up" d="M135 250l20 20 81-80v175h28V190l81 80 20-20-115-115z"/>
+            <path id="right" d="M250 135l-20 20 80 81H135v28h175l-80 81 20 20 115-115z"/>
+            <path id="down" d="M365 250l-20-20-81 80V135h-28v175l-81-80-20 20 115 115z"/>
+            <path id="left" d="M365 236H190l80-81-20-20-115 115 115 115 20-20-80-81h175z"/>
           </svg>
-        </div>
-        <div id="info">
-          <div id="stack">0</div>
-          <div id="score">0</div>
-          <div id="info-overlay"></div>
+          <div id="info-wrapper">
+            <div id="info">
+              <div id="stack">0</div>
+              <div id="score">0</div>
+              <div id="info-overlay"></div>
+            </div>
+          </div>
         </div>
         <svg id="input" width="220" height="220" viewBox="0 0 100 100">
           <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" transform="translate(38, 5)"/>

@@ -19,7 +19,6 @@ body {
   padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 */
   padding-bottom: env(safe-area-inset-bottom); /* iOS 11.2 */
 
-  min-height: 100%;
   background-color: #fff;
   color: #000;
   background: linear-gradient(90deg, rgba(158,1,66,0.4) 0%, rgba(213,62,79,0.4) 10%, rgba(244,109,67,0.4) 20%, rgba(253,174,97,0.4) 30%, rgba(254,224,139,0.4) 40%, rgba(255,255,191,0.4) 50%, rgba(230,245,152,0.4) 60%, rgba(171,221,164,0.4) 70%, rgba(102,194,165,0.4) 80%, rgba(50,136,189,0.4) 90%, rgba(94,79,162,0.4) 100%),
@@ -34,14 +33,15 @@ body {
 #game {
   width: 100%;
   height: 100%;
-  max-width: 860px;
+  max-width: 560px;
+  margin: 0 auto;
   padding: 20px;
   position: relative;
   text-align: center;
   font-size: 30px;
 }
 
-body.touch #game {
+body.touch.playing #game {
   padding-bottom: 0;
 }
 
@@ -51,7 +51,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 
 .layer {
   display: none;
-  position: relative;
   height: 100%;
   align-items: center;
   justify-content: center;
@@ -146,13 +145,15 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   /*background: linear-gradient(to bottom, #C6CDD9, #42455A, #73788C, #4B4F65);*/
 }
 
-#playing {
-  justify-content: space-between;
-}
-
 #play-field {
-  width: 250px;
-  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  flex-grow: 1;
+  max-width: 100%;
+  line-height: 0;
 }
 
 #time-remaining {
@@ -170,12 +171,18 @@ body.up #up, body.right #right, body.down #down, body.left #left {
 
 #input {
   display: none;
+  flex-shrink: 0;
+  margin-top: 20px;
   background-color: #fff;
   stroke: #000;
 }
 
 body.touch #input {
   display: block;
+}
+
+#info-wrapper {
+  padding-top: 20px;
 }
 
 #info {
@@ -185,8 +192,8 @@ body.touch #input {
   flex-direction: row;
   position: relative;
 
-  width: 250px;
   text-align: center;
+  font-size: 40px;
   font-weight: bold;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
@@ -194,14 +201,16 @@ body.touch #input {
 }
 
 #stack {
-  width: 50px;
+  width: 90px;
   padding: 10px;
+  line-height: 1.1;
   background-color: #dbdbdb;
 }
 
 #score {
   flex: 1;
   padding: 10px;
+  line-height: 1.1;
 }
 
 #info-overlay {
@@ -280,21 +289,8 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
 }
 
 @media screen and (min-width: 460px) {
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-
   #game {
-    z-index: 1;
     padding: 30px;
-  }
-
-  body.touch #game {
-    height: 700px;
-    padding-bottom: 0;
   }
 
   .play {
@@ -302,25 +298,16 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
     margin-left: 0;
   }
 
-  #playing {
-    justify-content: center;
-  }
-
-  #play-field {
-    flex-grow: 1;
-    height: auto;
-    max-width: 100%;
-    line-height: 0;
+  #info-wrapper {
+    padding-top: 30px;
   }
 
   #info {
-    width: auto;
-    margin-top: 30px;
-    font-size: 40px;
+    font-size: 50px;
   }
 
   #stack {
-    width: 60px;
+    width: 120px;
   }
 
   #input {
