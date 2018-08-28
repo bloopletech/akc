@@ -30,29 +30,25 @@ body {
   touch-action: none;
 }
 
-#game {
-  max-width: 560px;
+.layer {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   height: 100%;
+  max-width: 560px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
   font-size: 30px;
 }
 
-body.touch.playing #game {
+body.touch.playing .layer {
   padding-bottom: 0;
 }
 
 body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
   display: flex;
-}
-
-.layer {
-  display: none;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 #waiting {
@@ -274,7 +270,7 @@ body.playing #footer {
 }
 
 @media screen and (min-width: 460px) {
-  #game {
+  .layer {
     padding: 30px;
   }
 
