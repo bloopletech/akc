@@ -146,7 +146,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 }
 
 #play-field {
-  position: relative;
   width: 250px;
   height: 250px;
 }
