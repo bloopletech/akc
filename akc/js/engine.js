@@ -210,7 +210,9 @@ window.engine = function() {
   });
 
   function layout() {
-    $playField.style.width = $playField.clientHeight + "px";
+    var width = $playField.clientHeight + "px";
+    $playField.style.width = width;
+    $("#info").style.width = width;
   }
 
   window.addEventListener("resize", layout);

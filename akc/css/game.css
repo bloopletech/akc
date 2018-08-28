@@ -34,10 +34,14 @@ body {
 #game {
   width: 100%;
   height: 100%;
-  padding-top: 20px;
+  padding: 20px;
   position: relative;
   text-align: center;
   font-size: 30px;
+}
+
+body.touch #game {
+  padding-bottom: 0;
 }
 
 body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
@@ -284,11 +288,12 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
 
   #game {
     z-index: 1;
-    padding: 20px 20px 0 20px;
+    padding: 30px;
   }
 
   body.touch #game {
     height: 700px;
+    padding-bottom: 0;
   }
 
   .play {
@@ -302,13 +307,12 @@ body.attract #music-status.disabled .disabled, body.attract #music-status.enable
 
   #play-field {
     flex-grow: 1;
-    width: auto;
     height: auto;
     max-width: 100%;
+    line-height: 0;
   }
 
   #info {
-    width: 300px;
     margin-top: 30px;
     font-size: 40px;
   }
