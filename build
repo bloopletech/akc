@@ -14,3 +14,6 @@ rsync -a --del --ignore-missing-args music dist
 # --root => use the built version of the site
 # --maximumFileSizeToCacheInBytes => otherwise will skip audio files, size here is 20MB
 sw-precache --root=dist --maximumFileSizeToCacheInBytes=20971520
+
+size="$(wc -c <"dist/index.html")"
+echo "index.html size: $(echo "scale=1; $size/1024" | bc)KB"
