@@ -6,10 +6,10 @@ window.engine = function() {
   window.$ = document.querySelector.bind(document);
   var $playField = $("#play-field");
   var $grindRatio = $("#grind-ratio");
-  var $stackTrack = $("#stack-track");
+  var $stack = $("#stack");
   var $timeRemainingTrack = $("#time-remaining-track");
   var $score = $("#score");
-  var $stack = $("#stack");
+  var $streak = $("#streak");
 
   var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
@@ -144,8 +144,8 @@ window.engine = function() {
 
   function renderInfo() {
     $score.textContent = game.score().toLocaleString();
-    $stack.textContent = (game.maxStacks() - game.stack()).toLocaleString();
-    $stackTrack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1350.88);
+    $streak.textContent = game.streak().toLocaleString();
+    $stack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1350.88);
   }
 
   function endRound(now) {

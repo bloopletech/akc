@@ -186,7 +186,7 @@ body.touch #input {
   border-radius: 4px;
 }
 
-#stack {
+#streak {
   width: 90px;
   padding: 10px;
   line-height: 1.1;
@@ -285,7 +285,7 @@ body.playing #footer {
     font-size: 50px;
   }
 
-  #stack {
+  #streak {
     width: 120px;
   }
 
