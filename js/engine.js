@@ -4,6 +4,7 @@ window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   window.$ = document.querySelector.bind(document);
+  var $flasher;
   var $playField = $("#play-field");
   var $grindRatio = $("#grind-ratio");
   var $stack = $("#stack");
@@ -148,14 +149,27 @@ window.engine = function() {
     $stack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1256.64);
   }
 
+  function flash() {
+    if($flasher) $flasher.remove();
+
+    $flasher = document.createElement("div");
+    $flasher.id = "flasher";
+    document.body.insertBefore($flasher, document.body.firstChild);
+  }
+
   function endRound(now) {
     currentCode = null;
 
     var isGameOver = game.roundEnded(now);
     renderInfo();
 
-    if(isGameOver) gameOver();
-    else startRound(now);
+    if(isGameOver) {
+      gameOver();
+    }
+    else {
+      flash();
+      startRound(now);
+    }
   }
 
   function gameOver() {

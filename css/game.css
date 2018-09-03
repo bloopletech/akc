@@ -27,6 +27,27 @@ body {
   touch-action: none;
 }
 
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+#flasher {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-color: #449d44;
+  animation: both flash 200ms;
+}
+
 .layer {
   display: none;
   align-items: center;
