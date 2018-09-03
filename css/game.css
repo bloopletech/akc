@@ -44,8 +44,19 @@ body {
   bottom: 0;
   left: 0;
   z-index: -1;
-  background-color: #449d44;
-  animation: both flash 200ms;
+  animation: both flash 800ms;
+}
+
+#flasher.success {
+  background-color: #5cb85c;
+}
+
+#flasher.failure {
+  background-color: #d9534f;
+}
+
+#flasher.game-over {
+  background-color: #5bc0de;
 }
 
 .layer {

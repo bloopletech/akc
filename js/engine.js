@@ -143,33 +143,30 @@ window.engine = function() {
     onInputEnd(event, event.target.dataset.direction);
   }
 
-  function renderInfo() {
-    $score.textContent = game.score().toLocaleString();
-    $streak.textContent = game.streak().toLocaleString();
-    $stack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1256.64);
-  }
-
-  function flash() {
+  function flash(className) {
     if($flasher) $flasher.remove();
 
     $flasher = document.createElement("div");
     $flasher.id = "flasher";
+    $flasher.className = className;
     document.body.insertBefore($flasher, document.body.firstChild);
+  }
+
+  function renderInfo(className) {
+    $score.textContent = game.score().toLocaleString();
+    $streak.textContent = game.streak().toLocaleString();
+    $stack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1256.64);
+    flash(className);
   }
 
   function endRound(now) {
     currentCode = null;
 
     var isGameOver = game.roundEnded(now);
-    renderInfo();
+    renderInfo(isGameOver ? "failure" : "success");
 
-    if(isGameOver) {
-      gameOver();
-    }
-    else {
-      flash();
-      startRound(now);
-    }
+    if(isGameOver) gameOver();
+    else startRound(now);
   }
 
   function gameOver() {
