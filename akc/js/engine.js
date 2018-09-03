@@ -145,7 +145,7 @@ window.engine = function() {
   function renderInfo() {
     $score.textContent = game.score().toLocaleString();
     $streak.textContent = game.streak().toLocaleString();
-    $stack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1319.47);
+    $stack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1256.64);
   }
 
   function endRound(now) {
