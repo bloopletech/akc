@@ -60,7 +60,7 @@ window.engine = function() {
     var grindRatio = game.grindRatio(now);
     $grindRatio.style.r = grindRatio > 0 ? ((grindRatio * 174) + 50) : 0;
 
-    $timeRemainingTrack.style.strokeDashoffset = -(game.timeRemainingRatio(now) * 1332.04);
+    $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
 
     $score.textContent = (game.score() + game.delta(now)).toLocaleString();
 
