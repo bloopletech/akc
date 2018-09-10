@@ -156,7 +156,7 @@ window.engine = function() {
   function renderInfo(className) {
     $score.textContent = game.score().toLocaleString();
     $streak.textContent = game.streak().toLocaleString();
-    $stack.style.strokeDashoffset = ((game.stack() / game.maxStacks()) * 1256.64);
+    $stack.style.strokeDashoffset = -((game.stack() / game.maxStacks()) * 1256.64);
     flash(className);
   }
 
