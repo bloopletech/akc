@@ -38,7 +38,7 @@ window.Game = function(touch) {
   var cycles = 0;
   var direction = null;
   var pattern = [];
-  addDirections(pattern, 7);
+  addDirections(pattern, 5);
   var correct = false;
 
   function nextDirection() {
@@ -48,7 +48,11 @@ window.Game = function(touch) {
     if(stack >= pattern.length) {
       stack = 0;
       cycles++;
-      if(cycles % 3 == 0) addDirections(pattern, 2);
+      if(cycles % 3 == 0) {
+        addDirections(pattern, 1);
+        if(allowedTime >= 750) allowedTime -= 60;
+        else if(allowedTime > 300) allowedTime -= 30;
+      }
     }
 
     return next;
@@ -149,11 +153,6 @@ window.Game = function(touch) {
 
     score += delta(now);
     streak++;
-
-    if(stack == 0) {
-      if(allowedTime >= 750) allowedTime -= 60;
-      else if(allowedTime > 300) allowedTime -= 30;
-    }
 
     return false;
   }
