@@ -38,7 +38,7 @@ window.Game = function(touch) {
   var cycles = 0;
   var direction = null;
   var pattern = [];
-  addDirections(pattern, 5);
+  addDirections(pattern, 10);
   var correct = false;
 
   function nextDirection() {
@@ -48,8 +48,7 @@ window.Game = function(touch) {
     if(stack >= pattern.length) {
       stack = 0;
       cycles++;
-      if(cycles % 4 == 0) {
-        addDirections(pattern, 1);
+      if(cycles % 2 == 0) {
         if(allowedTime >= 750) allowedTime -= 75;
         else if(allowedTime > 300) allowedTime -= 30;
       }
