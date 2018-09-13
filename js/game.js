@@ -38,7 +38,7 @@ window.Game = function(touch) {
   var cycles = 0;
   var direction = null;
   var pattern = [];
-  addDirections(pattern, 10);
+  addDirections(pattern, 7);
   var correct = false;
 
   function nextDirection() {
