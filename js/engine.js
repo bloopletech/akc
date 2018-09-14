@@ -8,6 +8,7 @@ window.engine = function() {
   var $playField = $("#play-field");
   var $grindRatio = $("#grind-ratio");
   var $stack = $("#stack");
+  var $stackMax = $("#stack-max");
   var $timeRemainingTrack = $("#time-remaining-track");
   var $score = $("#score");
   var $streak = $("#streak");
@@ -157,6 +158,7 @@ window.engine = function() {
     $score.textContent = game.score().toLocaleString();
     $streak.textContent = game.streak().toLocaleString();
     $stack.style.strokeDashoffset = -((game.stack() / game.maxStacks()) * 1256.64);
+    $stackMax.textContent = game.maxStacks().toLocaleString();
     flash(className);
   }
 
