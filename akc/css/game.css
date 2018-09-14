@@ -187,7 +187,7 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   display: block;
 }
 
-#stack-max {
+#cycles, #stack-max {
   font-size: 50px;
 }
 
