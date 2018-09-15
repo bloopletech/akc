@@ -187,10 +187,6 @@ body.up #up, body.right #right, body.down #down, body.left #left {
   display: block;
 }
 
-#cycles, #stack-max {
-  font-size: 50px;
-}
-
 #input {
   display: none;
   flex: none;

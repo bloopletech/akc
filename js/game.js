@@ -2,7 +2,6 @@
 
 window.Game = function(touch) {
   var MAX_DUPE_LENGTH = 3;
-  var MAX_CYCLES = 3;
 
   function randomDirection() {
     return Game.DIRECTIONS[Math.floor(Math.random() * Game.DIRECTIONS.length)];
@@ -49,7 +48,7 @@ window.Game = function(touch) {
     if(stack >= pattern.length) {
       stack = 0;
       cycles++;
-      if(cycles == MAX_CYCLES) {
+      if(cycles == 2) {
         cycles = 0;
         addDirections(pattern, 1);
         if(allowedTime >= 750) allowedTime -= 75;
@@ -177,12 +176,6 @@ window.Game = function(touch) {
     },
     maxStacks: function() {
       return pattern.length;
-    },
-    cycles: function() {
-      return cycles;
-    },
-    maxCycles: function() {
-      return MAX_CYCLES;
     },
     roundStarted: roundStarted,
     input: input,
