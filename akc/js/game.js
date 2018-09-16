@@ -48,7 +48,7 @@ window.Game = function(touch) {
     if(stack >= pattern.length) {
       stack = 0;
       cycles++;
-      if(cycles == 2) {
+      if(cycles == 4) {
         cycles = 0;
         addDirections(pattern, 1);
         if(allowedTime >= 750) allowedTime -= 75;
