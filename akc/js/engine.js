@@ -162,7 +162,7 @@ window.engine = function() {
     $streak.textContent = game.streak().toLocaleString();
 
     $stack.style.strokeDasharray = ((1256.64 / game.maxStacks()) - 2) + " 2";
-    $stackTrack.style.strokeDashoffset = ((game.streak() + 1) / game.maxStacks()) * 1256.64;
+    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1256.64;
 
     flash(className);
   }
