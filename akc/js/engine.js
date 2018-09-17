@@ -37,10 +37,13 @@ window.engine = function() {
     setTimeout(function() {
       if(state != "waiting") return;
       transition("playing");
-      renderInfo();
 
-      startRound(timeNow());
-      updateTimeUsed();
+      setTimeout(function() {
+        renderInfo();
+
+        startRound(timeNow());
+        updateTimeUsed();
+      }, 0);
     }, 1500);
   }
 
@@ -157,8 +160,10 @@ window.engine = function() {
   function renderInfo(className) {
     $score.textContent = game.score().toLocaleString();
     $streak.textContent = game.streak().toLocaleString();
+
     $stack.style.strokeDasharray = ((1256.64 / game.maxStacks()) - 2) + " 2";
-    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1256.64;
+    $stackTrack.style.strokeDashoffset = ((game.streak() + 1) / game.maxStacks()) * 1256.64;
+
     flash(className);
   }
 
