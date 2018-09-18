@@ -38,12 +38,13 @@ window.engine = function() {
       if(state != "waiting") return;
       transition("playing");
 
-      setTimeout(function() {
-        renderInfo();
+      $stackTrack.classList.add("reset");
+      $stackTrack.offsetHeight;
+      renderInfo();
+      $stackTrack.classList.remove("reset");
 
-        startRound(timeNow());
-        updateTimeUsed();
-      }, 0);
+      startRound(timeNow());
+      updateTimeUsed();
     }, 1500);
   }
 
