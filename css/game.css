@@ -179,14 +179,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   line-height: 0;
 }
 
-#stack-track {
-  transition: stroke-dashoffset 100ms;
-}
-
-#stack-track.reset {
-  transition: none;
-}
-
 #up, #right, #down, #left {
   display: none;
 }

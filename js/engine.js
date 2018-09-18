@@ -154,27 +154,12 @@ window.engine = function() {
     document.body.insertBefore($flasher, document.body.firstChild);
   }
 
-  function resetStackTrack(stackOffset) {
-    $stackTrack.classList.add("reset");
-
-    window.requestAnimationFrame(function() {
-      $stackTrack.style.strokeDashoffset = stackOffset;
-
-      window.requestAnimationFrame(function() {
-        $stackTrack.classList.remove("reset");
-      });
-    });
-  }
-
   function renderInfo(className) {
     $score.textContent = game.score().toLocaleString();
     $streak.textContent = game.streak().toLocaleString();
 
     $stack.style.strokeDasharray = ((1256.64 / game.maxStacks()) - 2) + " 2";
-
-    var stackOffset = ((game.stack() + 1) / game.maxStacks()) * 1256.64;
-    if(game.stack() == 0) resetStackTrack(stackOffset);
-    else $stackTrack.style.strokeDashoffset = stackOffset;
+    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1256.64;
 
     flash(className);
   }
