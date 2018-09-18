@@ -184,7 +184,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 }
 
 #stack-track.reset {
-  transition-property: none;
+  transition: none;
 }
 
 #up, #right, #down, #left {
