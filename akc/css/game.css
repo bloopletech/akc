@@ -183,6 +183,10 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   transition: stroke-dashoffset 100ms;
 }
 
+#stack-track.reset {
+  transition-property: none;
+}
+
 #up, #right, #down, #left {
   display: none;
 }
