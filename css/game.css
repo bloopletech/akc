@@ -65,9 +65,9 @@ body {
   justify-content: center;
   flex-direction: column;
   height: 100%;
-  max-width: 560px;
+  max-width: 580px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 15px;
   text-align: center;
   font-size: 30px;
 }
