@@ -130,11 +130,11 @@ window.Game = function(touch) {
   }
 
   function isFlame(now) {
-    return grindStart && (reactionTime() <= (allowedTime * 0.3));
+    return grindStart && (reactionTime() <= (allowedTime * 0.25));
   }
 
   function isBoost(now) {
-    return grindStart && timeRemainingRatio(now) <= 0.1;
+    return grindStart && timeRemainingRatio(now) <= 0.05;
   }
 
   function delta(now) {
