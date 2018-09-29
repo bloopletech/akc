@@ -140,8 +140,8 @@ window.Game = function(touch) {
   function delta(now) {
     if(!grindStart) return 0;
 
-    var delta = (initialAllowedTime - reactionTime()) + (grindDuration(now) * 3) + (streak * 20);
-    if(isFlame(now)) delta *= 2;
+    var delta = (initialAllowedTime - reactionTime()) + grindDuration(now) + (streak * 20);
+    if(isFlame(now)) delta += 1000;
     if(isBoost(now)) delta += 1000;
     if(combo) delta *= 2;
     return Math.floor(delta);
