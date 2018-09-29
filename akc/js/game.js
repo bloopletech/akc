@@ -134,7 +134,7 @@ window.Game = function(touch) {
   }
 
   function isBoost(now) {
-    return grindStart && timeRemainingRatio(now) <= 0.05;
+    return grindStart && timeRemainingRatio(now) <= 0.1;
   }
 
   function delta(now) {
