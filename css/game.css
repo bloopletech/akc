@@ -285,7 +285,7 @@ body.playing #footer {
   display: none;
 }
 
-@media screen and (min-width: 460px) {
+@media screen and (min-width: 600px) {
   .layer {
     padding: 20px;
   }
