@@ -38,25 +38,7 @@ body {
 }
 
 #flasher {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
   animation: both flash 800ms;
-}
-
-#flasher.success {
-  background-color: #5cb85c;
-}
-
-#flasher.failure {
-  background-color: #d9534f;
-}
-
-#flasher.game-over {
-  background-color: #5bc0de;
 }
 
 .layer {
@@ -67,7 +49,7 @@ body {
   height: 100%;
   max-width: 580px;
   margin: 0 auto;
-  padding: 15px;
+  padding: 10px;
   text-align: center;
   font-size: 30px;
 }
@@ -305,7 +287,7 @@ body.playing #footer {
 
 @media screen and (min-width: 460px) {
   .layer {
-    padding: 30px;
+    padding: 15px;
   }
 
   .play {

@@ -4,7 +4,6 @@ window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   window.$ = document.querySelector.bind(document);
-  var $flasher;
   var $playField = $("#play-field");
   var $grindRatio = $("#grind-ratio");
   var $stack = $("#stack");
@@ -70,7 +69,7 @@ window.engine = function() {
 
   function onTimeUsed(now) {
     var code = currentCode;
-    endRound(game.finishTime());
+    endRound(game.finishTime(), "");
 
     if(state != "playing") return;
 
@@ -79,9 +78,10 @@ window.engine = function() {
     if(game.input(code)) {
       game.grindStarted(now);
       game.comboed();
+      flash("comboed");
     }
     else {
-      endRound(now);
+      endRound(now, "");
     }
   }
 
@@ -145,30 +145,28 @@ window.engine = function() {
     onInputEnd(event, event.target.dataset.direction);
   }
 
-  function flash(className) {
-    if($flasher) $flasher.remove();
+  function flash(type) {
+    if(type == null) type = "success";
 
-    $flasher = document.createElement("div");
-    $flasher.id = "flasher";
-    $flasher.className = className;
-    document.body.insertBefore($flasher, document.body.firstChild);
+    var $flasher = $("#flasher").cloneNode();
+    $flasher.style.fill = "url(#gradient-flasher-" + type + ")";
+    $("#time-remaining").replaceChild($flasher, $("#flasher"));
   }
 
-  function renderInfo(className) {
+  function renderInfo() {
     $score.textContent = game.score().toLocaleString();
     $streak.textContent = game.streak().toLocaleString();
 
     $stack.style.strokeDasharray = ((1256.64 / game.maxStacks()) - 2) + " 2";
     $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1256.64;
-
-    flash(className);
   }
 
-  function endRound(now) {
+  function endRound(now, flashType) {
     currentCode = null;
 
     var isGameOver = game.roundEnded(now);
-    renderInfo(isGameOver ? "failure" : "success");
+    renderInfo();
+    flash(flashType);
 
     if(isGameOver) gameOver();
     else startRound(now);
