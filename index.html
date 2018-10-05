@@ -6,6 +6,8 @@
     <meta content='true' name='HandheldFriendly'>
     <meta content='width=device-width, height=device-height, user-scalable=no, viewport-fit=cover' name='viewport'>
     <link rel="stylesheet" type="text/css" href="css/game.css">
+    <link rel="stylesheet" type="text/css" href="css/ranks.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link rel="stylesheet" type="text/css" href="css/panel.css">
     <link rel="stylesheet" type="text/css" href="css/panels/my_scores.css">
@@ -13,6 +15,7 @@
     <script src="js/ranks.js"></script>
     <script src="js/music.js"></script>
     <script src="js/engine.js"></script>
+    <script src="js/menu.js"></script>
     <script src="js/modal.js"></script>
     <script src="js/panel.js"></script>
     <script src="js/api/api.js"></script>
@@ -28,9 +31,11 @@
       </div>
       <div id="settings" class=""></div>
     </div>
+
     <div id="waiting" class="layer">
       <div>Wait...</div>
     </div>
+
     <div id="playing" class="layer">
       <div id="play-field">
         <svg id="time-remaining" viewBox="0 0 560 560">
@@ -77,6 +82,7 @@
         <polygon data-direction="left" points="0 0, 0 100, 50 50" fill-opacity="0"/>
       </svg>
     </div>
+
     <div id="game-over" class="layer">
       <div id="results">
         <div>Game Over!</div>
@@ -97,26 +103,44 @@
       </div>
       <a class="play">Play</a>
     </div>
+
     <div id="footer">
-      <svg id="attribution-link" width="24" height="24" viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-      </svg>
       <svg id="music-status" width="24" height="24" viewBox="0 0 24 24">
         <path class="disabled" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
         <path class="enabled" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
       </svg>
+      <svg id="menu-trigger" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+      </svg>
     </div>
-    <div id="attribution">
+
+    <div id="menu">
+      <div id="menu-close" class="clearfix">
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </div>
+      <a id="attribution-link" href="#">
+        <svg class="icon" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        Attribution
+      </a>
+    </div>
+
+    <div id="attribution" class="template">
       Music: "<a href="http://freemusicarchive.org/music/Audiobinger/~/City_Lights_1859">City Lights</a>" by <a href="http://freemusicarchive.org/music/Audiobinger/">Audiobinger</a><br>
       From the <a href="https://freemusicarchive.org/">Free Music Archive</a><br>
       <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY NC</a>
     </div>
+
     <div id="panel-backdrop">
       <div id="panel">
         <span id="panel-close">×</span>
         <div id="panel-content"></div>
       </div>
     </div>
+
     <div id="modal-backdrop">
       <div id="modal">
         <span id="modal-close">×</span>
