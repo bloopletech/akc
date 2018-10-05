@@ -27,6 +27,12 @@ body {
   touch-action: none;
 }
 
+.clearfix::after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
 @keyframes flash {
   from {
     opacity: 1;
