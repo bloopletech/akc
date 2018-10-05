@@ -109,48 +109,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   opacity: 0.65;
 }
 
-.unranked {
-  stroke: #555555;
-}
-
-.bronze {
-  stroke: #D39B77;
-  /*background: linear-gradient(to bottom, #D39B77, #FEFEF3, #935D38, #632E05);*/
-}
-
-.silver {
-  stroke: #CACED2;
-  /*background: linear-gradient(to bottom, #CACED2, #F1F2F6,  #757F88);*/
-}
-
-.gold {
-  stroke: #F7E36D;
-  /*background: linear-gradient(to bottom, #FCFCF4, #F7E36D, #B55F06, #5A4122);*/
-}
-
-.platinum {
-  stroke: #67655F;
-  /*background: linear-gradient(to bottom, #ECEDE8, #8E8F89, #67655F, #D8DCD8, #8C8B84);*/
-}
-
-.diamond {
-  /*background: linear-gradient(to bottom, #F4F5F8, #B5BDC3, #335B80, #0B2B3D);*/
-  /*background: linear-gradient(to bottom, #B4BCC1 10%, #F0F0F2, #E7E8EB, #697B82);*/
-  /*background: linear-gradient(to bottom, #F4F5F8, #335B80, #6086A4, #939F90, #DBDEE1, #B5BDC3, #335462);*/
-  stroke: #335B80;
-  /*background: linear-gradient(7deg, #335B80, #F4F5F8,  #939F90, #DBDEE1, #B5BDC3, #335462);*/
-}
-
-.strontium {
-  stroke: #E1D7B6;
-  /*background: linear-gradient(to bottom, #E1D7B6, #D7CEB0, #E3B56C, #8B7A6A);*/
-}
-
-.vanadium {
-  stroke: #73788C;
-  /*background: linear-gradient(to bottom, #C6CDD9, #42455A, #73788C, #4B4F65);*/
-}
-
 #play-field {
   display: flex;
   justify-content: center;
@@ -256,33 +214,6 @@ th {
 
 td {
   font-weight: bold;
-}
-
-#footer {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 15px;
-  font-size: 16px;
-}
-
-body.playing #footer {
-  display: none;
-}
-
-#music-status .disabled, #music-status .enabled {
-  display: none;
-}
-
-#music-status.disabled .disabled, #music-status.enabled .enabled {
-  display: block;
-}
-
-#attribution {
-  display: none;
 }
 
 @media screen and (min-width: 600px) {

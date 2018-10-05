@@ -1,0 +1,92 @@
+#footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 15px;
+  font-size: 16px;
+}
+
+body.playing #footer {
+  display: none;
+}
+
+.template {
+  display: none;
+}
+
+#footer svg {
+  display: block;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+#music-status {
+  margin-bottom: 20px;
+}
+
+#music-status .disabled, #music-status .enabled {
+  display: none;
+}
+
+#music-status.disabled .disabled, #music-status.enabled .enabled {
+  display: block;
+}
+
+#menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 250px;
+  padding: 20px;
+  z-index: 2;
+  background-color: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,.7);
+}
+
+body.menu-open #menu {
+  display: block;
+}
+
+svg.icon {
+  vertical-align: middle;
+}
+
+.clearfix::after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+#menu-close {
+  margin-top: -20px;
+  margin-right: -20px;
+}
+
+#menu-close svg {
+  float: right;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+@media screen and (min-width: 600px) {
+  #footer {
+    padding: 25px;
+  }
+
+  #footer svg {
+    display: inline-block;
+    width: 68px;
+    height: 68px;
+  }
+
+  #music-status {
+    margin-bottom: 0;
+    margin-right: 25px;
+  }
+}

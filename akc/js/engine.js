@@ -190,16 +190,6 @@ window.engine = function() {
     Api.submitScore(game);
   }
 
-  function showMusicStatus() {
-    $("#music-status").classList.remove("enabled", "disabled");
-    $("#music-status").classList.add(Music.getEnabled() ? "enabled" : "disabled");
-  }
-
-  function updateMusicStatus() {
-    Music.setEnabled(!Music.getEnabled());
-    showMusicStatus();
-  }
-
   function touchDevice() {
     document.body.classList.add("touch");
 
@@ -217,14 +207,7 @@ window.engine = function() {
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play:not(.disabled)")) start();
-    if(e.target.closest("#music-status")) updateMusicStatus();
-    if(e.target.closest("#attribution-link")) {
-      e.preventDefault();
-      Modal.show($("#attribution").innerHTML);
-    }
   });
-
-  showMusicStatus();
 };
 
 document.addEventListener("DOMContentLoaded", engine);
