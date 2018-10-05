@@ -51,14 +51,12 @@ body.menu-open #menu {
   display: block;
 }
 
-svg.icon {
-  vertical-align: middle;
+#menu a {
+  display: block;
 }
 
-.clearfix::after {
-  content: " ";
-  display: table;
-  clear: both;
+svg.icon {
+  vertical-align: middle;
 }
 
 #menu-close {

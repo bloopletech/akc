@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="css/game.css">
     <link rel="stylesheet" type="text/css" href="css/ranks.css">
     <link rel="stylesheet" type="text/css" href="css/menu.css">
-    <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link rel="stylesheet" type="text/css" href="css/panel.css">
     <link rel="stylesheet" type="text/css" href="css/panels/my_scores.css">
     <script src="js/game.js"></script>
@@ -16,11 +15,11 @@
     <script src="js/music.js"></script>
     <script src="js/engine.js"></script>
     <script src="js/menu.js"></script>
-    <script src="js/modal.js"></script>
     <script src="js/panel.js"></script>
     <script src="js/api/api.js"></script>
     <script src="js/api/user.js"></script>
     <script src="js/panels/my_scores.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/debug.js"></script>
     <script src="js/swr.js"></script>
   </head>
@@ -120,6 +119,7 @@
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         </svg>
       </div>
+      <a href="#my_scores">Your Scores</a>
       <a id="attribution-link" href="#">
         <svg class="icon" width="24" height="24" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
@@ -136,15 +136,12 @@
 
     <div id="panel-backdrop">
       <div id="panel">
-        <span id="panel-close">×</span>
+        <div id="panel-close" class="clearfix">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        </div>
         <div id="panel-content"></div>
-      </div>
-    </div>
-
-    <div id="modal-backdrop">
-      <div id="modal">
-        <span id="modal-close">×</span>
-        <div id="modal-content"></div>
       </div>
     </div>
   </body>

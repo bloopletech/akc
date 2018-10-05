@@ -32,4 +32,6 @@ window.e = function(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
-window.Panels = {};
+window.Panels = {
+
+};

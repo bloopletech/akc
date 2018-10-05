@@ -17,7 +17,7 @@ window.menu = function() {
     if(e.target.closest("#music-status")) updateMusicStatus();
     if(e.target.closest("#attribution-link")) {
       e.preventDefault();
-      Modal.show($("#attribution").innerHTML);
+      Panel.show($("#attribution").innerHTML);
     }
   });
 
