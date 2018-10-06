@@ -10,10 +10,6 @@ body.playing #footer {
   display: none;
 }
 
-.template {
-  display: none;
-}
-
 #footer svg {
   display: block;
   width: 44px;
