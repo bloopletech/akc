@@ -1,7 +1,6 @@
 "use strict";
 
-window.Panels.MyScores = (function() {
-  var $root;
+window.Panels.MyScores = function() {
   var dateFormatter = new Intl.DateTimeFormat('en-AU', {
     year: 'numeric', month: 'numeric', day: 'numeric',
     hour: 'numeric', minute: 'numeric', second: 'numeric',
@@ -9,14 +8,12 @@ window.Panels.MyScores = (function() {
   });
 
   function mount() {
-    Panel.show(`<div id="my-scores-root"></div>`);
-    $root = $("#my-scores-root");
-
     Api.myScores(render);
+    return `<div id="my-scores-root"></div>`;
   }
 
   function render(scores) {
-    $root.innerHTML = `
+    $("#my-scores-root").innerHTML = `
       <h2>Your Scores</h2>
       <table>
         <tr>
@@ -56,4 +53,4 @@ window.Panels.MyScores = (function() {
     mount: mount,
     unmount: unmount
   };
-})();
+};
