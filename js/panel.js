@@ -8,11 +8,12 @@ window.Panel = (function() {
 
   function hide() {
     $("body").classList.remove("panel-open");
+    window.location.hash = "#";
   }
 
   document.addEventListener("DOMContentLoaded", function() {
     $("body").addEventListener("click", function(e) {
-      if(e.target.matches("#panel-backdrop") || e.target.matches("#panel-close")) hide();
+      if(e.target.matches("#panel-backdrop") || e.target.closest("#panel-close")) hide();
     });
   });
 
@@ -32,6 +33,4 @@ window.e = function(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
-window.Panels = {
-
-};
+window.Panels = {};
