@@ -43,7 +43,7 @@ if ('serviceWorker' in navigator) {
                 // have been added to the cache.
                 // It's the perfect time to display a "New content is available; please refresh."
                 // message in the page's interface.
-                Panel.show("The game has been updated, please <a href='javascript:window.location.reload()'>reload the game</a> to play on the latest version.");
+                Panel.forward(new Panels.SwrUpdated());
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a "Content is cached for offline use." message.
