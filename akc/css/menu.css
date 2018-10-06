@@ -53,6 +53,7 @@ body.menu-open #menu {
 
 #menu a {
   display: block;
+  padding: 10px 0;
 }
 
 svg.icon {
