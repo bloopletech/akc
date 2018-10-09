@@ -45,6 +45,8 @@ window.Api = (function() {
   }
 
   function submitScore(game, success) {
+    if(game.score() == 0) return;
+
     var scoreData = {
       "scoring_version": Game.SCORING_VERSION,
       "mode": game.touch() ? "touch" : "keyboard",
