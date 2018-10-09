@@ -175,6 +175,7 @@ window.engine = function() {
   function gameOver() {
     window.cancelAnimationFrame(timeUsedUpdater);
 
+    rejectTouchPlay();
     showDirection("blank");
     $("#results-score").textContent = game.score().toLocaleString();
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
@@ -182,12 +183,16 @@ window.engine = function() {
     transition("game-over");
     Music.pause();
 
-    $("#game-over .play").classList.add("disabled");
-    setTimeout(function() {
-      $("#game-over .play").classList.remove("disabled");
-    }, 1000);
-
     Api.submitScore(game);
+  }
+
+  function rejectTouchPlay() {
+    if(document.body.classList.contains("touch")) {
+      $("#game-over .play").classList.add("disabled");
+      setTimeout(function() {
+        $("#game-over .play").classList.remove("disabled");
+      }, 500);
+    }
   }
 
   function touchDevice() {
