@@ -40,7 +40,7 @@ window.engine = function() {
       renderInfo();
       startRound(timeNow());
       updateTimeUsed();
-    }, 1500);
+    }, 500);
   }
 
   function showDirection(direction) {
@@ -86,19 +86,13 @@ window.engine = function() {
   }
 
   function onInputStart(event, code) {
-    if(state == "waiting") {
-      event.preventDefault();
-      return true;
-    }
-
-    if(state != "playing") return false;
-
+    if(state != "playing") return;
     event.preventDefault();
 
     if(!currentCode) {
       if(!game.input(code)) {
         endRound(event.timeStamp);
-        return true;
+        return;
       }
 
       currentCode = code;
@@ -108,33 +102,32 @@ window.engine = function() {
       game.input();
       endRound(event.timeStamp);
     }
-
-    return true;
   }
 
   function onInputEnd(event, code) {
     if(state == "waiting") {
       event.preventDefault();
-      return;
+      return true;
     }
 
-    if(state == "playing") {
-      if(!currentCode || currentCode != code) game.input();
-      endRound(event.timeStamp);
-    }
+    if(state != "playing") return false;
+    event.preventDefault();
+
+    if(!currentCode || currentCode != code) game.input();
+    endRound(event.timeStamp);
   }
 
   function onKeyDown(event) {
-    if(onInputStart(event, CODES_MAP[event.keyCode])) return;
+    onInputStart(event, CODES_MAP[event.keyCode]);
+  }
+
+  function onKeyUp(event) {
+    if(onInputEnd(event, CODES_MAP[event.keyCode])) return;
 
     if(event.keyCode == 32 || event.keyCode == 13) {
       event.preventDefault();
       if(!$("#game-over .play").matches(".disabled")) start();
     }
-  }
-
-  function onKeyUp(event) {
-    onInputEnd(event, CODES_MAP[event.keyCode]);
   }
 
   function onTouchStart(event) {
