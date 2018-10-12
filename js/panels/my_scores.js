@@ -9,7 +9,7 @@ window.Panels.MyScores = function() {
 
   function mount() {
     Api.myScores(render);
-    return `<div id="my-scores-root"></div>`;
+    return `<div id="my-scores-root">Loading...</div>`;
   }
 
   function render(scores) {
