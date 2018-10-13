@@ -73,6 +73,12 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   font-weight: bold;
 }
 
+#waiting > div {
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 6px;
+}
+
 .play {
   display: inline-block;
   position: absolute;
