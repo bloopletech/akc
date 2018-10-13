@@ -2,22 +2,6 @@
 
 window.Music = (function() {
   var player;
-  var playerInited = false;
-
-  function enabledKey() {
-    return "music.enabled";
-  }
-
-  function getEnabled() {
-    var enabled = localStorage[enabledKey()];
-    return enabled ? enabled == "true" : true;
-  }
-
-  function setEnabled(enabled) {
-    if(!enabled) pause();
-    localStorage[enabledKey()] = enabled;
-    if(enabled && !playerInited) initPlayer();
-  }
 
   function lastStartKey() {
     return "music.lastStart";
@@ -34,14 +18,12 @@ window.Music = (function() {
   }
 
   function play() {
-    if(getEnabled()) player.play();
+    player.play();
   }
 
   function pause() {
-    if(getEnabled()) {
-      player.pause();
-      if(!player.ended) setLastStart(player.currentTime);
-    }
+    player.pause();
+    if(!player.ended) setLastStart(player.currentTime);
   }
 
   function initPlayer() {
@@ -50,15 +32,10 @@ window.Music = (function() {
       setLastStart(null);
     });
     player.currentTime = getLastStart();
-
-    playerInited = true;
   }
 
-  if(getEnabled()) initPlayer();
-
   return {
-    getEnabled: getEnabled,
-    setEnabled: setEnabled,
+    init: initPlayer,
     play: play,
     pause: pause
   };

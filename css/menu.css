@@ -18,15 +18,15 @@ body.playing #footer {
   background-color: #fff;
 }
 
-#music-status {
+#jukebox-status {
   margin-bottom: 20px;
 }
 
-#music-status .disabled, #music-status .enabled {
+#jukebox-status .disabled, #jukebox-status .enabled {
   display: none;
 }
 
-#music-status.disabled .disabled, #music-status.enabled .enabled {
+#jukebox-status.disabled .disabled, #jukebox-status.enabled .enabled {
   display: block;
 }
 
@@ -80,7 +80,7 @@ svg.icon {
     height: 68px;
   }
 
-  #music-status {
+  #jukebox-status {
     margin-bottom: 0;
     margin-right: 25px;
   }

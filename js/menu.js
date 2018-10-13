@@ -1,14 +1,14 @@
 "use strict";
 
 window.menu = function() {
-  function showMusicStatus() {
-    $("#music-status").classList.remove("enabled", "disabled");
-    $("#music-status").classList.add(Music.getEnabled() ? "enabled" : "disabled");
+  function showJukeboxStatus() {
+    $("#jukebox-status").classList.remove("enabled", "disabled");
+    $("#jukebox-status").classList.add(Jukebox.getEnabled() ? "enabled" : "disabled");
   }
 
-  function updateMusicStatus() {
-    Music.setEnabled(!Music.getEnabled());
-    showMusicStatus();
+  function updateJukeboxStatus() {
+    Jukebox.setEnabled(!Jukebox.getEnabled());
+    showJukeboxStatus();
   }
 
   document.body.addEventListener("click", function(e) {
@@ -19,10 +19,10 @@ window.menu = function() {
     }
     if(e.target.closest("#menu-trigger")) document.body.classList.add("menu-open");
     if(e.target.closest("#menu-close")) document.body.classList.remove("menu-open");
-    if(e.target.closest("#music-status")) updateMusicStatus();
+    if(e.target.closest("#jukebox-status")) updateJukeboxStatus();
   });
 
-  showMusicStatus();
+  showJukeboxStatus();
 };
 
 document.addEventListener("DOMContentLoaded", menu);

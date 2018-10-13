@@ -31,7 +31,7 @@ window.engine = function() {
   function start() {
     transition("waiting");
     game = new Game(document.body.classList.contains("touch"));
-    Music.play();
+    Jukebox.play();
 
     setTimeout(function() {
       if(state != "waiting") return;
@@ -174,7 +174,7 @@ window.engine = function() {
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak().toLocaleString();
     transition("game-over");
-    Music.pause();
+    Jukebox.pause();
 
     Api.submitScore(game);
   }
