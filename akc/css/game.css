@@ -70,7 +70,6 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 
 #waiting {
   font-size: 40px;
-  font-weight: bold;
 }
 
 #waiting > div {
