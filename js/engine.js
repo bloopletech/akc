@@ -31,6 +31,7 @@ window.engine = function() {
   function start() {
     transition("waiting");
     game = new Game(document.body.classList.contains("touch"));
+    window.game = game;
     Music.play();
 
     setTimeout(function() {
@@ -44,7 +45,7 @@ window.engine = function() {
   }
 
   function showDirection(direction) {
-    for(var i in Game.DIRECTIONS) document.body.classList.remove(Game.DIRECTIONS[i]);
+    for(var i in Pattern.DIRECTIONS) document.body.classList.remove(Pattern.DIRECTIONS[i]);
     document.body.classList.add(direction);
   }
 
@@ -57,27 +58,27 @@ window.engine = function() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    var grindRatio = game.grindRatio(now);
+    var grindRatio = game.round().grindRatio(now);
     $grindRatio.style.r = grindRatio > 0 ? ((grindRatio * 174) + 50) : 0;
 
-    $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
+    $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.round().timeRemainingRatio(now) * 1482.83));
 
-    $score.textContent = (game.score() + game.delta(now)).toLocaleString();
+    $score.textContent = (game.score() + game.round().delta(now)).toLocaleString();
 
-    if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
+    if(game.round().timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
 
   function onTimeUsed(now) {
     var code = currentCode;
-    endRound(game.finishTime(), "");
+    endRound(game.round().finishTime(), "");
 
     if(state != "playing") return;
 
     currentCode = code;
 
-    if(game.input(code)) {
-      game.grindStarted(now);
-      game.comboed();
+    if(game.round().input(code)) {
+      game.round().grindStarted(now);
+      game.round().comboed();
       flash("comboed");
     }
     else {
@@ -90,16 +91,16 @@ window.engine = function() {
     event.preventDefault();
 
     if(!currentCode) {
-      if(!game.input(code)) {
+      if(!game.round().input(code)) {
         endRound(event.timeStamp);
         return;
       }
 
       currentCode = code;
-      game.grindStarted(event.timeStamp);
+      game.round().grindStarted(event.timeStamp);
     }
     else if(currentCode != code) {
-      game.input();
+      game.round().input();
       endRound(event.timeStamp);
     }
   }
@@ -113,7 +114,7 @@ window.engine = function() {
     if(state != "playing") return false;
     event.preventDefault();
 
-    if(!currentCode || currentCode != code) game.input();
+    if(!currentCode || currentCode != code) game.round().input();
     endRound(event.timeStamp);
   }
 
@@ -148,10 +149,10 @@ window.engine = function() {
 
   function renderInfo() {
     $score.textContent = game.score().toLocaleString();
-    $streak.textContent = game.streak().toLocaleString();
+    $streak.textContent = game.round().streak().toLocaleString();
 
     $stack.style.strokeDasharray = ((1256.64 / game.maxStacks()) - 2) + " 2";
-    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1256.64;
+    $stackTrack.style.strokeDashoffset = ((game.round().stack() + 1) / game.maxStacks()) * 1256.64;
   }
 
   function endRound(now, flashType) {
@@ -170,9 +171,9 @@ window.engine = function() {
 
     rejectTouchPlay();
     showDirection("blank");
-    $("#results-score").textContent = game.score().toLocaleString();
+    $("#results-score").textContent = game.round().score().toLocaleString();
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
-    $("#results-streak").textContent = game.streak().toLocaleString();
+    $("#results-streak").textContent = game.round().streak().toLocaleString();
     transition("game-over");
     Music.pause();
 
