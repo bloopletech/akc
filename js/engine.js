@@ -58,7 +58,7 @@ window.engine = function() {
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
     var grindRatio = game.grindRatio(now);
-    $grindRatio.style.r = grindRatio > 0 ? ((grindRatio * 174) + 50) : 0;
+    $grindRatio.style.r = grindRatio > 0 ? (249 - (grindRatio * 249)) : 0;
 
     $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
 
