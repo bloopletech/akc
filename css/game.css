@@ -130,6 +130,10 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   line-height: 0;
 }
 
+#time-remaining {
+  margin: -10px -10px 0 -10px;
+}
+
 #up, #right, #down, #left {
   display: none;
 }
@@ -235,6 +239,10 @@ td {
   .play {
     position: static;
     margin-left: 0;
+  }
+
+  #time-remaining {
+    margin: 0;
   }
 
   #info {
