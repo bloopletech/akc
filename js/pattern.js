@@ -41,10 +41,13 @@ window.Pattern = function() {
   }
 
   return {
-    length: function() {
-      return pattern.length;
+    next: next,
+    stack: function() {
+      return stack;
     },
-    next: next
+    maxStacks: function() {
+      return pattern.length;
+    }
   };
 };
 
