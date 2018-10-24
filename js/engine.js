@@ -44,7 +44,7 @@ window.engine = function() {
   }
 
   function showDirection(direction) {
-    for(var i in Game.DIRECTIONS) document.body.classList.remove(Game.DIRECTIONS[i]);
+    for(var i in Pattern.DIRECTIONS) document.body.classList.remove(Pattern.DIRECTIONS[i]);
     document.body.classList.add(direction);
   }
 
