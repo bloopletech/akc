@@ -1,32 +1,6 @@
 "use strict";
 
 window.Game = function(touch) {
-  var MAX_DUPE_LENGTH = 3;
-
-  function randomDirection() {
-    return Game.DIRECTIONS[Math.floor(Math.random() * Game.DIRECTIONS.length)];
-  }
-
-  function addDirection(pattern) {
-    while(true) {
-      pattern.push(randomDirection());
-
-      var sliced = pattern.slice(-(MAX_DUPE_LENGTH + 1));
-      if(sliced.length < MAX_DUPE_LENGTH) return;
-
-      var dupes = sliced.every(function(value) {
-        return value == sliced[0];
-      });
-
-      if(dupes) pattern.pop();
-      else return;
-    }
-  }
-
-  function addDirections(pattern, count) {
-    for(var i = 0; i < count; i++) addDirection(pattern);
-  }
-
   var initialAllowedTime = 1200;
   var allowedTime = initialAllowedTime;
   var score = 0;
@@ -34,29 +8,9 @@ window.Game = function(touch) {
   var startTime = null;
   var grindStart = null;
   var combo = null;
-  var stack = 0;
-  var cycles = 0;
   var direction = null;
-  var pattern = [];
-  addDirections(pattern, 8);
+  var pattern = new Pattern();
   var correct = false;
-
-  function nextDirection() {
-    var next = pattern[stack];
-
-    stack++;
-    if(stack >= pattern.length) {
-      stack = 0;
-      cycles++;
-      if(cycles == 2) {
-        cycles = 0;
-        if(allowedTime >= 750) allowedTime -= 75;
-        else if(allowedTime > 300) allowedTime -= 30;
-      }
-    }
-
-    return next;
-  }
 
   function grindTime(now) {
     return ((now - grindStart) * 2);
@@ -92,11 +46,12 @@ window.Game = function(touch) {
   }
 
   function roundStarted(now) {
-    direction = nextDirection();
+    direction = pattern.next();
     startTime = now;
     correct = false;
     grindStart = null;
     combo = null;
+
     return direction;
   }
 
@@ -154,7 +109,16 @@ window.Game = function(touch) {
     score += delta(now);
     streak++;
 
+    if(isAdjustAllowedTime()) {
+      if(allowedTime >= 750) allowedTime -= 75;
+      else if(allowedTime > 300) allowedTime -= 30;
+    }
+
     return false;
+  }
+
+  function isAdjustAllowedTime() {
+    return ((streak - 1) % (pattern.length() * 2)) == 0;
   }
 
   return {
@@ -171,10 +135,10 @@ window.Game = function(touch) {
       return streak;
     },
     stack: function() {
-      return stack;
+      return (streak - 1) % pattern.length();
     },
     maxStacks: function() {
-      return pattern.length;
+      return pattern.length();
     },
     roundStarted: roundStarted,
     input: input,
@@ -189,5 +153,4 @@ window.Game = function(touch) {
   };
 };
 
-window.Game.DIRECTIONS = ["left", "up", "right", "down"];
 window.Game.SCORING_VERSION = 1;
