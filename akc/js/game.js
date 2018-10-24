@@ -39,7 +39,7 @@ window.Game = function(touch) {
   }
 
   function timeRemainingRatio(now) {
-    var time = (allowedTime - timePassed(now)) / (allowedTime + 0.0);
+    var time = timeRemaining(now) / allowedTime;
     if(time < 0) return 0;
     if(time > 1) return 1;
     return time;
@@ -51,7 +51,6 @@ window.Game = function(touch) {
     correct = false;
     grindStart = null;
     combo = null;
-
     return direction;
   }
 
@@ -107,18 +106,15 @@ window.Game = function(touch) {
     if(diff < 50 || diff > allowedTime || !correct) return true;
 
     score += delta(now);
-    streak++;
 
-    if(isAdjustAllowedTime()) {
+    if(streak % (pattern.maxStacks() * 2) == 0) {
       if(allowedTime >= 750) allowedTime -= 75;
       else if(allowedTime > 300) allowedTime -= 30;
     }
 
-    return false;
-  }
+    streak++;
 
-  function isAdjustAllowedTime() {
-    return ((streak - 1) % (pattern.length() * 2)) == 0;
+    return false;
   }
 
   return {
@@ -135,10 +131,10 @@ window.Game = function(touch) {
       return streak;
     },
     stack: function() {
-      return (streak - 1) % pattern.length();
+      return pattern.stack();
     },
     maxStacks: function() {
-      return pattern.length();
+      return pattern.maxStacks();
     },
     roundStarted: roundStarted,
     input: input,
