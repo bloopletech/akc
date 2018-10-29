@@ -11,6 +11,8 @@ window.Game = function(touch) {
   var direction = null;
   var pattern = new Pattern();
   var correct = false;
+  var outcome = null;
+  var roundLogs = [];
 
   function grindTime(now) {
     return ((now - grindStart) * 2);
@@ -101,11 +103,36 @@ window.Game = function(touch) {
     return Math.floor(delta);
   }
 
-  function roundEnded(now) {
-    var diff = timePassed(now);
-    if(diff < 50 || diff > allowedTime || !correct) return true;
+  function createLogEntry(now, outcome) {
+    roundLogs.push({
+      allowedTime: allowedTime,
+      score: score,
+      streak: streak,
+      startTime: startTime,
+      grindStart: grindStart,
+      combo: combo,
+      direction: direction,
+      now: now,
+      diff: timePassed(now),
+      outcome: outcome
+    });
+  }
 
-    score += delta(now);
+  function updateOutcome(now) {
+    var diff = timePassed(now);
+    if(!correct) outcome = "incorrect";
+    if(diff > allowedTime) outcome = "timeExceeded";
+    if(diff < 50) outcome = "keyAutoRepeat";
+  }
+
+  function roundEnded(now) {
+    if(outcome) return;
+
+    updateOutcome(now);
+    if(!outcome) score += delta(now);
+    createLogEntry(now);
+
+    if(outcome) return;
 
     if(streak % (pattern.maxStacks() * 2) == 0) {
       if(allowedTime >= 750) allowedTime -= 75;
@@ -113,8 +140,6 @@ window.Game = function(touch) {
     }
 
     streak++;
-
-    return false;
   }
 
   return {
@@ -136,6 +161,12 @@ window.Game = function(touch) {
     maxStacks: function() {
       return pattern.maxStacks();
     },
+    outcome: function() {
+      return outcome;
+    },
+    roundLogs: function() {
+      return roundLogs;
+    },
     roundStarted: roundStarted,
     input: input,
     timeRemaining: timeRemaining,
@@ -150,3 +181,9 @@ window.Game = function(touch) {
 };
 
 window.Game.SCORING_VERSION = 1;
+window.Game.formatOutcome = function(outcome) {
+  if(outcome == "incorrect") return "Wrong input";
+  if(outcome == "timeExceeded") return "Too slow";
+  if(outcome == "keyAutoRepeat") return "Key held down";
+  return "";
+};
