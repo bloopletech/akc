@@ -157,11 +157,11 @@ window.engine = function() {
   function endRound(now, flashType) {
     currentCode = null;
 
-    var isGameOver = game.roundEnded(now);
+    game.roundEnded(now);
     renderInfo();
     flash(flashType);
 
-    if(isGameOver) gameOver();
+    if(game.outcome()) gameOver();
     else startRound(now);
   }
 
@@ -173,6 +173,7 @@ window.engine = function() {
     $("#results-score").textContent = game.score().toLocaleString();
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak().toLocaleString();
+    $("#results-outcome").textContent = Game.formatOutcome(game.outcome());
     transition("game-over");
     Music.pause();
 

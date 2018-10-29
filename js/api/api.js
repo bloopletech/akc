@@ -52,7 +52,9 @@ window.Api = (function() {
       "mode": game.touch() ? "touch" : "keyboard",
       "value": game.score(),
       "streak": game.streak(),
-      "rank": Ranks.scoreRank(game.score()).humanName
+      "rank": Ranks.scoreRank(game.score()).humanName,
+      "outcome": game.outcome(),
+      "rounds": game.roundLogs()
     };
 
     User.withToken(function(token) {
