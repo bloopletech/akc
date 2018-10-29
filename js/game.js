@@ -103,7 +103,7 @@ window.Game = function(touch) {
     return Math.floor(delta);
   }
 
-  function createLogEntry(now, outcome) {
+  function createLogEntry(now) {
     roundLogs.push({
       allowedTime: allowedTime,
       score: score,
