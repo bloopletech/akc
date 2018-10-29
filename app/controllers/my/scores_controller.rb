@@ -15,6 +15,25 @@ class My::ScoresController < My::BaseController
 
   private
   def score_params
-    params.require(:score).permit(:scoring_version, :mode, :value, :streak, :rank)
+    params.require(:score).permit(
+      :scoring_version,
+      :mode,
+      :value,
+      :streak,
+      :rank,
+      :outcome,
+      rounds: [
+        :allowedTime,
+        :score,
+        :streak,
+        :startTime,
+        :grindStart,
+        :combo,
+        :direction,
+        :now,
+        :diff,
+        :outcome
+      ]
+    )
   end
 end

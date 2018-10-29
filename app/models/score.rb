@@ -8,4 +8,6 @@ class Score < ApplicationRecord
   validates :value, presence: true
   validates :streak, presence: true
   validates :rank, presence: true
+  validates :outcome, presence: true, inclusion: { in: ['incorrect', 'timeExceeded', 'keyAutoRepeat'] }
+  validates :rounds, presence: true
 end
