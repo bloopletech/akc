@@ -42,6 +42,9 @@ window.Pattern = function() {
 
   return {
     next: next,
+    peek: function() {
+      return pattern[stack];
+    },
     stack: function() {
       return stack;
     },

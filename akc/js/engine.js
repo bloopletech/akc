@@ -68,21 +68,19 @@ window.engine = function() {
   }
 
   function onTimeUsed(now) {
+    if(!game.canCombo()) {
+      endRound(now, "");
+      return;
+    }
+
     var code = currentCode;
     endRound(game.finishTime(), "");
-
-    if(state != "playing") return;
-
     currentCode = code;
 
-    if(game.input(code)) {
-      game.grindStarted(now);
-      game.comboed();
-      flash("comboed");
-    }
-    else {
-      endRound(now, "");
-    }
+    game.input(code);
+    game.grindStarted(now);
+    game.comboed();
+    flash("comboed");
   }
 
   function onInputStart(event, code) {

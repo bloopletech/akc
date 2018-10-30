@@ -81,6 +81,10 @@ window.Game = function(touch) {
     return grindStart - startTime;
   }
 
+  function canCombo() {
+    return correct && (direction == pattern.peek());
+  }
+
   function comboed() {
     combo = true;
   }
@@ -173,6 +177,7 @@ window.Game = function(touch) {
     timeRemainingRatio: timeRemainingRatio,
     grindStarted: grindStarted,
     finishTime: finishTime,
+    canCombo: canCombo,
     comboed: comboed,
     roundEnded: roundEnded,
     delta: delta,
