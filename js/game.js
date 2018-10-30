@@ -121,8 +121,8 @@ window.Game = function(touch) {
   function updateOutcome(now) {
     var diff = timePassed(now);
     if(!correct) outcome = "incorrect";
-    if(diff > allowedTime) outcome = "timeExceeded";
-    if(diff < 50) outcome = "keyAutoRepeat";
+    else if(diff > allowedTime) outcome = "timeExceeded";
+    else if(diff < 50) outcome = "keyAutoRepeat";
   }
 
   function roundEnded(now) {
