@@ -11,6 +11,7 @@ window.engine = function() {
   var $timeRemainingTrack = $("#time-remaining-track");
   var $score = $("#score");
   var $streak = $("#streak");
+  1.0.toLocaleString(); //Preload the NumberFormat
 
   var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
