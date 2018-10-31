@@ -133,6 +133,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
 }
 
 #time-remaining {
+  transform: translateZ(0);
   margin: -10px -10px 0 -10px;
 }
 
@@ -180,6 +181,7 @@ body.touch #input {
 }
 
 #score {
+  transform: translateZ(0);
   flex: 1;
   padding: 10px;
   line-height: 1.1;
