@@ -62,22 +62,18 @@ body {
   font-size: 30px;
 }
 
-body.touch.playing .layer {
+body.touch.waiting .layer, body.touch.playing .layer {
   padding-bottom: 0;
 }
 
-body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-over #game-over {
-  display: flex;
-}
-
 #waiting {
-  font-size: 40px;
+  display: none;
+  font-size: 50px;
+  font-weight: bold;
 }
 
-#waiting > div {
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 6px;
+body.attract #attract, body.waiting #playing, body.playing #playing, body.game-over #game-over {
+  display: flex;
 }
 
 .play {
@@ -141,7 +137,7 @@ body.attract #attract, body.waiting #waiting, body.playing #playing, body.game-o
   display: none;
 }
 
-body.up #up, body.right #right, body.down #down, body.left #left {
+body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #waiting {
   display: block;
 }
 
