@@ -164,11 +164,19 @@ window.engine = function() {
     else startRound(now);
   }
 
+  function resetPlayField() {
+    showDirection("blank");
+    $score.textContent = "0";
+    $streak.textContent = "0";
+    $timeRemainingTrack.style.strokeDashoffset = 0;
+    $stackTrack.style.strokeDashoffset = 0;
+  }
+
   function gameOver() {
     window.cancelAnimationFrame(timeUsedUpdater);
 
     rejectTouchPlay();
-    showDirection("blank");
+    resetPlayField();
     $("#results-score").textContent = game.score().toLocaleString();
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak().toLocaleString();
