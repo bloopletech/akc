@@ -168,6 +168,7 @@ window.engine = function() {
     showDirection("blank");
     $score.textContent = "0";
     $streak.textContent = "0";
+    $grindRatio.style.r = 0;
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;
   }
