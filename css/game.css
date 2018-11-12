@@ -20,6 +20,8 @@ body {
   padding-bottom: env(safe-area-inset-bottom); /* iOS 11.2 */
 
   background: #eee;
+  background-position: center;
+  background-size: cover;
   color: #000;
   font-size: 16px;
 
