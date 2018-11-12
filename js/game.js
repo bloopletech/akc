@@ -126,7 +126,6 @@ window.Game = function(touch) {
     var diff = timePassed(now);
     if(!correct) outcome = "incorrect";
     else if(diff > allowedTime) outcome = "timeExceeded";
-    else if(diff < 50) outcome = "keyAutoRepeat";
   }
 
   function roundEnded(now) {
@@ -189,6 +188,5 @@ window.Game.SCORING_VERSION = 1;
 window.Game.formatOutcome = function(outcome) {
   if(outcome == "incorrect") return "Wrong input";
   if(outcome == "timeExceeded") return "Too slow";
-  if(outcome == "keyAutoRepeat") return "Key held down";
   return "";
 };
