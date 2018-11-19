@@ -19,9 +19,7 @@ body {
   padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 */
   padding-bottom: env(safe-area-inset-bottom); /* iOS 11.2 */
 
-  background: linear-gradient(90deg, rgba(158,1,66,0.4) 0%, rgba(213,62,79,0.4) 10%, rgba(244,109,67,0.4) 20%, rgba(253,174,97,0.4) 30%, rgba(254,224,139,0.4) 40%, rgba(255,255,191,0.4) 50%, rgba(230,245,152,0.4) 60%, rgba(171,221,164,0.4) 70%, rgba(102,194,165,0.4) 80%, rgba(50,136,189,0.4) 90%, rgba(94,79,162,0.4) 100%),
-              linear-gradient(180deg, rgba(158,1,66,0.4) 0%, rgba(213,62,79,0.4) 10%, rgba(244,109,67,0.4) 20%, rgba(253,174,97,0.4) 30%, rgba(254,224,139,0.4) 40%, rgba(255,255,191,0.4) 50%, rgba(230,245,152,0.4) 60%, rgba(171,221,164,0.4) 70%, rgba(102,194,165,0.4) 80%, rgba(50,136,189,0.4) 90%, rgba(94,79,162,0.4) 100%);
-  background-blend-mode: lighten;
+  background: #eee;
   color: #000;
   font-size: 16px;
 

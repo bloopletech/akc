@@ -40,7 +40,7 @@ body.waiting #footer, body.playing #footer {
   padding: 20px;
   z-index: 2;
   background-color: #fff;
-  box-shadow: 0 0 15px rgba(0,0,0,.7);
+  box-shadow: 0 0 15px rgba(0, 0, 0, .7);
 }
 
 body.menu-open #menu {
