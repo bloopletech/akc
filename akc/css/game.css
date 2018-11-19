@@ -144,7 +144,7 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
 #input {
   display: none;
   flex: none;
-  margin-top: 20px;
+  margin-top: 10px;
   background-color: #fff;
   stroke: #000;
 }
@@ -159,7 +159,7 @@ body.touch #input {
   justify-content: center;
   flex: none;
   position: relative;
-  margin-top: 20px;
+  margin-top: 10px;
   overflow: auto;
 
   text-align: center;
@@ -244,6 +244,10 @@ td {
 
   #time-remaining {
     margin: 0;
+  }
+
+  #input {
+    margin-top: 20px;
   }
 
   #info {
