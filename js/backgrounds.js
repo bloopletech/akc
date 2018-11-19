@@ -18,7 +18,7 @@ window.Backgrounds = (function() {
   }
 
   function render() {
-    $("body").style.backgroundImage = `url("images/${current().path}")`;
+    document.body.style.backgroundImage = `url("images/${current().path}")`;
   }
 
   document.addEventListener("DOMContentLoaded", render);
