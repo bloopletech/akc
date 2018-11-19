@@ -1,24 +1,15 @@
 "use strict";
 
 window.User = (function() {
-  function tokenKey() {
-    return "user.token";
-  }
-
-  function getToken() {
-    return localStorage[tokenKey()];
-  }
-
-  function setToken(token) {
-    localStorage[tokenKey()] = token;
-  }
+  var TOKEN_KEY = "user.token";
+  Setting.init(TOKEN_KEY, null, "string");
 
   function withToken(callback) {
-    var token = getToken();
+    var token = Setting(TOKEN_KEY);
     if(token != null) return callback(token);
 
     Api.createUser(function(data) {
-      setToken(data.token);
+      Setting(TOKEN_KEY, data.token);
       callback(data.token);
     });
   }

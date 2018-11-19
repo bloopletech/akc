@@ -1,23 +1,34 @@
 "use strict";
 
 window.Backgrounds = (function() {
-  var currentImage = null;
+  var BACKGROUND_INDEX_KEY = "backgrounds.index";
+  Setting.init(BACKGROUND_INDEX_KEY, 0, "integer");
 
-  function show(index) {
-    currentImage = window.backgroundImages[index];
-    $("body").style.backgroundImage = `url("images/${currentImage.path}")`;
+  function getIndex() {
+    return Setting(BACKGROUND_INDEX_KEY);
   }
 
-  function init() {
-    show(17);
+  function setIndex(index) {
+    Setting(BACKGROUND_INDEX_KEY, index);
+    render();
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  function current() {
+    return window.backgroundImages[getIndex()];
+  }
+
+  function render() {
+    $("body").style.backgroundImage = `url("images/${current().path}")`;
+  }
+
+  document.addEventListener("DOMContentLoaded", render);
 
   return {
-    attribution: function() {
-      return currentImage.attribution;
+    images: function() {
+      return window.backgroundImages;
     },
-    show: show
+    current: current,
+    getIndex: getIndex,
+    setIndex: setIndex
   };
 })();
