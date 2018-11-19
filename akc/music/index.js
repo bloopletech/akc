@@ -1,4 +1,5 @@
-[
+"use strict";
+window.musicTracks = [
   {
     "path": "music/Audiobinger_-_City_Lights.mp3",
     "title": "Audiobinger - City Lights",
@@ -27,4 +28,4 @@
       "license_name": "CC BY"
     }
   }
-]
+];
