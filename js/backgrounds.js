@@ -2,7 +2,7 @@
 
 window.Backgrounds = (function() {
   var BACKGROUND_INDEX_KEY = "backgrounds.index";
-  Setting.init(BACKGROUND_INDEX_KEY, 0, "integer");
+  Setting.init(BACKGROUND_INDEX_KEY, 17, "integer");
 
   function getIndex() {
     return Setting(BACKGROUND_INDEX_KEY);
