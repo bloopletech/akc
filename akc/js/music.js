@@ -36,6 +36,7 @@ window.Music = (function() {
 
   function initPlayer() {
     player = new Audio("music/Audiobinger_-_City_Lights.mp3");
+    player.loop = true;
     player.addEventListener("ended", function() {
       setLastStart(null);
     });
