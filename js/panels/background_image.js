@@ -5,7 +5,7 @@ window.Panels.BackgroundImage = function() {
     if(e.target.matches("#background-image-list a")) {
       e.preventDefault();
       var index = e.target.getAttribute("href").substring(1);
-      Backgrounds.currentId(index);
+      BackgroundImages.currentId(index);
       render();
     }
   }
@@ -27,13 +27,13 @@ window.Panels.BackgroundImage = function() {
 
   function renderImages() {
     var output = [];
-    var images = Backgrounds.images();
+    var images = BackgroundImages.images();
     for(var i = 0; i < images.length; i++) output.push(renderImage(images[i], i));
     return output.join("");
   }
 
   function renderImage(image, index) {
-    var klass = (index == Backgrounds.currentId()) ? "active" : "";
+    var klass = (index == BackgroundImages.currentId()) ? "active" : "";
     return `
       <li>
         <a href="#${index}" class="${klass}">${e(image.title)}</a>
