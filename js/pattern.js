@@ -41,7 +41,6 @@ window.Pattern = function() {
   }
 
   return {
-    next: next,
     peek: function() {
       return pattern[stack];
     },
@@ -50,7 +49,8 @@ window.Pattern = function() {
     },
     maxStacks: function() {
       return pattern.length;
-    }
+    },
+    next: next
   };
 };
 
