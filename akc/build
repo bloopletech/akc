@@ -18,9 +18,7 @@ function runBuild () {
   rsync -a --del --ignore-missing-args music images dist
 
   # yarn global add sw-precache, requires NodeJS & yarn installed
-  # --root => use the built version of the site
-  # --maximumFileSizeToCacheInBytes => otherwise will skip audio files, size here is 20MB
-  sw-precache --root=dist --maximumFileSizeToCacheInBytes=20971520
+  sw-precache --config=sw-precache-config.js
 
   size="$(wc -c <"dist/index.html")"
   echo "index.html size: $(echo "scale=1; $size/1024" | bc)KB"
