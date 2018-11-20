@@ -19,7 +19,7 @@ body {
   padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 */
   padding-bottom: env(safe-area-inset-bottom); /* iOS 11.2 */
 
-  background: #eee;
+  background: #ddd;
   background-position: center;
   background-size: cover;
   color: #000;
