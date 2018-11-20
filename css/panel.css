@@ -65,11 +65,12 @@ body.panel-open #panel {
   margin-bottom: 0;
 }
 
-#panel ul.choose-list li {
+#panel a.list-item {
+  display: block;
   margin-bottom: 5px;
 }
 
-#panel ul.choose-list li:last-child {
+#panel a.list-item:last-child {
   margin-bottom: 0;
 }
 

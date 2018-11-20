@@ -12,9 +12,10 @@ window.menu = function() {
   }
 
   document.body.addEventListener("click", function(e) {
-    if(e.target.matches("#menu a")) {
+    var link = e.target.closest("#menu a.list-item");
+    if(link) {
       e.preventDefault();
-      var type = e.target.getAttribute("href").substring(1);
+      var type = link.getAttribute("href").substring(1);
       Panel.forward(new Panels[type]());
     }
     if(e.target.closest("#menu-trigger")) document.body.classList.add("menu-open");
