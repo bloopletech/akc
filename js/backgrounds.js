@@ -1,20 +1,21 @@
 "use strict";
 
 window.Backgrounds = (function() {
-  var BACKGROUND_INDEX_KEY = "backgrounds.index";
-  Setting.init(BACKGROUND_INDEX_KEY, 17, "integer");
+  var CURRENT_ID_KEY = "backgrounds.index";
+  Setting.init(CURRENT_ID_KEY, 17, "integer");
 
-  function getIndex() {
-    return Setting(BACKGROUND_INDEX_KEY);
-  }
-
-  function setIndex(index) {
-    Setting(BACKGROUND_INDEX_KEY, index);
-    render();
+  function currentId() {
+    if(arguments.length == 1) {
+      Setting(CURRENT_ID_KEY, arguments[0]);
+      render();
+    }
+    else {
+      return Setting(CURRENT_ID_KEY);
+    }
   }
 
   function current() {
-    return window.backgroundImages[getIndex()];
+    return window.backgroundImages[currentId()];
   }
 
   function render() {
@@ -28,7 +29,6 @@ window.Backgrounds = (function() {
       return window.backgroundImages;
     },
     current: current,
-    getIndex: getIndex,
-    setIndex: setIndex
+    currentId: currentId
   };
 })();
