@@ -1,5 +1,5 @@
 "use strict";
-window.backgroundImages = [
+window.allImages = [
   {
     "path": "Cathedral_of_Saint_Cecilia_of_Albi_-_7095_-_Altar_and_choir.jpg",
     "title": "Altar and choir of Cathedral of Saint Cecilia of Albi",

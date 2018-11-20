@@ -10,7 +10,7 @@ window.Panels.Attribution = function() {
         <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY NC</a>
       </p>
       <h4>Background image</h4>
-      <p>${Backgrounds.current().attribution}</p>
+      <p>${BackgroundImages.current().attribution}</p>
     `;
   }
 

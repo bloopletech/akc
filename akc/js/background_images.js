@@ -1,6 +1,6 @@
 "use strict";
 
-window.Backgrounds = (function() {
+window.BackgroundImages = (function() {
   var CURRENT_ID_KEY = "backgrounds.index";
   Setting.init(CURRENT_ID_KEY, 17, "integer");
 
@@ -15,7 +15,7 @@ window.Backgrounds = (function() {
   }
 
   function current() {
-    return window.backgroundImages[currentId()];
+    return window.allImages[currentId()];
   }
 
   function render() {
@@ -26,7 +26,7 @@ window.Backgrounds = (function() {
 
   return {
     images: function() {
-      return window.backgroundImages;
+      return window.allImages;
     },
     current: current,
     currentId: currentId
