@@ -2,7 +2,7 @@
 
 window.Panels.BackgroundImage = function() {
   function clickHandler(e) {
-    if(e.target.matches("#background-image-list a")) {
+    if(e.target.matches("#background-image-root a")) {
       e.preventDefault();
       var index = e.target.getAttribute("href").substring(1);
       BackgroundImages.currentId(index);
@@ -20,9 +20,7 @@ window.Panels.BackgroundImage = function() {
   function render() {
     $("#background-image-root").innerHTML = `
       <h2>Background Image</h2>
-      <ul id="background-image-list" class="choose-list">
-        ${renderImages()}
-      </ul>`;
+      ${renderImages()}`;
   }
 
   function renderImages() {
@@ -34,10 +32,7 @@ window.Panels.BackgroundImage = function() {
 
   function renderImage(image, index) {
     var klass = (index == BackgroundImages.currentId()) ? "active" : "";
-    return `
-      <li>
-        <a href="#${index}" class="${klass}">${e(image.title)}</a>
-      </li>`;
+    return `<a href="#${index}" class="list-item ${klass}">${e(image.title)}</a>`;
   }
 
   function unmount() {
