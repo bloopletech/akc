@@ -39,41 +39,35 @@
     </div>
 
     <div id="playing" class="layer">
-      <div id="play-field">
-        <svg id="time-remaining" viewBox="0 0 560 560">
-          <radialGradient id="gradient-flasher-success">
-            <stop offset="0%" stop-color="#398439" />
-            <stop offset="94%" stop-color="#398439" />
-            <stop offset="100%" stop-color="#000" stop-opacity="0" />
-          </radialGradient>
-          <radialGradient id="gradient-flasher-comboed">
-            <stop offset="0%" stop-color="#5bc0de" />
-            <stop offset="93%" stop-color="#5bc0de" />
-            <stop offset="100%" stop-color="#000" stop-opacity="0" />
-          </radialGradient>
-          <circle id="flasher" cx="280" cy="280" r="280" fill="none"/>
-          <circle cx="280" cy="280" r="260" fill="#fff"/>
-          <circle id="grind-ratio" cx="-280" cy="280" transform="rotate(-90)" r="0" fill="#ffef00"/>
-          <circle cx="280" cy="280" r="200" fill="none" stroke="#fff" stroke-width="17"/>
-          <circle id="stack" cx="-280" cy="280" transform="rotate(-90)" r="200" fill="none" stroke="#000" stroke-width="10" stroke-dashoffset="-2"/>
-          <circle id="stack-track" cx="-280" cy="280" transform="rotate(-90)" r="200" fill="none" stroke="#fafafa" stroke-width="12" stroke-dasharray="1256.64"/>
-          <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#398439" stroke-width="27" stroke-dasharray="1482.83"/>
-          <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#31b0d5" stroke-width="17" stroke-dasharray="370.71,1112.12" stroke-dashoffset="370.71"/>
-          <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#f0ad4e" stroke-width="17" stroke-dasharray="1482.83" stroke-dashoffset="1037.98"/>
-          <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#c9302c" stroke-width="17" stroke-dasharray="1482.83" stroke-dashoffset="1334.55"/>
-          <circle id="time-remaining-track" cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#fff" stroke-width="29" stroke-dasharray="1482.83"/>
-          <path id="up" d="M165 280l20 20 81-80v175h28V220l81 80 20-20-115-115z"/>
-          <path id="right" d="M280 165l-20 20 80 81H165v28h175l-80 81 20 20 115-115z"/>
-          <path id="down" d="M395 280l-20-20-81 80V165h-28v175l-81-80-20 20 115 115z"/>
-          <path id="left" d="M395 266H220l80-81-20-20-115 115 115 115 20-20-80-81h175z"/>
-          <text id="waiting" x="280" y="280" dy="0.35em" text-anchor="middle">Get Ready</text>
-        </svg>
-        <div id="info">
-          <div id="streak">0</div>
-          <div id="score">0</div>
-          <div id="info-overlay"></div>
-        </div>
-      </div>
+      <svg id="time-remaining" viewBox="0 0 560 560">
+        <radialGradient id="gradient-flasher-success">
+          <stop offset="0%" stop-color="#398439" />
+          <stop offset="94%" stop-color="#398439" />
+          <stop offset="100%" stop-color="#000" stop-opacity="0" />
+        </radialGradient>
+        <radialGradient id="gradient-flasher-comboed">
+          <stop offset="0%" stop-color="#5bc0de" />
+          <stop offset="93%" stop-color="#5bc0de" />
+          <stop offset="100%" stop-color="#000" stop-opacity="0" />
+        </radialGradient>
+        <circle id="flasher" cx="280" cy="280" r="280" fill="none"/>
+        <circle cx="280" cy="280" r="260" fill="#fff"/>
+        <circle id="grind-ratio" cx="-280" cy="280" transform="rotate(-90)" r="0" fill="#ffef00"/>
+        <circle cx="280" cy="280" r="200" fill="none" stroke="#fff" stroke-width="17"/>
+        <circle id="stack" cx="-280" cy="280" transform="rotate(-90)" r="200" fill="none" stroke="#000" stroke-width="10" stroke-dashoffset="-2"/>
+        <circle id="stack-track" cx="-280" cy="280" transform="rotate(-90)" r="200" fill="none" stroke="#fafafa" stroke-width="12" stroke-dasharray="1256.64"/>
+        <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#398439" stroke-width="27" stroke-dasharray="1482.83"/>
+        <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#31b0d5" stroke-width="17" stroke-dasharray="370.71,1112.12" stroke-dashoffset="370.71"/>
+        <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#f0ad4e" stroke-width="17" stroke-dasharray="1482.83" stroke-dashoffset="1037.98"/>
+        <circle cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#c9302c" stroke-width="17" stroke-dasharray="1482.83" stroke-dashoffset="1334.55"/>
+        <circle id="time-remaining-track" cx="-280" cy="280" transform="rotate(-90)" r="236" fill="none" stroke="#fff" stroke-width="29" stroke-dasharray="1482.83"/>
+        <path id="up" d="M165 280l20 20 81-80v175h28V220l81 80 20-20-115-115z"/>
+        <path id="right" d="M280 165l-20 20 80 81H165v28h175l-80 81 20 20 115-115z"/>
+        <path id="down" d="M395 280l-20-20-81 80V165h-28v175l-81-80-20 20 115 115z"/>
+        <path id="left" d="M395 266H220l80-81-20-20-115 115 115 115 20-20-80-81h175z"/>
+        <text id="delta" x="280" y="400" dy="0.35em" text-anchor="middle" fill="#3137a3" stroke="none">0</text>
+        <text id="waiting" x="280" y="280" dy="0.35em" text-anchor="middle">Get Ready</text>
+      </svg>
       <svg id="input" width="250" height="250" viewBox="0 0 100 100">
         <polygon data-direction="up" points="2 0, 98 0, 50 48" fill="#fff" stroke="none"/>
         <polygon data-direction="right" points="100 2, 100 98, 52 50" fill="#fff" stroke="none"/>
@@ -99,16 +93,16 @@
             <td id="results-outcome"></td>
           </tr>
           <tr>
+            <th>Streak</th>
+            <td id="results-streak"></td>
+          </tr>
+          <tr>
             <th>Score</th>
             <td id="results-score"></td>
           </tr>
           <tr>
             <th>Rank</th>
             <td id="results-rank"></td>
-          </tr>
-          <tr>
-            <th>Streak</th>
-            <td id="results-streak"></td>
           </tr>
         </table>
       </div>

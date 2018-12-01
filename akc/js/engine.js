@@ -4,13 +4,11 @@ window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   window.$ = document.querySelector.bind(document);
-  var $playField = $("#play-field");
   var $grindRatio = $("#grind-ratio");
   var $stack = $("#stack");
   var $stackTrack = $("#stack-track");
   var $timeRemainingTrack = $("#time-remaining-track");
-  var $score = $("#score");
-  var $streak = $("#streak");
+  var $delta = $("#delta");
   1.0.toLocaleString(); //Preload the NumberFormat
 
   var highPrecisionTimer = (typeof window.performance == "object");
@@ -63,7 +61,8 @@ window.engine = function() {
 
     $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
 
-    $score.textContent = (game.score() + game.delta(now)).toLocaleString();
+    $delta.textContent = game.delta(now).toLocaleString();
+    $delta.style.display = game.grinding() ? "block" : "none";
 
     if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
@@ -146,9 +145,6 @@ window.engine = function() {
   }
 
   function renderInfo() {
-    $score.textContent = game.score().toLocaleString();
-    $streak.textContent = game.streak().toLocaleString();
-
     $stack.style.strokeDasharray = ((1256.64 / game.maxStacks()) - 4) + " 4";
     $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1256.64;
   }
@@ -166,8 +162,8 @@ window.engine = function() {
 
   function resetPlayField() {
     showDirection("blank");
-    $score.textContent = "0";
-    $streak.textContent = "0";
+    $delta.textContent = "0";
+    $delta.style.display = "none";
     $grindRatio.style.r = 0;
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;
