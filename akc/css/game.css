@@ -35,6 +35,10 @@ body {
   clear: both;
 }
 
+.chrome {
+  pointer-events: none;
+}
+
 @keyframes flash {
   from {
     opacity: 1;
@@ -146,10 +150,6 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
   flex: none;
   margin-top: 10px;
   stroke: #000;
-}
-
-#input path {
-  pointer-events: none;
 }
 
 body.touch #input {
