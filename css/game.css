@@ -122,16 +122,6 @@ body.attract #attract, body.waiting #playing, body.playing #playing, body.game-o
   opacity: 0.65;
 }
 
-#play-field {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-
-  flex-grow: 1;
-  line-height: 0;
-}
-
 #time-remaining {
   transform: translateZ(0);
   margin: -10px -10px 0 -10px;
@@ -145,6 +135,12 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
   display: block;
 }
 
+#delta {
+  display: none;
+  font-size: 85px;
+  font-weight: bold;
+}
+
 #input {
   display: none;
   flex: none;
@@ -154,46 +150,6 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
 
 body.touch #input {
   display: block;
-}
-
-#info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  position: relative;
-  margin-top: 10px;
-  overflow: auto;
-
-  text-align: center;
-  font-size: 40px;
-  background-color: #fff;
-  border: 1px solid #e3e3e3;
-  border-radius: 8px;
-}
-
-#streak {
-  width: 90px;
-  padding: 10px;
-  background-color: #e0e0e0;
-  line-height: 1.1;
-}
-
-#score {
-  transform: translateZ(0);
-  flex: 1;
-  padding: 10px;
-  line-height: 1.1;
-  font-weight: bold;
-}
-
-#info-overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  box-shadow: inset 0 3px 8px rgba(0,0,0,.1);
 }
 
 #results {
@@ -251,15 +207,6 @@ td {
 
   #input {
     margin-top: 20px;
-  }
-
-  #info {
-    margin-top: 30px;
-    font-size: 50px;
-  }
-
-  #streak {
-    width: 120px;
   }
 
   #input {
