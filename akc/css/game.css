@@ -145,8 +145,11 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
   display: none;
   flex: none;
   margin-top: 10px;
-  background-color: #fff;
   stroke: #000;
+}
+
+#input path {
+  pointer-events: none;
 }
 
 body.touch #input {
