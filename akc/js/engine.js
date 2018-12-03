@@ -57,10 +57,10 @@ window.engine = function() {
 
     $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
 
+    document.body.classList.toggle("grinding", game.grinding());
     $delta.textContent = game.delta(now).toLocaleString();
-    $delta.style.display = game.grinding() ? "block" : "none";
     var grindRatio = game.grindRatio(now);
-    $delta.style.fontSize = 50 + (grindRatio > 0 ? (grindRatio * 50) : 0);
+    $delta.style.fontSize = 50 + (grindRatio > 0 ? (grindRatio * 70) : 0);
 
     if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
@@ -160,8 +160,8 @@ window.engine = function() {
 
   function resetPlayField() {
     showDirection("blank");
+    document.body.classList.remove("grinding");
     $delta.textContent = "0";
-    $delta.style.display = "none";
     $delta.style.fontSize = 50;
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;
