@@ -135,18 +135,10 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
   display: block;
 }
 
-body.up.grinding #up, body.right.grinding #right, body.down.grinding #down, body.left.grinding #left {
-  opacity: 0.5;
-}
-
 #delta {
   display: none;
   font-size: 85px;
   font-weight: bold;
-}
-
-body.grinding #delta {
-  display: block;
 }
 
 #input {
