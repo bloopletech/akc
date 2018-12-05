@@ -7,7 +7,6 @@ function debugInit() {
     document.body.classList.remove("attract");
     document.body.classList.add("playing", "up");
     $("#time-remaining-track").style.strokeDashoffset = 1482.83;
-    $("#delta").style.display = "block";
   }
 
   document.body.insertAdjacentHTML("beforeend", `

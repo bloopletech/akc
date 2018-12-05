@@ -8,7 +8,7 @@ window.engine = function() {
   var $stack = $("#stack");
   var $stackTrack = $("#stack-track");
   var $timeRemainingTrack = $("#time-remaining-track");
-  var $delta = $("#delta");
+  var $score = $("#score");
   1.0.toLocaleString(); //Preload the NumberFormat
 
   var highPrecisionTimer = (typeof window.performance == "object");
@@ -64,7 +64,7 @@ window.engine = function() {
     if(game.grinding()) document.body.classList.add("grinding");
     else document.body.classList.remove("grinding");
 
-    $delta.textContent = game.delta(now).toLocaleString();
+    $score.textContent = (game.score() + game.delta(now)).toLocaleString();
 
     if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
@@ -166,7 +166,7 @@ window.engine = function() {
     showDirection("blank");
     document.body.classList.remove("grinding");
     $grindRatio.style.r = 0;
-    $delta.textContent = "0";
+    $score.textContent = "0";
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;
   }
