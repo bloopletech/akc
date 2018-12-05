@@ -64,7 +64,8 @@ window.engine = function() {
     if(game.grinding()) document.body.classList.add("grinding");
     else document.body.classList.remove("grinding");
 
-    $score.textContent = (game.score() + game.delta(now)).toLocaleString();
+    var newScore = game.score() + game.delta(now);
+    $score.textContent = newScore > 0 ? newScore.toLocaleString() : "";
 
     if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
@@ -166,7 +167,7 @@ window.engine = function() {
     showDirection("blank");
     document.body.classList.remove("grinding");
     $grindRatio.style.r = 0;
-    $score.textContent = "0";
+    $score.textContent = "";
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;
   }
