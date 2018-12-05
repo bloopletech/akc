@@ -4,6 +4,7 @@ window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   window.$ = document.querySelector.bind(document);
+  var $grindRatio = $("#grind-ratio");
   var $stack = $("#stack");
   var $stackTrack = $("#stack-track");
   var $timeRemainingTrack = $("#time-remaining-track");
@@ -55,12 +56,13 @@ window.engine = function() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
+    var grindRatio = game.grindRatio(now);
+    $grindRatio.style.r = grindRatio > 0 ? (grindRatio * 224) : 0;
+
     $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
 
     $delta.textContent = game.delta(now).toLocaleString();
     $delta.style.display = game.grinding() ? "block" : "none";
-    var grindRatio = game.grindRatio(now);
-    $delta.style.fontSize = 50 + (grindRatio > 0 ? (grindRatio * 50) : 0);
 
     if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
   }
@@ -160,9 +162,9 @@ window.engine = function() {
 
   function resetPlayField() {
     showDirection("blank");
+    $grindRatio.style.r = 0;
     $delta.textContent = "0";
     $delta.style.display = "none";
-    $delta.style.fontSize = 50;
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;
   }

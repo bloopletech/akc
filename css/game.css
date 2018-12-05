@@ -137,7 +137,7 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
 
 #delta {
   display: none;
-  font-size: 85px;
+  font-size: 50px;
   font-weight: bold;
 }
 
