@@ -141,6 +141,10 @@ body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #
   font-weight: bold;
 }
 
+body.grinding #delta {
+  display: block;
+}
+
 #input {
   display: none;
   flex: none;
