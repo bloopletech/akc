@@ -57,9 +57,7 @@ window.engine = function() {
 
     $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
 
-    if(game.grinding()) document.body.classList.add("grinding");
-    else document.body.classList.remove("grinding");
-
+    document.body.classList.toggle("grinding", game.grinding());
     $delta.textContent = game.delta(now).toLocaleString();
     var grindRatio = game.grindRatio(now);
     $delta.style.fontSize = 50 + (grindRatio > 0 ? (grindRatio * 70) : 0);
