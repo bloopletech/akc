@@ -87,25 +87,6 @@ window.engine = function() {
   }
 
   function onInputStart(event, code) {
-    if(state != "playing") return;
-    event.preventDefault();
-
-    if(!currentCode) {
-      if(!game.input(code)) {
-        endRound(event.timeStamp);
-        return;
-      }
-
-      currentCode = code;
-      game.grindStarted(event.timeStamp);
-    }
-    else if(currentCode != code) {
-      game.input();
-      endRound(event.timeStamp);
-    }
-  }
-
-  function onInputEnd(event, code) {
     if(state == "waiting") {
       event.preventDefault();
       return true;
@@ -114,16 +95,12 @@ window.engine = function() {
     if(state != "playing") return false;
     event.preventDefault();
 
-    if(!currentCode || currentCode != code) game.input();
+    if(game.input(code)) game.grindStarted(event.timeStamp);
     endRound(event.timeStamp);
   }
 
   function onKeyDown(event) {
-    onInputStart(event, CODES_MAP[event.keyCode]);
-  }
-
-  function onKeyUp(event) {
-    if(onInputEnd(event, CODES_MAP[event.keyCode])) return;
+    if(onInputStart(event, CODES_MAP[event.keyCode])) return;
 
     if(event.keyCode == 32 || event.keyCode == 13) {
       event.preventDefault();
@@ -135,15 +112,11 @@ window.engine = function() {
     onInputStart(event, event.target.dataset.direction);
   }
 
-  function onTouchEnd(event) {
-    onInputEnd(event, event.target.dataset.direction);
-  }
-
   function flash(type) {
     if(type == null) type = "success";
 
     var $flasher = $("#flasher").cloneNode();
-    $flasher.style.fill = "url(#gradient-flasher-" + type + ")";
+    //$flasher.style.fill = "url(#gradient-flasher-" + type + ")";
     $("#time-remaining").replaceChild($flasher, $("#flasher"));
   }
 
@@ -200,16 +173,16 @@ window.engine = function() {
     document.body.classList.add("touch");
 
     window.removeEventListener("keydown", onKeyDown);
-    window.removeEventListener("keyup", onKeyUp);
+    //window.removeEventListener("keyup", onKeyUp);
     window.addEventListener("touchstart", onTouchStart);
-    window.addEventListener("touchend", onTouchEnd);
+    //window.addEventListener("touchend", onTouchEnd);
     $(".play").removeEventListener("touchstart", touchDevice);
   }
 
   $(".play").addEventListener("touchstart", touchDevice);
 
   window.addEventListener("keydown", onKeyDown);
-  window.addEventListener("keyup", onKeyUp);
+  //window.addEventListener("keyup", onKeyUp);
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play:not(.disabled)")) start();
