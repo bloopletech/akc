@@ -7,7 +7,6 @@ window.Game = function(touch) {
   var streak = 1;
   var startTime = null;
   var grindStart = null;
-  var combo = null;
   var direction = null;
   var pattern = new Pattern();
   var correct = false;
@@ -19,20 +18,11 @@ window.Game = function(touch) {
   }
 
   function timePassed(now) {
-    if(grindStart) {
+    if(now > grindStart) {
       return grindTime(now) + (grindStart - startTime);
     }
     else {
       return now - startTime;
-    }
-  }
-
-  function finishTime() {
-    if(grindStart) {
-      return grindStart + (((startTime + allowedTime) - grindStart) / 2.0);
-    }
-    else {
-      return startTime + allowedTime;
     }
   }
 
@@ -50,9 +40,8 @@ window.Game = function(touch) {
   function roundStarted(now) {
     direction = pattern.next();
     startTime = now;
+    grindStart = startTime + Math.ceil(allowedTime / 2);
     correct = false;
-    grindStart = null;
-    combo = null;
     return direction;
   }
 
@@ -61,49 +50,17 @@ window.Game = function(touch) {
     return correct;
   }
 
-  function grindStarted(now) {
-    grindStart = now;
-  }
-
   function grindDuration(now) {
-    return grindStart ? (now - grindStart) : 0;
-  }
-
-  function grindRatio(now) {
-    if(!grindStart) return 0;
-    var ratio = grindTime(now) / (allowedTime - (grindStart - startTime));
-    if(ratio < 0) return 0;
-    if(ratio > 1) return 1;
-    return ratio;
-  }
-
-  function reactionTime() {
-    return grindStart - startTime;
-  }
-
-  function canCombo() {
-    return correct && (direction == pattern.peek());
-  }
-
-  function comboed() {
-    combo = true;
-  }
-
-  function isFlame(now) {
-    return grindStart && (reactionTime() <= (allowedTime * 0.25));
+    return Math.max(now - grindStart, 0);
   }
 
   function isBoost(now) {
-    return grindStart && timeRemainingRatio(now) <= 0.1;
+    return timeRemainingRatio(now) <= 0.1;
   }
 
   function delta(now) {
-    if(!grindStart) return 0;
-
-    var delta = ((initialAllowedTime - reactionTime()) + grindDuration(now)) * Math.max(1, streak / 10);
-    if(isFlame(now)) delta += 1000;
+    var delta = (initialAllowedTime - (now - startTime)) * Math.max(1, streak / 10);
     if(isBoost(now)) delta *= 1.5;
-    if(combo) delta *= 2;
     return Math.floor(delta);
   }
 
@@ -113,8 +70,6 @@ window.Game = function(touch) {
       score: score,
       streak: streak,
       startTime: startTime,
-      grindStart: grindStart,
-      combo: combo,
       direction: direction,
       now: now,
       diff: timePassed(now),
@@ -149,9 +104,6 @@ window.Game = function(touch) {
     touch: function() {
       return touch;
     },
-    grinding: function() {
-      return !!grindStart;
-    },
     score: function() {
       return score;
     },
@@ -174,13 +126,8 @@ window.Game = function(touch) {
     input: input,
     timeRemaining: timeRemaining,
     timeRemainingRatio: timeRemainingRatio,
-    grindStarted: grindStarted,
-    finishTime: finishTime,
-    canCombo: canCombo,
-    comboed: comboed,
     roundEnded: roundEnded,
-    delta: delta,
-    grindRatio: grindRatio
+    delta: delta
   };
 };
 

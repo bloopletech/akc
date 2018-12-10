@@ -4,7 +4,6 @@ window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   window.$ = document.querySelector.bind(document);
-  var $grindRatio = $("#grind-ratio");
   var $stack = $("#stack");
   var $stackTrack = $("#stack-track");
   var $timeRemainingTrack = $("#time-remaining-track");
@@ -13,7 +12,6 @@ window.engine = function() {
 
   var highPrecisionTimer = (typeof window.performance == "object");
   var game = null;
-  var currentCode = null;
   var state = null;
   var timeUsedUpdater = null;
 
@@ -49,41 +47,18 @@ window.engine = function() {
 
   function startRound() {
     showDirection(game.roundStarted(timeNow()));
-    currentCode = null;
   }
 
   function updateTimeUsed() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    var grindRatio = game.grindRatio(now);
-    $grindRatio.style.r = grindRatio > 0 ? (50 + (grindRatio * 174)) : 0;
-
     $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
-
-    if(game.grinding()) document.body.classList.add("grinding");
-    else document.body.classList.remove("grinding");
 
     var newScore = game.score() + game.delta(now);
     $score.textContent = newScore > 0 ? newScore.toLocaleString() : "";
 
-    if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
-  }
-
-  function onTimeUsed(now) {
-    if(!game.canCombo()) {
-      endRound(now, "");
-      return;
-    }
-
-    var code = currentCode;
-    endRound(game.finishTime(), "");
-    currentCode = code;
-
-    game.input(code);
-    game.grindStarted(now);
-    game.comboed();
-    flash("comboed");
+    if(game.timeRemaining(now) < 0) setTimeout(endRound, 0, now);
   }
 
   function onInputStart(event, code) {
@@ -95,7 +70,7 @@ window.engine = function() {
     if(state != "playing") return false;
     event.preventDefault();
 
-    if(game.input(code)) game.grindStarted(event.timeStamp);
+    game.input(code);
     endRound(event.timeStamp);
   }
 
@@ -125,12 +100,10 @@ window.engine = function() {
     $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1288.05;
   }
 
-  function endRound(now, flashType) {
-    currentCode = null;
-
+  function endRound(now) {
     game.roundEnded(now);
     renderInfo();
-    flash(flashType);
+    flash();
 
     if(game.outcome()) gameOver();
     else startRound(now);
@@ -138,8 +111,6 @@ window.engine = function() {
 
   function resetPlayField() {
     showDirection("blank");
-    document.body.classList.remove("grinding");
-    $grindRatio.style.r = 0;
     $score.textContent = "";
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;
@@ -173,16 +144,13 @@ window.engine = function() {
     document.body.classList.add("touch");
 
     window.removeEventListener("keydown", onKeyDown);
-    //window.removeEventListener("keyup", onKeyUp);
     window.addEventListener("touchstart", onTouchStart);
-    //window.addEventListener("touchend", onTouchEnd);
     $(".play").removeEventListener("touchstart", touchDevice);
   }
 
   $(".play").addEventListener("touchstart", touchDevice);
 
   window.addEventListener("keydown", onKeyDown);
-  //window.addEventListener("keyup", onKeyUp);
 
   document.body.addEventListener("click", function(e) {
     if(e.target.matches(".play:not(.disabled)")) start();
