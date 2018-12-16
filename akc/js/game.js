@@ -1,29 +1,20 @@
 "use strict";
 
 window.Game = function(touch) {
-  var initialAllowedTime = 1200;
+  var initialAllowedTime = 1500;
   var allowedTime = initialAllowedTime;
   var score = 0;
   var streak = 1;
   var startTime = null;
-  var grindStart = null;
   var direction = null;
   var pattern = new Pattern();
   var correct = false;
   var outcome = null;
   var roundLogs = [];
 
-  function grindTime(now) {
-    return ((now - grindStart) * 2);
-  }
-
   function timePassed(now) {
-    if(now > grindStart) {
-      return grindTime(now) + (grindStart - startTime);
-    }
-    else {
-      return now - startTime;
-    }
+    var diff = now - startTime;
+    return diff * ((diff / allowedTime) + 1);
   }
 
   function timeRemaining(now) {
@@ -40,7 +31,6 @@ window.Game = function(touch) {
   function roundStarted(now) {
     direction = pattern.next();
     startTime = now;
-    grindStart = startTime + Math.ceil(allowedTime / 2);
     correct = false;
     return direction;
   }
@@ -48,10 +38,6 @@ window.Game = function(touch) {
   function input(playerDirection) {
     correct = playerDirection == direction;
     return correct;
-  }
-
-  function grindDuration(now) {
-    return Math.max(now - grindStart, 0);
   }
 
   function isBoost(now) {
@@ -79,8 +65,8 @@ window.Game = function(touch) {
 
   function updateOutcome(now) {
     var diff = timePassed(now);
-    if(!correct) outcome = "incorrect";
-    else if(diff > allowedTime) outcome = "timeExceeded";
+    if(diff > allowedTime) outcome = "timeExceeded";
+    else if(!correct) outcome = "incorrect";
   }
 
   function roundEnded(now) {
