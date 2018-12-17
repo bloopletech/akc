@@ -1,7 +1,7 @@
 class My::ScoresController < My::BaseController
   def index
-    @scores = @user.scores.order(created_at: :desc)
-    render json: @scores
+    @scores = @user.scores.order(created_at: :desc).includes(:user)
+    render json: @scores.to_json(methods: :username, except: :rounds)
   end
 
   def create
@@ -9,7 +9,7 @@ class My::ScoresController < My::BaseController
     if @score.save
       render json: @score
     else
-      render json: { errors: @score.errors }
+      render json: { errors: @score.errors.full_messages }, status: 422
     end
   end
 

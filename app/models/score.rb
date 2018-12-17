@@ -10,4 +10,8 @@ class Score < ApplicationRecord
   validates :rank, presence: true
   validates :outcome, presence: true, inclusion: { in: ['incorrect', 'timeExceeded', 'keyAutoRepeat'] }
   validates :rounds, presence: true
+
+  def username
+    user.username
+  end
 end

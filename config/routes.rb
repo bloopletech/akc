@@ -7,5 +7,10 @@ Rails.application.routes.draw do
 
   namespace :my do
     resources :scores, only: [:index, :create]
+    resource :profile, only: [:show, :update] do
+      post :update
+    end
   end
+
+  resolve('Profile') { [:profile] }
 end

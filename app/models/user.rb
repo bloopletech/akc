@@ -4,4 +4,5 @@ class User < ApplicationRecord
 
   # Validations
   validates :token, presence: true, uniqueness: true
+  validates :username, uniqueness: true
 end
