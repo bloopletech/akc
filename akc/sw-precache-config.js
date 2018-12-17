@@ -1,6 +1,6 @@
 module.exports = {
   // Generate service-worker.js in the built version of the site
-  "root": "dist/", 
+  "root": "dist/",
   // Only precache the main app file (HTML + CSS + JS)
   "staticFileGlobs": [
     "dist/index.html"

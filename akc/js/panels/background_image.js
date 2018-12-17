@@ -16,7 +16,7 @@ window.Panels.BackgroundImage = function() {
 
     return `<div id="background-image-root">Loading...</div>`;
   }
-  
+
   function render() {
     $("#background-image-root").innerHTML = `
       <h2>Background Image</h2>

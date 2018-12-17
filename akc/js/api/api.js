@@ -1,52 +1,56 @@
 "use strict";
 
 window.Api = (function() {
-  var endpoint = null;
-  if(location.host == "akc.link") endpoint = "https://api.akc.link/";
-  else if(location.host == "akc.dokku.bloople.net") endpoint = "https://akc-api.dokku.bloople.net";
-  else endpoint = "http://localhost:3000/";
+  var TOKEN_KEY = "user.token";
+  Setting.init(TOKEN_KEY, null, "string");
 
-  function serialize(params) {
-    return "?" + Object.keys(params).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`).join('&');
-  }
+  function withToken(callback) {
+    var token = Setting(TOKEN_KEY);
+    if(token != null) return callback(token);
 
-  function request(options) {
-    var http = new XMLHttpRequest();
-    var requestType = options.type || "GET";
-    var url = options.url;
-
-    var data = options.data || {};
-    if(options.token != null) data.access_token = options.token;
-
-    if(requestType == "GET") url += serialize(data);
-
-    http.open(requestType, url);
-
-    http.onreadystatechange = function() {
-      if(http.readyState === 4 && http.status === 200) {
-        var success = options.success;
-        if(success) success(JSON.parse(http.responseText));
-      }
-    };
-
-    http.setRequestHeader("Accept", "application/json");
-    http.setRequestHeader("Content-Type", "text/plain");
-
-    if(requestType != "GET" && data != {}) http.send(JSON.stringify(data));
-    else http.send();
+    createUser(function(data) {
+      Setting(TOKEN_KEY, data.token);
+      callback(data.token);
+    });
   }
 
   function createUser(success) {
-    request({
+    Client.request({
       type: "POST",
-      url: endpoint + "users",
+      path: "users",
       success: success
+    });
+  }
+
+  function loadProfile(success) {
+    withToken(function(token) {
+      Client.request({
+        type: "GET",
+        path: "my/profile",
+        token: token,
+        success: success
+      });
+    });
+  }
+
+  function saveProfile(username, success, failure) {
+    withToken(function(token) {
+      Client.request({
+        type: "POST",
+        path: "my/profile",
+        token: token,
+        data: {
+          "username": username
+        },
+        success: success,
+        failure: failure
+      });
     });
   }
 
   function submitScore(game, success) {
     if(game.score() == 0) return;
-console.log("logs: ", game.roundLogs());
+
     var scoreData = {
       "scoring_version": Game.SCORING_VERSION,
       "mode": game.touch() ? "touch" : "keyboard",
@@ -57,10 +61,10 @@ console.log("logs: ", game.roundLogs());
       "rounds": game.roundLogs()
     };
 
-    User.withToken(function(token) {
-      request({
+    withToken(function(token) {
+      Client.request({
         type: "POST",
-        url: endpoint + "my/scores",
+        path: "my/scores",
         token: token,
         data: { "score": scoreData },
         success: success
@@ -68,19 +72,28 @@ console.log("logs: ", game.roundLogs());
     });
   }
 
-  function myScores(success) {
-    User.withToken(function(token) {
-      request({
-        url: endpoint + "my/scores",
+  function loadScores(success) {
+    withToken(function(token) {
+      Client.request({
+        path: "my/scores",
         token: token,
         success: success
       });
     });
   }
 
+  function loadTopScores(success) {
+    Client.request({
+      path: "scores",
+      success: success
+    });
+  }
+
   return {
-    createUser: createUser,
+    loadProfile: loadProfile,
+    saveProfile: saveProfile,
     submitScore: submitScore,
-    myScores: myScores
+    loadScores: loadScores,
+    loadTopScores: loadTopScores
   };
 })();
