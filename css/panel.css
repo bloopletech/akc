@@ -46,7 +46,8 @@ body.panel-open #panel {
 }
 
 #panel h2 {
-  margin: 0 0 20px 0;
+  margin-top: 0;
+  margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
 }
@@ -58,7 +59,7 @@ body.panel-open #panel {
 }
 
 #panel p {
-  margin: 0 0 20px 0;
+  margin: 0 0 15px 0;
 }
 
 #panel p:last-child {
@@ -75,6 +76,83 @@ body.panel-open #panel {
 }
 
 #panel a.active {
+  font-weight: bold;
+}
+
+#panel .alert {
+  display: none;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#panel .alert.success {
+  display: block;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+#panel .alert.error {
+  display: block;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+#panel ul {
+  margin: 0 0 15px 0;
+  padding-left: 30px;
+}
+
+#panel ul:last-child {
+  margin-bottom: 0;
+}
+
+#panel form > div {
+  margin-bottom: 20px;
+}
+
+#panel form > div:last-child {
+  margin-bottom: 0;
+}
+
+#panel form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#panel form input {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: inherit;
+  background-color: #fff;
+  color: #000;
+}
+
+#panel form button {
+  display: inline-block;
+  margin: 0;
+  padding: 6px 10px;
+  font-size: inherit;
+}
+
+#panel table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+#panel th, #panel td {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+}
+
+#panel th {
+  text-align: left;
   font-weight: bold;
 }
 

@@ -2,7 +2,7 @@
 
 window.Panel = (function() {
   var stack = [];
-  
+
   function current() {
     return stack[stack.length - 1];
   }
