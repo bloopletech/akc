@@ -8,8 +8,6 @@ window.Game = function(touch) {
   var startTime = null;
   var direction = null;
   var pattern = new Pattern();
-  var correct = false;
-  var outcome = null;
   var roundLogs = [];
 
   function timePassed(now) {
@@ -31,13 +29,7 @@ window.Game = function(touch) {
   function roundStarted(now) {
     direction = pattern.next();
     startTime = now;
-    correct = false;
     return direction;
-  }
-
-  function input(playerDirection) {
-    correct = playerDirection == direction;
-    return correct;
   }
 
   function isBoost(now) {
@@ -46,7 +38,7 @@ window.Game = function(touch) {
 
   function delta(now) {
     var delta = (initialAllowedTime - (now - startTime)) * Math.max(1, streak / 10);
-    if(isBoost(now)) delta *= 1.5;
+    if(isBoost(now)) delta *= 3;
     return Math.floor(delta);
   }
 
@@ -58,25 +50,16 @@ window.Game = function(touch) {
       startTime: startTime,
       direction: direction,
       now: now,
-      diff: timePassed(now),
-      outcome: outcome
+      diff: timePassed(now)
     });
   }
 
-  function updateOutcome(now) {
-    var diff = timePassed(now);
-    if(diff > allowedTime) outcome = "timeExceeded";
-    else if(!correct) outcome = "incorrect";
-  }
+  function roundEnded(playerDirection, now) {
+    if(timePassed(now) > allowedTime) return "timeExceeded";
+    if(playerDirection != direction) return "incorrect";
 
-  function roundEnded(now) {
-    if(outcome) return;
-
-    updateOutcome(now);
-    if(!outcome) score += delta(now);
+    score += delta(now);
     createLogEntry(now);
-
-    if(outcome) return;
 
     if(streak % (pattern.maxStacks() * 2) == 0) {
       if(allowedTime >= 750) allowedTime -= 75;
@@ -102,14 +85,10 @@ window.Game = function(touch) {
     maxStacks: function() {
       return pattern.maxStacks();
     },
-    outcome: function() {
-      return outcome;
-    },
     roundLogs: function() {
       return roundLogs;
     },
     roundStarted: roundStarted,
-    input: input,
     timeRemaining: timeRemaining,
     timeRemainingRatio: timeRemainingRatio,
     roundEnded: roundEnded,

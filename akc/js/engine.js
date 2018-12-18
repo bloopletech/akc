@@ -34,7 +34,6 @@ window.engine = function() {
       if(state != "waiting") return;
       transition("playing");
 
-      renderInfo();
       startRound(timeNow());
       updateTimeUsed();
     }, 500);
@@ -46,6 +45,8 @@ window.engine = function() {
   }
 
   function startRound() {
+    $stack.style.strokeDasharray = ((1288.05 / game.maxStacks()) - 4) + " 4";
+    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1288.05;
     showDirection(game.roundStarted(timeNow()));
   }
 
@@ -58,7 +59,7 @@ window.engine = function() {
     var newScore = game.score() + game.delta(now);
     $score.textContent = newScore > 0 ? newScore.toLocaleString() : "";
 
-    if(game.timeRemaining(now) < 0) setTimeout(endRound, 0, now);
+    if(game.timeRemaining(now) < 0) setTimeout(endRound, 0, false, now);
   }
 
   function onInputStart(event, code) {
@@ -70,8 +71,8 @@ window.engine = function() {
     if(state != "playing") return false;
     event.preventDefault();
 
-    game.input(code);
-    endRound(event.timeStamp);
+    flash();
+    endRound(code, event.timeStamp);
   }
 
   function onKeyDown(event) {
@@ -87,25 +88,14 @@ window.engine = function() {
     onInputStart(event, event.target.dataset.direction);
   }
 
-  function flash(type) {
-    if(type == null) type = "success";
-
+  function flash() {
     var $flasher = $("#flasher").cloneNode();
-    //$flasher.style.fill = "url(#gradient-flasher-" + type + ")";
     $("#time-remaining").replaceChild($flasher, $("#flasher"));
   }
 
-  function renderInfo() {
-    $stack.style.strokeDasharray = ((1288.05 / game.maxStacks()) - 4) + " 4";
-    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1288.05;
-  }
-
-  function endRound(now) {
-    game.roundEnded(now);
-    renderInfo();
-    flash();
-
-    if(game.outcome()) gameOver();
+  function endRound(code, now) {
+    var outcome = game.roundEnded(code, now);
+    if(outcome) gameOver(outcome);
     else startRound(now);
   }
 
@@ -116,7 +106,7 @@ window.engine = function() {
     $stackTrack.style.strokeDashoffset = 0;
   }
 
-  function gameOver() {
+  function gameOver(outcome) {
     window.cancelAnimationFrame(timeUsedUpdater);
 
     rejectTouchPlay();
@@ -124,11 +114,11 @@ window.engine = function() {
     $("#results-score").textContent = game.score().toLocaleString();
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak().toLocaleString();
-    $("#results-outcome").textContent = Game.formatOutcome(game.outcome());
+    $("#results-outcome").textContent = Game.formatOutcome(outcome);
     transition("game-over");
     Music.pause();
 
-    Api.submitScore(game);
+    Api.submitScore(game, outcome);
   }
 
   function rejectTouchPlay() {
