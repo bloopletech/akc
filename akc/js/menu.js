@@ -1,6 +1,6 @@
 "use strict";
 
-window.menu = function() {
+window.Menu = (function() {
   function showMusicStatus() {
     $("#music-status").classList.remove("enabled", "disabled");
     $("#music-status").classList.add(Music.getEnabled() ? "enabled" : "disabled");
@@ -11,19 +11,32 @@ window.menu = function() {
     showMusicStatus();
   }
 
-  document.body.addEventListener("click", function(e) {
-    var link = e.target.closest("#menu a.list-item");
-    if(link) {
-      e.preventDefault();
-      var type = link.getAttribute("href").substring(1);
-      Panel.forward(new Panels[type]());
-    }
-    if(e.target.closest("#menu-trigger")) document.body.classList.add("menu-open");
-    if(e.target.closest("#menu-close")) document.body.classList.remove("menu-open");
-    if(e.target.closest("#music-status")) updateMusicStatus();
-  });
+  function render() {
+    $("#menu-welcome").innerText = Profile.username() ? "Hello, " + Profile.username() + "!" : "Hello!";
+  }
 
-  showMusicStatus();
-};
+  function init() {
+    document.body.addEventListener("click", function(e) {
+      var link = e.target.closest("#menu a.list-item");
+      if(link) {
+        e.preventDefault();
+        var type = link.getAttribute("href").substring(1);
+        Panel.forward(new Panels[type]());
+      }
+      if(e.target.closest("#menu-trigger")) {
+        render();
+        document.body.classList.add("menu-open");
+      }
+      if(e.target.closest("#menu-close")) document.body.classList.remove("menu-open");
+      if(e.target.closest("#music-status")) updateMusicStatus();
+    });
 
-document.addEventListener("DOMContentLoaded", menu);
+    showMusicStatus();
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+
+  return {
+    render: render
+  }
+})();

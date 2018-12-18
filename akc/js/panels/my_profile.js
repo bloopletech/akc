@@ -23,6 +23,7 @@ window.Panels.MyProfile = function() {
       alert.innerHTML = "User profile updated successfully.";
       alert.classList.add("success");
       renderForm();
+      Menu.render();
     }, function(data) {
       alert.innerHTML = renderErrors(data.errors);
       alert.classList.add("error");
@@ -58,7 +59,7 @@ window.Panels.MyProfile = function() {
         </div>
         <div>
           <label for="user-token">Token</label>
-          <p>${e(Profile.token())}</p>
+          <p>${e(Api.token())}</p>
         </div>
         <div>
           <button type="submit" class="btn">Save</button>

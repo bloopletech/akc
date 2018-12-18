@@ -1,7 +1,6 @@
 "use strict";
 
 window.Profile = (function() {
-  var token = null;
   var username = null;
 
   function accessUsername() {
@@ -10,10 +9,7 @@ window.Profile = (function() {
   }
 
   function load(callback) {
-    if(token != null) return callback();
-
     Api.loadProfile(function(data) {
-      token = data.token;
       username = data.username;
       //data
 
@@ -25,20 +21,11 @@ window.Profile = (function() {
     Api.saveProfile(username, success, failure);
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
-    load(function() {
-      $("#menu-username").innerText = username;
-    });
-  });
+  if(Api.token() != null) load(function() {});
 
   return {
-    token: function() {
-      return token;
-    },
     load: load,
     save: save,
     username: accessUsername
   };
 })();
-
-

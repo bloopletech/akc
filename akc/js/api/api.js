@@ -4,8 +4,12 @@ window.Api = (function() {
   var TOKEN_KEY = "user.token";
   Setting.init(TOKEN_KEY, null, "string");
 
+  function accessToken() {
+    return Setting(TOKEN_KEY);
+  }
+
   function withToken(callback) {
-    var token = Setting(TOKEN_KEY);
+    var token = accessToken();
     if(token != null) return callback(token);
 
     createUser(function(data) {
@@ -90,6 +94,7 @@ window.Api = (function() {
   }
 
   return {
+    token: accessToken,
     loadProfile: loadProfile,
     saveProfile: saveProfile,
     submitScore: submitScore,
