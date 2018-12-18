@@ -50,7 +50,7 @@ body {
 }
 
 #flasher {
-  animation: both flash 500ms;
+  animation: both flash 300ms;
 }
 
 .layer {
@@ -59,7 +59,7 @@ body {
   justify-content: center;
   flex-direction: column;
   height: 100%;
-  max-width: 600px;
+  max-width: 560px;
   margin: 0 auto;
   padding: 10px;
   text-align: center;
@@ -74,6 +74,10 @@ body.touch.waiting .layer, body.touch.playing .layer {
   display: none;
   font-size: 50px;
   font-weight: bold;
+}
+
+#playing {
+  justify-content: flex-end;
 }
 
 body.attract #attract, body.waiting #playing, body.playing #playing, body.game-over #game-over {
@@ -127,7 +131,6 @@ body.attract #attract, body.waiting #playing, body.playing #playing, body.game-o
 
 #time-remaining {
   transform: translateZ(0);
-  margin: -10px -10px 0 -10px;
 }
 
 #up, #right, #down, #left {
@@ -196,13 +199,13 @@ body.touch #input {
     padding: 20px;
   }
 
+  #playing {
+    justify-content: center;
+  }
+
   .play {
     position: static;
     margin-left: 0;
-  }
-
-  #time-remaining {
-    margin: 0;
   }
 
   #input {

@@ -52,7 +52,7 @@ window.Api = (function() {
     });
   }
 
-  function submitScore(game, success) {
+  function submitScore(game, outcome, success) {
     if(game.score() == 0) return;
 
     var scoreData = {
@@ -61,7 +61,7 @@ window.Api = (function() {
       "value": game.score(),
       "streak": game.streak(),
       "rank": Ranks.scoreRank(game.score()).humanName,
-      "outcome": game.outcome(),
+      "outcome": outcome,
       "rounds": game.roundLogs()
     };
 
