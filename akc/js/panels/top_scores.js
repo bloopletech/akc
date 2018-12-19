@@ -3,7 +3,7 @@
 window.Panels.TopScores = function() {
   var dateFormatter = new Intl.DateTimeFormat('en-AU', {
     year: 'numeric', month: 'numeric', day: 'numeric',
-    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    hour: 'numeric', minute: 'numeric',
     hour12: true
   });
 
@@ -19,8 +19,7 @@ window.Panels.TopScores = function() {
         <tr>
           <th>User</th>
           <th>Score</th>
-          <th>Streak</th>
-          <th>Rank</th>
+          <th class="visible-desktop">Streak</th>
           <th>When</th>
         </tr>
         ${renderScores(scores)}
@@ -42,8 +41,7 @@ window.Panels.TopScores = function() {
       <tr>
         <td>${e(score.username)}</td>
         <td>${e(score.value.toLocaleString())}</td>
-        <td>${e(score.streak.toLocaleString())}</td>
-        <td>${e(score.rank)}</td>
+        <td class="visible-desktop">${e(score.streak.toLocaleString())}</td>
         <td>${e(formatTimestamp(score.created_at))}</td>
       </tr>`;
   }

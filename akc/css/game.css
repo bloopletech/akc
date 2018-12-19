@@ -39,6 +39,10 @@ body {
   pointer-events: none;
 }
 
+.visible-desktop {
+  display: none;
+}
+
 @keyframes flash {
   from {
     opacity: 1;
@@ -195,6 +199,14 @@ body.touch #input {
 }
 
 @media screen and (min-width: 600px) {
+  .visible-desktop {
+    display: block;
+  }
+
+  th.visible-desktop, td.visible-desktop {
+    display: table-cell;
+  }
+
   .layer {
     padding: 20px;
   }
