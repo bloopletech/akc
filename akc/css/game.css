@@ -54,7 +54,7 @@ body {
 }
 
 #flasher {
-  animation: both flash 300ms;
+  animation: both flash 150ms;
 }
 
 .layer {
