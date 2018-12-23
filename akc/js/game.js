@@ -32,13 +32,10 @@ window.Game = function(touch) {
     return direction;
   }
 
-  function isBoost(now) {
-    return timeRemainingRatio(now) <= 0.1;
-  }
-
   function delta(now) {
     var delta = (initialAllowedTime - (now - startTime)) * Math.max(1, streak / 10);
-    if(isBoost(now)) delta *= 3;
+    if(timeRemainingRatio(now) <= 0.1) delta *= 3;
+    else if(timeRemainingRatio(now) <= 0.3) delta *= 2;
     return Math.floor(delta);
   }
 
