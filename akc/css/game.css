@@ -43,20 +43,6 @@ body {
   display: none;
 }
 
-@keyframes flash {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-#flasher {
-  animation: both flash 150ms;
-}
-
 .layer {
   display: none;
   align-items: center;
@@ -135,6 +121,25 @@ body.attract #attract, body.waiting #playing, body.playing #playing, body.game-o
 
 #time-remaining {
   transform: translateZ(0);
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+#flasher {
+  display: none;
+  animation: both flash 200ms;
+}
+
+#flasher.animated {
+  display: block;
 }
 
 #up, #right, #down, #left {

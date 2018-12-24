@@ -89,6 +89,7 @@ window.engine = function() {
   }
 
   function flash() {
+    $("#flasher").classList.add("animated");
     var $flasher = $("#flasher").cloneNode();
     $("#time-remaining").replaceChild($flasher, $("#flasher"));
   }
@@ -111,6 +112,7 @@ window.engine = function() {
 
     rejectTouchPlay();
     resetPlayField();
+    $("#flasher").classList.remove("animated");
     $("#results-score").textContent = game.score().toLocaleString();
     $("#results-rank").textContent = Ranks.scoreRank(game.score()).humanName;
     $("#results-streak").textContent = game.streak().toLocaleString();
