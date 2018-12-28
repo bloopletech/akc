@@ -3,7 +3,7 @@
 window.Panels.MyScores = function() {
   var dateFormatter = new Intl.DateTimeFormat('en-AU', {
     year: 'numeric', month: 'numeric', day: 'numeric',
-    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    hour: 'numeric', minute: 'numeric',
     hour12: true
   });
 
