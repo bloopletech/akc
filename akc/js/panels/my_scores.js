@@ -18,8 +18,7 @@ window.Panels.MyScores = function() {
       <table>
         <tr>
           <th>Score</th>
-          <th>Streak</th>
-          <th>Rank</th>
+          <th class="visible-desktop">Streak</th>
           <th>When</th>
         </tr>
         ${renderScores(scores)}
@@ -40,8 +39,7 @@ window.Panels.MyScores = function() {
     return `
       <tr>
         <td>${e(score.value.toLocaleString())}</td>
-        <td>${e(score.streak.toLocaleString())}</td>
-        <td>${e(score.rank)}</td>
+        <td class="visible-desktop">${e(score.streak.toLocaleString())}</td>
         <td>${e(formatTimestamp(score.created_at))}</td>
       </tr>`;
   }

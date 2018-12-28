@@ -36,8 +36,8 @@ body.waiting #footer, body.playing #footer {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 350px;
-  padding: 20px;
+  left: 0;
+  padding: 15px;
   z-index: 2;
   background-color: #fff;
   box-shadow: 0 0 15px rgba(0, 0, 0, .7);
@@ -72,16 +72,11 @@ svg.icon {
 }
 
 #menu-close {
-  float: right;
-  margin-top: -20px;
-  margin-right: -20px;
-}
-
-#menu-close svg {
-  float: right;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
   background-color: #fff;
 }
 
@@ -99,5 +94,11 @@ svg.icon {
   #music-status {
     margin-bottom: 0;
     margin-right: 25px;
+  }
+
+  #menu {
+    left: auto;
+    width: 350px;
+    padding: 20px;
   }
 }
