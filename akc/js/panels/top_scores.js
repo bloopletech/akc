@@ -17,6 +17,7 @@ window.Panels.TopScores = function() {
       <h2>Top Scores</h2>
       <table>
         <tr>
+          <th>#</th>
           <th>User</th>
           <th>Score</th>
           <th class="visible-desktop">Streak</th>
@@ -28,7 +29,7 @@ window.Panels.TopScores = function() {
 
   function renderScores(scores) {
     var output = [];
-    for(var i = 0; i < scores.length; i++) output.push(renderScore(scores[i]));
+    for(var i = 0; i < scores.length; i++) output.push(renderScore(scores[i], i + 1));
     return output.join("");
   }
 
@@ -36,9 +37,10 @@ window.Panels.TopScores = function() {
     return dateFormatter.format(Date.parse(timestamp)).replace(",", "");
   }
 
-  function renderScore(score) {
+  function renderScore(score, position) {
     return `
       <tr>
+        <td>${e(position)}</td>
         <td>${e(score.username)}</td>
         <td>${e(score.value.toLocaleString())}</td>
         <td class="visible-desktop">${e(score.streak.toLocaleString())}</td>
