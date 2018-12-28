@@ -2,7 +2,7 @@
 
 window.Client = (function() {
   var endpoint = null;
-  if(location.host == "akc.link") endpoint = "https://api.akc.link/";
+  if(location.host == "akc.link" || location.host == "www.akc.link") endpoint = "https://api.akc.link/";
   else if(location.host == "akc.dokku.bloople.net") endpoint = "https://akc-api.dokku.bloople.net";
   else endpoint = "http://localhost:3000/";
 
