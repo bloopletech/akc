@@ -4,5 +4,5 @@ class User < ApplicationRecord
 
   # Validations
   validates :token, presence: true, uniqueness: true
-  validates :username, uniqueness: true
+  validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 30 }
 end
