@@ -63,6 +63,8 @@ window.engine = function() {
   }
 
   function onInputStart(event, code) {
+    if(document.body.classList.contains("panel-open")) return true;
+
     if(state == "waiting") {
       event.preventDefault();
       return true;
