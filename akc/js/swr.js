@@ -22,7 +22,7 @@ if ('serviceWorker' in navigator) {
   // precaching requests don't degrade the first visit experience.
   // See https://developers.google.com/web/fundamentals/instant-and-offline/service-worker/registration
   window.addEventListener('load', function() {
-    if(location.host != "akc.link" && location.host != "akc.dokku.bloople.net") return;
+    if(location.host != "akc.link" && location.host != "www.akc.link" && location.host != "akc.dokku.bloople.net") return;
 
     // Your service-worker.js *must* be located at the top-level directory relative to your site.
     // It won't be able to control pages unless it's located at the same level or higher than them.
