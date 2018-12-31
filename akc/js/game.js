@@ -33,7 +33,7 @@ window.Game = function(touch) {
   }
 
   function delta(now) {
-    var delta = (initialAllowedTime - (now - startTime)) * Math.max(1, streak / 10);
+    var delta = (initialAllowedTime - (now - startTime)) * Math.max(1, streak / 20);
     if(timeRemainingRatio(now) <= 0.1) delta *= 3;
     else if(timeRemainingRatio(now) <= 0.3) delta *= 2;
     return Math.floor(delta);
@@ -58,10 +58,7 @@ window.Game = function(touch) {
     score += delta(now);
     createLogEntry(now);
 
-    if(streak % (pattern.maxStacks() * 2) == 0) {
-      if(allowedTime >= 750) allowedTime -= 75;
-      else if(allowedTime > 300) allowedTime -= 30;
-    }
+    allowedTime = Math.max(initialAllowedTime - (75 * Math.floor(score / 20000)), 250);
 
     streak++;
   }
