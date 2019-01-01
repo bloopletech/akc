@@ -34,8 +34,8 @@ window.Game = function(touch) {
 
   function delta(now) {
     var delta = (initialAllowedTime - (now - startTime)) * Math.max(1, streak / 20);
-    if(timeRemainingRatio(now) <= 0.1) delta *= 3;
-    else if(timeRemainingRatio(now) <= 0.3) delta *= 2;
+    if(timeRemainingRatio(now) <= 0.15) delta *= 3;
+    else if(timeRemainingRatio(now) <= 0.3) delta *= -2;
     return Math.floor(delta);
   }
 
@@ -56,6 +56,7 @@ window.Game = function(touch) {
     if(playerDirection != direction) return "incorrect";
 
     score += delta(now);
+    if(score < 0) score = 0;
     createLogEntry(now);
 
     allowedTime = Math.max(initialAllowedTime - (75 * Math.floor(score / 20000)), 250);
