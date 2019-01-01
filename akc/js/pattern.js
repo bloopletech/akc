@@ -29,7 +29,7 @@ window.Pattern = function() {
 
   var stack = 0;
   var pattern = [];
-  addDirections(pattern, 8);
+  addDirections(pattern, 10);
 
   function next() {
     var next = pattern[stack];
