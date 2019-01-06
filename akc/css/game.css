@@ -123,23 +123,8 @@ body.attract #attract, body.waiting #playing, body.playing #playing, body.game-o
   transform: translateZ(0);
 }
 
-@keyframes flash {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-#flasher {
+#grind, #grind-ratio {
   display: none;
-  animation: both flash 200ms;
-}
-
-#flasher.animated {
-  display: block;
 }
 
 #up, #right, #down, #left {
@@ -147,6 +132,10 @@ body.attract #attract, body.waiting #playing, body.playing #playing, body.game-o
 }
 
 body.up #up, body.right #right, body.down #down, body.left #left, body.waiting #waiting {
+  display: block;
+}
+
+body.grinding #grind, body.grinding #grind-ratio {
   display: block;
 }
 
