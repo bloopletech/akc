@@ -95,7 +95,6 @@ window.Game = function(touch) {
     if(timeRemainingRatio(now) <= 0.1) delta *= 2;
     else if(timeRemainingRatio(now) <= 0.2) delta *= 1.5;
 
-    if(combo) delta *= 2;
     return Math.floor(delta);
   }
 
