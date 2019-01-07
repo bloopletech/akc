@@ -119,7 +119,10 @@ window.Game = function(touch) {
     score += delta(now);
     createLogEntry(now);
 
-    allowedTime = Math.max(initialAllowedTime - (60 * Math.floor(score / 20000)), 250);
+    if(streak % (pattern.maxStacks() * 2) == 0) {
+      if(allowedTime >= 750) allowedTime -= 75;
+      else if(allowedTime > 300) allowedTime -= 30;
+    }
 
     streak++;
   }
