@@ -99,7 +99,7 @@ window.Game = function(touch) {
   }
 
   function createLogEntry(now) {
-    roundLogs.push({
+    return {
       allowedTime: allowedTime,
       score: score,
       streak: streak,
@@ -109,15 +109,18 @@ window.Game = function(touch) {
       direction: direction,
       now: now,
       diff: timePassed(now)
-    });
+    };
   }
 
   function roundEnded(now) {
+    var logEntry = createLogEntry(now);
+    roundLogs.push(logEntry);
+
     if(timePassed(now) > allowedTime) return "timeExceeded";
     if(!correct) return "incorrect";
 
     score += delta(now);
-    createLogEntry(now);
+    logEntry.score = score;
 
     if(streak % (pattern.maxStacks() * 2) == 0) {
       if(allowedTime >= 840) allowedTime -= 60;
