@@ -32,7 +32,7 @@ class My::ScoresController < My::BaseController
         :direction,
         :now,
         :diff,
-        :outcome
+        :delta
       ]
     )
   end

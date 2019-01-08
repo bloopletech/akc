@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:create]
 
-  resources :scores, only: [:index]
+  resources :scores, only: [:index, :show]
 
   namespace :my do
     resources :scores, only: [:index, :create]
