@@ -49,7 +49,7 @@ window.Panel = (function() {
 
     $("body").addEventListener("click", function(e) {
       if(e.target.closest("#panel-back")) back();
-      else if(e.target.matches("#panel-backdrop") || e.target.closest("#panel-close")) close();
+      else if(e.target.matches("#panel-backdrop") || e.target.closest("#panel-close")) back();
     });
   });
 
@@ -58,15 +58,5 @@ window.Panel = (function() {
     back: back
   };
 })();
-
-window.e = function(unsafe) {
-  if(unsafe == null) return "";
-  return unsafe.toString()
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
 
 window.Panels = {};

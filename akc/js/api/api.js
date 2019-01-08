@@ -93,12 +93,20 @@ window.Api = (function() {
     });
   }
 
+  function loadResult(id, success) {
+    Client.request({
+      path: "scores/" + id,
+      success: success
+    });
+  }
+
   return {
     token: accessToken,
     loadProfile: loadProfile,
     saveProfile: saveProfile,
     submitScore: submitScore,
     loadScores: loadScores,
-    loadTopScores: loadTopScores
+    loadTopScores: loadTopScores,
+    loadResult: loadResult
   };
 })();

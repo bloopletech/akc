@@ -41,9 +41,14 @@ body.panel-open #panel {
 }
 
 #panel h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin: 0 0 20px 0;
   font-size: 24px;
+  font-weight: bold;
+}
+
+#panel h3 {
+  margin: 0 0 15px 0;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -94,13 +99,34 @@ body.panel-open #panel {
   border-color: #ebccd1;
 }
 
-#panel ul {
+#panel ul, #panel ol {
   margin: 0 0 15px 0;
   padding-left: 30px;
 }
 
-#panel ul:last-child {
+#panel ul:last-child, #panel ol:last-child {
   margin-bottom: 0;
+}
+
+#panel table {
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+#panel table:last-child {
+  margin-bottom: 0;
+}
+
+#panel th, #panel td {
+  padding: 6px;
+  border: 1px solid #ccc;
+}
+
+#panel th {
+  text-align: left;
+  font-weight: bold;
 }
 
 #panel form > div {
@@ -136,20 +162,67 @@ body.panel-open #panel {
   font-size: inherit;
 }
 
-#panel table {
-  font-size: 14px;
-  border-collapse: collapse;
-  border: 1px solid #ccc;
+svg.template {
+  display: none;
 }
 
-#panel th, #panel td {
-  padding: 6px;
-  border: 1px solid #ccc;
+#show-result-root ol.rounds {
+  padding-left: 0;
+  list-style-position: inside;
 }
 
-#panel th {
-  text-align: left;
-  font-weight: bold;
+#show-result-root ol.rounds li {
+  padding: 5px 5px 0 5px;
+}
+
+#show-result-root ol.rounds li:nth-child(odd) {
+  background-color: #eee;
+}
+
+#show-result-root ol.rounds span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#show-result-root .direction {
+  width: 22px;
+  margin-left: 10px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  line-height 1;
+}
+
+#show-result-root .reaction-time {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+#show-result-root .grind-duration {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+#show-result-root .allowed-time {
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+#show-result-root .delta {
+  margin-bottom: 10px;
+}
+
+#show-result-root .combo {
+}
+
+#show-result-root svg.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+}
+
+#show-result-root .ms {
+  font-size: 10px;
 }
 
 @media screen and (min-width: 600px) {
@@ -176,5 +249,9 @@ body.panel-open #panel {
 
   #panel th, #panel td {
     padding: 6px 10px;
+  }
+
+  #show-result-root ol.rounds li {
+    padding: 5px 10px 0 10px;
   }
 }

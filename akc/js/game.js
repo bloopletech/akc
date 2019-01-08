@@ -108,7 +108,8 @@ window.Game = function(touch) {
       combo: combo,
       direction: direction,
       now: now,
-      diff: timePassed(now)
+      diff: timePassed(now),
+      delta: null
     };
   }
 
@@ -119,8 +120,10 @@ window.Game = function(touch) {
     if(timePassed(now) > allowedTime) return "timeExceeded";
     if(!correct) return "incorrect";
 
-    score += delta(now);
+    var dx = delta(now);
+    score += dx;
     logEntry.score = score;
+    logEntry.delta = dx;
 
     if(streak % (pattern.maxStacks() * 2) == 0) {
       if(allowedTime >= 840) allowedTime -= 60;

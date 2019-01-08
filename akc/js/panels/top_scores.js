@@ -1,13 +1,15 @@
 "use strict";
 
 window.Panels.TopScores = function() {
-  var dateFormatter = new Intl.DateTimeFormat('en-AU', {
-    year: 'numeric', month: 'numeric', day: 'numeric',
-    hour: 'numeric', minute: 'numeric',
-    hour12: true
-  });
+  function clickHandler(e) {
+    if(e.target.matches("#top-scores-root a")) {
+      e.preventDefault();
+      Panel.forward(new Panels.ShowResult(e.target.dataset.id));
+    }
+  }
 
   function mount() {
+    document.body.addEventListener("click", clickHandler);
     Api.loadTopScores(render);
     return `<div id="top-scores-root">Loading...</div>`;
   }
@@ -33,22 +35,19 @@ window.Panels.TopScores = function() {
     return output.join("");
   }
 
-  function formatTimestamp(timestamp) {
-    return dateFormatter.format(Date.parse(timestamp)).replace(",", "");
-  }
-
   function renderScore(score, position) {
     return `
       <tr>
-        <td>${e(position)}</td>
+        <td>${ef(position)}</td>
         <td>${e(score.username)}</td>
-        <td>${e(score.value.toLocaleString())}</td>
-        <td class="visible-desktop">${e(score.streak.toLocaleString())}</td>
-        <td>${e(formatTimestamp(score.created_at))}</td>
+        <td><a href="#" data-id="${e(score.id)}">${ef(score.value)}</a></td>
+        <td class="visible-desktop">${ef(score.streak)}</td>
+        <td>${ef(new Date(score.created_at))}</td>
       </tr>`;
   }
 
   function unmount() {
+    document.body.removeEventListener("click", clickHandler);
   }
 
   return {
