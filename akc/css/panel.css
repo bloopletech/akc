@@ -162,10 +162,6 @@ body.panel-open #panel {
   font-size: inherit;
 }
 
-svg.template {
-  display: none;
-}
-
 #show-result-root table.rounds th {
   white-space: nowrap;
   text-align: center;
