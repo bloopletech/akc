@@ -95,7 +95,7 @@ self.addEventListener('fetch', function(event) {
 
   var url = canonicalise(event.request.url);
 
-  if(!url.match(/\.(?:html|png|gif|jpg|jpeg|svg|mp3)$/)) return;
+  if(!url.match(/\.(?:html|png|gif|jpg|jpeg|svg|ico|mp3)$/)) return;
 
   event.respondWith(
     caches.open(cacheName).then(function(cache) {
