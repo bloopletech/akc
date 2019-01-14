@@ -64,6 +64,22 @@ function setOfCachedUrls(cache) {
   });
 }
 
+function fetchAndCache(cache, url) {
+  var request = new Request(url, {credentials: 'same-origin'});
+  return fetch(request).then(function(response) {
+    // Bail out of installation unless we get back a 200 OK for
+    // every request.
+    if(!response.ok) {
+      throw new Error('Request for ' + url + ' returned a response with status ' + response.status);
+    }
+
+    return cleanResponse(response).then(function(responseToCache) {
+      cache.put(url, responseToCache.clone());
+      return responseToCache;
+    });
+  });
+}
+
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(cacheName).then(function(cache) {
@@ -71,21 +87,7 @@ self.addEventListener('install', function(event) {
         return Promise.all(
           Array.from(urlsToCacheKeys.values()).map(function(cacheKey) {
             // If we don't have a key matching url in the cache already, add it.
-            if(!cachedUrls.has(cacheKey)) {
-              var request = new Request(cacheKey, {credentials: 'same-origin'});
-              return fetch(request).then(function(response) {
-                // Bail out of installation unless we get back a 200 OK for
-                // every request.
-                if(!response.ok) {
-                  throw new Error('Request for ' + cacheKey + ' returned a ' +
-                    'response with status ' + response.status);
-                }
-
-                return cleanResponse(response).then(function(responseToCache) {
-                  return cache.put(cacheKey, responseToCache);
-                });
-              });
-            }
+            if(!cachedUrls.has(cacheKey)) return fetchAndCache(cache, cacheKey);
           })
         );
       });
@@ -116,35 +118,36 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-
-self.addEventListener('fetch', function(event) {
-  if(event.request.method != 'GET') return;
-
-  // First, remove any hash fragment, and see if we
-  // have that URL in our cache. If so, great!
-  var url = new URL(event.request.url);
-
+function canonicalise(originalUrl) {
+  var url = new URL(originalUrl);
   // Remove the hash; see https://github.com/GoogleChrome/sw-precache/issues/290
   url.hash = '';
   // add 'index.html' at the end if path refers to a directory.
   if(url.pathname.slice(-1) === '/') url.pathname += 'index.html';
+  return url.toString();
+}
 
-  url = url.toString();
+self.addEventListener('fetch', function(event) {
+  if(event.request.method != 'GET') return;
+
+  var url = canonicalise(event.request.url);
 
   if(urlsToCacheKeys.has(url)) {
     event.respondWith(
       caches.open(cacheName).then(function(cache) {
         return cache.match(urlsToCacheKeys.get(url)).then(function(response) {
-          if(response) {
-            return response;
-          }
-          throw Error('The cached response that was expected is missing.');
+          if(response) return response;
         });
-      }).catch(function(e) {
-        // Fall back to just fetch()ing the request if some unexpected error
-        // prevented the cached response from being valid.
-        console.warn('Couldn\'t serve response for "%s" from cache: %O', event.request.url, e);
-        return fetch(event.request);
+      })
+    );
+  }
+  else if(url.match(/\.(?:png|gif|jpg|jpeg|svg|mp3)$/)) {
+    event.respondWith(
+      caches.open(cacheName).then(function(cache) {
+        return cache.match(url).then(function(response) {
+          if(response) return response;
+          else return fetchAndCache(cache, url);
+        });
       })
     );
   }
