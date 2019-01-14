@@ -16,7 +16,8 @@
 
 'use strict';
 
-var precacheConfig = [["index.html","index_html_hash"]];
+//index_html_hash
+
 var cacheName = 'sw-precache-v3-sw-precache-' + (self.registration ? self.registration.scope : '');
 
 var cleanResponse = function(originalResponse) {
@@ -41,28 +42,7 @@ var cleanResponse = function(originalResponse) {
   });
 };
 
-var urlsToCacheKeys = new Map(
-  precacheConfig.map(function(item) {
-    var relativeUrl = item[0];
-    var hash = item[1];
-    var absoluteUrl = new URL(relativeUrl, self.location);
-
-    var cachedUrl = new URL(absoluteUrl);
-    cachedUrl.search += (cachedUrl.search ? '&' : '') + 'precache=' + encodeURIComponent(hash);
-
-    return [absoluteUrl.toString(), cachedUrl.toString()];
-  })
-);
-
-function setOfCachedUrls(cache) {
-  return cache.keys().then(function(requests) {
-    return requests.map(function(request) {
-      return request.url;
-    });
-  }).then(function(urls) {
-    return new Set(urls);
-  });
-}
+var indexUrl = (new URL('index.html', self.location)).toString();
 
 function fetchAndCache(cache, url) {
   var request = new Request(url, {credentials: 'same-origin'});
@@ -83,14 +63,7 @@ function fetchAndCache(cache, url) {
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      return setOfCachedUrls(cache).then(function(cachedUrls) {
-        return Promise.all(
-          Array.from(urlsToCacheKeys.values()).map(function(cacheKey) {
-            // If we don't have a key matching url in the cache already, add it.
-            if(!cachedUrls.has(cacheKey)) return fetchAndCache(cache, cacheKey);
-          })
-        );
-      });
+      return fetchAndCache(cache, indexUrl);
     }).then(function() {
       // Force the SW to transition from installing -> active state
       return self.skipWaiting();
@@ -99,19 +72,9 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-  var setOfExpectedUrls = new Set(urlsToCacheKeys.values());
-
   event.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      return cache.keys().then(function(existingRequests) {
-        return Promise.all(
-          existingRequests.map(function(existingRequest) {
-            if(!setOfExpectedUrls.has(existingRequest.url)) {
-              return cache.delete(existingRequest);
-            }
-          })
-        );
-      });
+      return cache.delete(indexUrl);
     }).then(function() {
       return self.clients.claim();
     })
@@ -132,23 +95,14 @@ self.addEventListener('fetch', function(event) {
 
   var url = canonicalise(event.request.url);
 
-  if(urlsToCacheKeys.has(url)) {
-    event.respondWith(
-      caches.open(cacheName).then(function(cache) {
-        return cache.match(urlsToCacheKeys.get(url)).then(function(response) {
-          if(response) return response;
-        });
-      })
-    );
-  }
-  else if(url.match(/\.(?:png|gif|jpg|jpeg|svg|mp3)$/)) {
-    event.respondWith(
-      caches.open(cacheName).then(function(cache) {
-        return cache.match(url).then(function(response) {
-          if(response) return response;
-          else return fetchAndCache(cache, url);
-        });
-      })
-    );
-  }
+  if(!url.match(/\.(?:html|png|gif|jpg|jpeg|svg|mp3)$/)) return;
+
+  event.respondWith(
+    caches.open(cacheName).then(function(cache) {
+      return cache.match(url).then(function(response) {
+        if(response) return response;
+        else return fetchAndCache(cache, url);
+      });
+    })
+  );
 });
