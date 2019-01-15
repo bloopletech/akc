@@ -55,13 +55,10 @@ window.Game = function(touch) {
     return direction;
   }
 
-  function input(playerDirection) {
+  function input(playerDirection, now) {
     correct = playerDirection == direction;
+    if(correct) grindStart = now;
     return correct;
-  }
-
-  function grindStarted(now) {
-    grindStart = now;
   }
 
   function grindDuration(now) {
@@ -159,7 +156,6 @@ window.Game = function(touch) {
     input: input,
     timeRemaining: timeRemaining,
     timeRemainingRatio: timeRemainingRatio,
-    grindStarted: grindStarted,
     finishTime: finishTime,
     canCombo: canCombo,
     comboed: comboed,

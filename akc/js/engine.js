@@ -81,8 +81,7 @@ window.engine = function() {
     endRound(game.finishTime());
     currentCode = code;
 
-    game.input(code);
-    game.grindStarted(now);
+    game.input(code, now);
     game.comboed();
    }
 
@@ -93,16 +92,15 @@ window.engine = function() {
     event.preventDefault();
 
     if(!currentCode) {
-      if(!game.input(code)) {
+      if(!game.input(code, event.timeStamp)) {
         endRound(event.timeStamp);
         return;
       }
 
       currentCode = code;
-      game.grindStarted(event.timeStamp);
     }
     else if(currentCode != code) {
-      game.input();
+      game.input(null, event.timeStamp);
       endRound(event.timeStamp);
     }
   }
@@ -118,7 +116,7 @@ window.engine = function() {
     if(state != "playing") return false;
     event.preventDefault();
 
-    if(!currentCode || currentCode != code) game.input();
+    if(!currentCode || currentCode != code) game.input(null, event.timeStamp);
     endRound(event.timeStamp);
   }
 
