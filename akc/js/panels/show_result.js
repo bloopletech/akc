@@ -121,8 +121,8 @@ window.Panels.ShowResult = function(scoreId) {
       <td class="allowed-time">${ef(round.allowedTime)}${ms}</td>`;
 
     if(round.grindStart != null) {
-      var reactionTime = round.grindStart - round.startTime;
-      var grindDuration = round.now - round.grindStart;
+      var reactionTime = Math.round(round.grindStart - round.startTime);
+      var grindDuration = Math.round(round.now - round.grindStart);
       return `
         <td class="reaction-time">${ef(reactionTime)}${ms}</td>
         <td class="grind-duration">${ef(grindDuration)}${ms}</td>
