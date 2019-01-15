@@ -138,7 +138,9 @@ window.engine = function() {
   }
 
   function onTouchEnd(event) {
-    onInputEnd(event, event.target.dataset.direction);
+    var touch = event.changedTouches[0];
+    var realTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+    onInputEnd(event, realTarget.dataset.direction);
   }
 
   function endRound(now) {
