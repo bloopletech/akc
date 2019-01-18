@@ -19,7 +19,7 @@ body {
   padding-bottom: constant(safe-area-inset-bottom); /* iOS 11.0 */
   padding-bottom: env(safe-area-inset-bottom); /* iOS 11.2 */
 
-  background: #ddd;
+  background: #ccc;
   background-position: center;
   background-size: cover;
   color: #000;
@@ -159,7 +159,7 @@ body.touch #input {
 #results {
   margin-bottom: 40px;
   padding: 30px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 6px;
 }
 
