@@ -1,26 +1,24 @@
 "use strict";
 
 window.Music = (function() {
-  var ENABLED_KEY = "music.enabled";
-  var LAST_START_KEY = "music.lastStart";
-  Setting.init(ENABLED_KEY, true, "boolean");
-  Setting.init(LAST_START_KEY, 0, "float");
+  Settings.define("musicEnabled", "boolean", true);
+  Settings.define("musicLastStart", "float", 0);
 
   var player;
   var playerInited = false;
 
   function getEnabled() {
-    return Setting(ENABLED_KEY);
+    return Settings.musicEnabled;
   }
 
   function setEnabled(enabled) {
     if(!enabled) pause();
-    Setting(ENABLED_KEY, enabled);
+    Settings.musicEnabled = enabled;
     if(enabled && !playerInited) initPlayer();
   }
 
   function setLastStart(time) {
-    Setting(LAST_START_KEY, time);
+    Settings.musicLastStart = time;
   }
 
   function play() {
@@ -40,7 +38,7 @@ window.Music = (function() {
     player.addEventListener("ended", function() {
       setLastStart(null);
     });
-    player.currentTime = Setting(LAST_START_KEY);
+    player.currentTime = Settings.musicLastStart;
 
     playerInited = true;
   }

@@ -1,11 +1,10 @@
 "use strict";
 
 window.Api = (function() {
-  var TOKEN_KEY = "user.token";
-  Setting.init(TOKEN_KEY, null, "string");
+  Settings.define("userToken", "string");
 
   function accessToken() {
-    return Setting(TOKEN_KEY);
+    return Settings.userToken;
   }
 
   function withToken(callback) {
@@ -13,7 +12,7 @@ window.Api = (function() {
     if(token != null) return callback(token);
 
     createUser(function(data) {
-      Setting(TOKEN_KEY, data.token);
+      Settings.userToken = data.token;
       callback(data.token);
     });
   }

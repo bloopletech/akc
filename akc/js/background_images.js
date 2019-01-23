@@ -1,16 +1,15 @@
 "use strict";
 
 window.BackgroundImages = (function() {
-  var CURRENT_ID_KEY = "backgrounds.index";
-  Setting.init(CURRENT_ID_KEY, 17, "integer");
+  Settings.define("backgroundImageId", "integer", 17);
 
   function currentId() {
     if(arguments.length == 1) {
-      Setting(CURRENT_ID_KEY, arguments[0]);
+      Settings.backgroundImageId = arguments[0];
       render();
     }
     else {
-      return Setting(CURRENT_ID_KEY);
+      return Settings.backgroundImageId;
     }
   }
 
