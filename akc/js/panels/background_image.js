@@ -5,7 +5,7 @@ window.Panels.BackgroundImage = function() {
     if(e.target.matches("#background-image-root a")) {
       e.preventDefault();
       var index = e.target.getAttribute("href").substring(1);
-      BackgroundImages.currentId(index);
+      BackgroundImages.currentId = index;
       render();
     }
   }
@@ -31,7 +31,7 @@ window.Panels.BackgroundImage = function() {
   }
 
   function renderImage(image, index) {
-    var klass = (index == BackgroundImages.currentId()) ? "active" : "";
+    var klass = index == BackgroundImages.currentId ? "active" : "";
     return `<a href="#${index}" class="list-item ${klass}">${e(image.title)}</a>`;
   }
 

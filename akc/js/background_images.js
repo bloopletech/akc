@@ -3,18 +3,8 @@
 window.BackgroundImages = (function() {
   Settings.define("backgroundImageId", "integer", 17);
 
-  function currentId() {
-    if(arguments.length == 1) {
-      Settings.backgroundImageId = arguments[0];
-      render();
-    }
-    else {
-      return Settings.backgroundImageId;
-    }
-  }
-
   function current() {
-    return window.allImages[currentId()];
+    return window.allImages[Settings.backgroundImageId];
   }
 
   function render() {
@@ -28,6 +18,12 @@ window.BackgroundImages = (function() {
       return window.allImages;
     },
     current: current,
-    currentId: currentId
+    get currentId() {
+      return Settings.backgroundImageId;
+    },
+    set currentId(value) {
+      Settings.backgroundImageId = value;
+      render();
+    }
   };
 })();
