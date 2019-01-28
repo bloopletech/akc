@@ -126,6 +126,9 @@ window.Game = function(touch) {
       if(allowedTime >= 850) allowedTime -= 70;
       else if(allowedTime > 300) allowedTime -= 30;
     }
+    else if(streak <= pattern.maxStacks() && reactionTime() < 500) {
+      allowedTime -= Math.floor((500 - reactionTime()) / 8.0);
+    }
 
     streak++;
   }
