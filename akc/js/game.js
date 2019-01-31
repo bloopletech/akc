@@ -168,7 +168,7 @@ window.Game = function(touch) {
   };
 };
 
-window.Game.SCORING_VERSION = 1;
+window.Game.SCORING_VERSION = 2;
 window.Game.formatOutcome = function(outcome) {
   if(outcome == "incorrect") return "Wrong input";
   if(outcome == "timeExceeded") return "Too slow";
