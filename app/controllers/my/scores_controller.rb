@@ -1,6 +1,6 @@
 class My::ScoresController < My::BaseController
   def index
-    @scores = @user.scores.order(created_at: :desc).includes(:user)
+    @scores = @user.scores.current.order(created_at: :desc).includes(:user)
     render json: @scores.to_json(methods: :username, except: :rounds)
   end
 

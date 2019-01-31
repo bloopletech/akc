@@ -1,4 +1,6 @@
 class Score < ApplicationRecord
+  CURRENT_VERSION = 2
+
   # Associations
   belongs_to :user
 
@@ -10,6 +12,10 @@ class Score < ApplicationRecord
   validates :rank, presence: true
   validates :outcome, presence: true, inclusion: { in: ['incorrect', 'timeExceeded', 'keyAutoRepeat'] }
   validates :rounds, presence: true
+
+  def self.current
+    where(scoring_version: CURRENT_VERSION)
+  end
 
   def username
     user.username
