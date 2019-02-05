@@ -45,6 +45,10 @@
     <div id="playing" class="layer">
       <svg id="time-remaining" viewBox="0 0 520 520">
         <defs>
+          <mask id="grind-ratio-mask">
+            <circle cx="260" cy="260" r="184" fill="#fff"/>
+            <circle id="grind-ratio" cx="260" cy="260" r="0" fill="#000"/>
+          </mask>
           <mask id="stack-mask">
             <circle cx="260" cy="260" r="201" fill="none" stroke="#fff" stroke-width="19"/>
             <circle id="stack-track" cx="-260" cy="260" transform="rotate(-90)" r="201" fill="none" stroke="#000" stroke-width="17" stroke-dasharray="1262.92"/>
@@ -55,8 +59,9 @@
           </mask>
         </defs>
         <circle cx="260" cy="260" r="260" fill="#fff" fill-opacity="0.5"/>
-        <circle id="grind" cx="260" cy="260" r="184" fill="#ffef00"/>
-        <circle id="grind-ratio" cx="260" cy="260" r="0" fill="#fff"/>
+        <g mask="url(#grind-ratio-mask)">
+          <circle id="grind" cx="260" cy="260" r="184" fill="#ffef00"/>
+        </g>
         <g mask="url(#stack-mask)">
           <circle id="stack" cx="-260" cy="260" transform="rotate(-90)" r="201" fill="none" stroke="#000" stroke-width="15" stroke-dashoffset="-2"/>
         </g>
