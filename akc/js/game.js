@@ -14,7 +14,7 @@ window.Game = function(touch) {
   var roundLogs = [];
 
   function grindTime(now) {
-    return ((now - grindStart) * 2);
+    return ((now - grindStart) * 1.7);
   }
 
   function timePassed(now) {
@@ -28,7 +28,7 @@ window.Game = function(touch) {
 
   function finishTime() {
     if(grindStart) {
-      return grindStart + (((startTime + allowedTime) - grindStart) / 2.0);
+      return grindStart + (((startTime + allowedTime) - grindStart) / 1.7);
     }
     else {
       return startTime + allowedTime;
