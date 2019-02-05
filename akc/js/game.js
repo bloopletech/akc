@@ -1,7 +1,7 @@
 "use strict";
 
 window.Game = function(touch) {
-  var initialAllowedTime = 1200;
+  var initialAllowedTime = 1500;
   var allowedTime = initialAllowedTime;
   var score = 0;
   var streak = 1;
@@ -123,11 +123,11 @@ window.Game = function(touch) {
     logEntry.delta = dx;
 
     if(streak % (pattern.maxStacks() * 2) == 0) {
-      if(allowedTime >= 850) allowedTime -= 70;
+      if(allowedTime >= 870) allowedTime -= 70;
       else if(allowedTime > 300) allowedTime -= 30;
     }
-    else if(streak <= pattern.maxStacks() && reactionTime() < 500) {
-      allowedTime -= Math.floor((500 - reactionTime()) / 8.0);
+    else if(streak <= pattern.maxStacks() && reactionTime() <= 500) {
+      allowedTime -= 50;
     }
 
     streak++;
