@@ -8,6 +8,7 @@ window.Game = function(touch) {
   var startTime = null;
   var grindStart = null;
   var combo = null;
+  var quickResponses = 0;
   var direction = null;
   var pattern = new Pattern();
   var correct = false;
@@ -127,8 +128,9 @@ window.Game = function(touch) {
       else if(allowedTime > 300) allowedTime -= 30;
     }
     else if(streak <= pattern.maxStacks() && reactionTime() <= 500) {
-      allowedTime -= 50;
+      quickResponses++;
     }
+    if(streak == pattern.maxStacks()) allowedTime -= quickResponses * 50;
 
     streak++;
   }
