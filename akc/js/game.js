@@ -130,7 +130,7 @@ window.Game = function(touch) {
     else if(streak <= pattern.maxStacks() && reactionTime() <= 600) {
       quickResponses++;
     }
-    if(streak == pattern.maxStacks()) allowedTime -= quickResponses * 50;
+    if(streak == pattern.maxStacks()) allowedTime -= Math.max(3, quickResponses) * 50;
 
     streak++;
   }
