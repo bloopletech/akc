@@ -123,14 +123,15 @@ window.Game = function(touch) {
     logEntry.score = score;
     logEntry.delta = dx;
 
-    if(streak % (pattern.maxStacks() * 2) == 0) {
+    if(streak <= pattern.maxStacks() && reactionTime() <= 600) quickResponses++;
+
+    if(streak == pattern.maxStacks()) {
+      allowedTime -= Math.max(3, quickResponses) * 50;
+    }
+    else if(streak % (pattern.maxStacks() * 2) == pattern.maxStacks()) {
       if(allowedTime >= 870) allowedTime -= 70;
       else if(allowedTime > 300) allowedTime -= 30;
     }
-    else if(streak <= pattern.maxStacks() && reactionTime() <= 600) {
-      quickResponses++;
-    }
-    if(streak == pattern.maxStacks()) allowedTime -= Math.max(3, quickResponses) * 50;
 
     streak++;
   }
