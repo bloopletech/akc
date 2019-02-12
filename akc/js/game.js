@@ -112,12 +112,12 @@ window.Game = function(touch) {
   }
 
   function updateAllowedTime() {
-    if(streak <= pattern.maxStacks() && reactionTime() <= 600) quickResponses++;
+    if(streak <= pattern.length() && reactionTime() <= 600) quickResponses++;
 
-    if(streak == pattern.maxStacks()) {
+    if(streak == pattern.length()) {
       allowedTime -= Math.max(3, quickResponses) * 50;
     }
-    else if(streak % (pattern.maxStacks() * 2) == pattern.maxStacks()) {
+    else if(streak % (pattern.length() * 2) == pattern.length()) {
       if(allowedTime >= 870) allowedTime -= 70;
       else if(allowedTime > 300) allowedTime -= 30;
     }
@@ -155,8 +155,8 @@ window.Game = function(touch) {
     stack: function() {
       return pattern.stack();
     },
-    maxStacks: function() {
-      return pattern.maxStacks();
+    patternLength: function() {
+      return pattern.length();
     },
     roundLogs: function() {
       return roundLogs;

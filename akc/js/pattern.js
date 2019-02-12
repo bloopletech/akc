@@ -47,7 +47,7 @@ window.Pattern = function() {
     stack: function() {
       return stack;
     },
-    maxStacks: function() {
+    length: function() {
       return pattern.length;
     },
     next: next

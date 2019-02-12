@@ -47,8 +47,8 @@ window.engine = function() {
   }
 
   function startRound() {
-    $stack.style.strokeDasharray = ((1262.92 / game.maxStacks()) - 4) + " 4";
-    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.maxStacks()) * 1262.92;
+    $stack.style.strokeDasharray = ((1262.92 / game.patternLength()) - 4) + " 4";
+    $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.patternLength()) * 1262.92;
     showDirection(game.roundStarted(timeNow()));
     currentCode = null;
   }
