@@ -112,12 +112,14 @@ window.Game = function(touch) {
   }
 
   function updateAllowedTime() {
-    if(streak <= pattern.length() && reactionTime() <= 600) quickResponses++;
+    var length = pattern.length();
 
-    if(streak == pattern.length()) {
+    if(streak <= length && reactionTime() <= 600) quickResponses++;
+
+    if(streak == length) {
       allowedTime -= Math.max(3, quickResponses) * 50;
     }
-    else if(streak % (pattern.length() * 2) == pattern.length()) {
+    else if(streak % (length * 2) == length) {
       if(allowedTime >= 870) allowedTime -= 70;
       else if(allowedTime > 300) allowedTime -= 30;
     }
