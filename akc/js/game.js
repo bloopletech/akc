@@ -117,10 +117,10 @@ window.Game = function(touch) {
     if(streak <= length && reactionTime() <= 600) quickResponses++;
 
     if(streak == length) {
-      allowedTime -= Math.max(3, quickResponses) * 50;
+      allowedTime -= Math.max(3, quickResponses) * 35;
     }
     else if(streak % (length * 2) == length) {
-      if(allowedTime >= 870) allowedTime -= 70;
+      if(allowedTime >= 850) allowedTime -= 65;
       else if(allowedTime > 300) allowedTime -= 30;
     }
   }
