@@ -119,10 +119,6 @@ body.attract #attract, body.waiting #playing, body.playing #playing, body.game-o
   opacity: 0.65;
 }
 
-#time-remaining {
-  transform: translateZ(0);
-}
-
 #grind, #grind-ratio {
   display: none;
 }
