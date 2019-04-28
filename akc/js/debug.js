@@ -2,6 +2,23 @@
 
 window.debug = window.location.hash == "#debug";
 
+window.DebugConsole = (function() {
+  var entries = [];
+
+  function log() {
+    var entry = [performance.now()];
+    for(var i = 0; i < arguments.length; i++) entry.push(arguments[i].toString());
+    entries.push(entry.join(", "));
+  }
+
+  return {
+    log: log,
+    entries: function() {
+      return entries;
+    }
+  }
+})();
+
 function debugInit() {
   function debugPlaying() {
     document.body.classList.remove("attract");
@@ -12,6 +29,8 @@ function debugInit() {
   document.body.insertAdjacentHTML("beforeend", `
     <div id="debug-root" style="position: absolute; top: 0; left: 0;">
       <a href="#" id="debug-playing">Debug Playing</a>
+      <br>
+      <a href="#" id="debug-console">Debug Console</a>
     </div>
   `);
 
@@ -19,6 +38,10 @@ function debugInit() {
     if(e.target.matches("#debug-playing")) {
       e.preventDefault();
       debugPlaying();
+    }
+    else if(e.target.matches("#debug-console")) {
+      e.preventDefault();
+      Panel.forward(new Panels.DebugConsole());
     }
   });
 }
