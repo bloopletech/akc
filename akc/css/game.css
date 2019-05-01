@@ -119,6 +119,10 @@ body.attract #attract, body.waiting #playing, body.playing #playing, body.game-o
   opacity: 0.65;
 }
 
+#time-remaining {
+  width: 100%;
+}
+
 #grind, #grind-ratio {
   display: none;
 }
