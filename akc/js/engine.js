@@ -4,7 +4,6 @@ window.engine = function() {
   var CODES_MAP = { 37: "left", 38: "up", 39: "right", 40: "down", 65: "left", 87: "up", 68: "right", 83: "down" };
 
   window.$ = document.querySelector.bind(document);
-  var $grindRatio = $("#grind-ratio");
   var $stack = $("#stack");
   var $stackTrack = $("#stack-track");
   var $timeRemainingTrack = $("#time-remaining-track");
@@ -56,9 +55,6 @@ window.engine = function() {
   function updateTimeUsed() {
     var now = timeNow();
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
-
-    var grindRatio = game.grindRatio(now);
-    $grindRatio.style.r = grindRatio > 0 ? (grindRatio * 184) : 0;
 
     $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
 
@@ -154,7 +150,6 @@ window.engine = function() {
   function resetPlayField() {
     showDirection("blank");
     document.body.classList.remove("grinding");
-    $grindRatio.style.r = 0;
     $score.textContent = "";
     $timeRemainingTrack.style.strokeDashoffset = 0;
     $stackTrack.style.strokeDashoffset = 0;

@@ -66,14 +66,6 @@ window.Game = function(touch) {
     return grindStart ? (now - grindStart) : 0;
   }
 
-  function grindRatio(now) {
-    if(!grindStart) return 0;
-    var ratio = grindTime(now) / (allowedTime - (grindStart - startTime));
-    if(ratio < 0) return 0;
-    if(ratio > 1) return 1;
-    return ratio;
-  }
-
   function reactionTime() {
     return grindStart - startTime;
   }
@@ -171,8 +163,7 @@ window.Game = function(touch) {
     canCombo: canCombo,
     comboed: comboed,
     roundEnded: roundEnded,
-    delta: delta,
-    grindRatio: grindRatio
+    delta: delta
   };
 };
 
