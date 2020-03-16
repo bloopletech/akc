@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+function updateDist () {
+  echo "-----> Syncing dist"
+
+  cd dist
+  git pull origin master
+  cd ..
+
+  echo "=====> Synced dist"
+}
+
+time updateDist
+
+./build
+
+function deployDist () {
+  echo "-----> Deploying akc"
+
+  cd dist
+  #You must have already initialised a git repo inside dist, that is configured with the origin remote pointing to dokku.
+  git add -A
+  git commit -m "Build"
+  git push origin master
+
+  echo "=====> Deployed akc"
+}
+
+time deployDist
