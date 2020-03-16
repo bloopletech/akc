@@ -1,38 +1,35 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: akc-api
+  name: akc
 spec:
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: akc-api
+    app: akc
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: akc-api
+  name: akc
 spec:
   selector:
     matchLabels:
-      app: akc-api
+      app: akc
   replicas: 1
   template:
     metadata:
       labels:
-        app: akc-api
+        app: akc
     spec:
       containers:
-      - name: akc-api
-        image: bloopletech/akc-api@sha256:816684b00f70c8842a42a73c88853a61495f4e20651038f5225ceac6bfcc97bd
+      - name: akc
+        image: bloopletech/akc@sha256:fc515c56754a49915d72798091d4c4f4571bd24755e1e9f9cda14419b94c773b
         ports:
         - containerPort: 80
-        envFrom:
-        - secretRef:
-            name: akc-api-secret-envs
         resources:
           limits:
-            memory: "512Mi"
+            memory: "32Mi"
       imagePullSecrets:
       - name: regcred

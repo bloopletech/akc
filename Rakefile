@@ -1,5 +1,14 @@
+APPS = %w{akc akc-api}
+
+########################################################################################################################
+
 unless File.expand_path(File.dirname(__FILE__)) == File.expand_path(Dir.getwd)
   puts "All rake tasks MUST be run from the project root directory"
+  exit
+end
+
+unless APPS.all? { |app| app =~ /^[\w-]+$/ }
+  puts "App names must not contain any shell-sensitive characters (hyphen is allowed)"
   exit
 end
 
@@ -11,19 +20,22 @@ namespace :shipping do
   task :import_ruby_base_image do
     ruby_base_image_sha = Build.get_images["bloopletech/ruby-base"]
 
-    Build.update_image_sha("akc-api/Dockerfile", "ruby-base", ruby_base_image_sha)
-    Build.update_image_sha("kube/akc-api.yaml", "ruby-base", ruby_base_image_sha)
+    APPS.each do |app|
+      Build.update_image_sha("#{app}/Dockerfile", "ruby-base", ruby_base_image_sha)
+      Build.update_image_sha("kube/#{app}.yaml", "ruby-base", ruby_base_image_sha)
+    end
   end
 
   task build: [:import_ruby_base_image] do
     Shell.exec(Shell.script_cmd("build"))
 
     images = Build.get_images
-    Build.update_image_sha("kube/akc-api.yaml", "akc-api", images["bloopletech/akc-api"])
+    APPS.each { |app| Build.update_image_sha("kube/#{app}.yaml", "#{app}", images["bloopletech/#{app}"]) }
   end
 
   task :deploy do
-    Shell.exec("kubectl apply -f kube/akc-api.yaml")
+    args = APPS.map { |app| "-f kube/#{app}.yaml" }.join(" ")
+    Shell.exec("kubectl apply #{args}")
   end
 
   task :migrate do
