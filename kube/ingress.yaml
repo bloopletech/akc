@@ -11,7 +11,7 @@ spec:
   tls:
   - hosts:
     - akc-api.bloople.net
-    #- api.akc.link
+    - api.akc.link
     secretName: letsencrypt-prod
   rules:
   - host: akc-api.bloople.net
@@ -20,9 +20,9 @@ spec:
       - backend:
           serviceName: akc-api
           servicePort: 80
-  # - host: api.akc.link
-  #   http:
-  #     paths:
-  #     - backend:
-  #         serviceName: akc-api
-  #         servicePort: 80
+  - host: api.akc.link
+    http:
+      paths:
+      - backend:
+          serviceName: akc-api
+          servicePort: 80
