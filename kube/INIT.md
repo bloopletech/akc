@@ -1,4 +1,8 @@
-Run:
+## Initial Setup
+
+First, configure cluster per https://github.com/bloopletech/kube-common
+
+Then, run:
 
 ```
 kubectl apply -f namespace.yaml
