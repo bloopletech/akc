@@ -10,18 +10,6 @@ kubectl config set-context akc --namespace=akc --cluster=<cluster name> --user=<
 kubectl config use-context akc
 ```
 
-## Monitoring
-
-It is assumed that monitoring is already set up cluser-wide.
-
-## ingress-nginx
-
-It is assumed that ingress-nginx has already been set up cluster-wide.
-
-## cert-manager
-
-It is assumed that cert-manager has already been set up cluster-wide.
-
 ## application configs and secrets
 
 ````
@@ -36,5 +24,6 @@ kubectl create secret docker-registry regcred --docker-server='https://index.doc
 kubectl apply -f staging-issuer.yaml
 kubectl apply -f prod-issuer.yaml
 kubectl apply -f akc-api.yaml
+kubectl apply -f akc.yaml
 kubectl apply -f ingress.yaml
 ````
