@@ -9,7 +9,7 @@ gem 'bcrypt', '3.1.12'
 gem 'ffi', '1.10.0'
 gem 'msgpack', '1.2.7'
 gem 'nio4r', '2.3.1'
-gem 'nokogiri', '1.10.1'
+gem 'nokogiri', '1.13.4'
 gem 'sassc', '2.0.1'
 gem 'websocket-driver', '0.7.0'
 
