@@ -1,0 +1,3 @@
+[submodule "akc/dist"]
+	path = akc/dist
+	url = git@github.com:bloopletech/akc-dist.git
