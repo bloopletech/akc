@@ -1,11 +1,17 @@
-FROM bloopletech/ruby-base@sha256:2438d436874e204e063f196fd85107e2a9f7924b31bc61ceb6d8b18bd1df853d
+FROM ruby:2.6.6-alpine3.12
 
-#gem ffi -> dependency of sassc and rbtrace
-#gem msgpack -> dependency of bootsnap and rbtrace
+# throw errors if Gemfile has been modified since Gemfile.lock
+RUN bundle config --global frozen 1
+
+WORKDIR /usr/src/app
+ENV LANG="C.UTF-8" SSL_CERT_DIR="/etc/ssl/certs" RAILS_ENV=production RAILS_LOG_TO_STDOUT=1 PORT=80
+
+#gem ffi -> dependency of sassc
+#gem msgpack -> dependency of bootsnap
 #gem nio4r -> dependency of actioncable
 #gem websocket-driver -> dependency of actioncable
 RUN apk add --no-cache build-base tzdata postgresql-dev nodejs git && \
-    gem install bcrypt:3.1.12 bootsnap:1.4.1 ffi:1.10.0 msgpack:1.2.7 nio4r:2.3.1 nokogiri:1.10.1 pg:1.1.4 puma:3.12.0 sassc:2.0.1 websocket-driver:0.7.0 rbtrace:0.4.11 && \
+    gem install bcrypt:3.1.17 bootsnap:1.11.1 ffi:1.15.5 msgpack:1.5.1 nio4r:2.5.8 nokogiri:1.13.4 pg:1.3.5 puma:4.3.12 sassc:2.4.0 websocket-driver:0.7.5 && \
     apk del build-base
 
 COPY Gemfile Gemfile.lock ./
