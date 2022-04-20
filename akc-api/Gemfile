@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.1'
+ruby '2.6.6'
 
 # Core Rails with native dependencies
 #versions for bcrypt bootsnap ffi msgpack nio4r nokogiri pg puma sassc websocket-driver need to match base-image/Dockerfile exactly.
