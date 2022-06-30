@@ -5,8 +5,9 @@ window.Game = function(touch) {
   var allowedTime = initialAllowedTime;
   var score = 0;
   var streak = 1;
-  var startTime = null;
   var now = null;
+  var startTime = null;
+  var elapsed = null;
   var grindStart = null;
   var combo = null;
   var quickResponses = 0;
@@ -17,28 +18,21 @@ window.Game = function(touch) {
 
   function tick(nextNow) {
     now = nextNow;
+    elapsed = now - startTime;
   }
 
   function grindTime() {
-    return (now - grindStart) * 1.7;
+    return (elapsed - grindStart) * 1.7;
   }
 
   function timePassed() {
-    if(grindStart) {
-      return grindTime() + (grindStart - startTime);
-    }
-    else {
-      return now - startTime;
-    }
+    if(grindStart) return grindTime() + grindStart;
+    return elapsed;
   }
 
   function finishTime() {
-    if(grindStart) {
-      return grindStart + (((startTime + allowedTime) - grindStart) / 1.7);
-    }
-    else {
-      return startTime + allowedTime;
-    }
+    if(grindStart) return grindStart + ((allowedTime - grindStart) / 1.7);
+    else return allowedTime;
   }
 
   function timeRemaining() {
@@ -63,20 +57,20 @@ window.Game = function(touch) {
 
   function input(playerDirection) {
     correct = playerDirection == direction;
-    if(correct) grindStart = now;
+    if(correct) grindStart = elapsed;
     return correct;
   }
 
   function grindDuration() {
-    return grindStart ? (now - grindStart) : 0;
+    return grindStart ? elapsed - grindStart : 0;
   }
 
   function reactionTime() {
-    return grindStart - startTime;
+    return grindStart;
   }
 
   function canCombo() {
-    return correct && (direction == pattern.peek());
+    return correct && direction == pattern.peek();
   }
 
   function comboed() {
