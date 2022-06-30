@@ -6,6 +6,7 @@ window.Game = function(touch) {
   var score = 0;
   var streak = 1;
   var startTime = null;
+  var now = null;
   var grindStart = null;
   var combo = null;
   var quickResponses = 0;
@@ -14,13 +15,17 @@ window.Game = function(touch) {
   var correct = false;
   var roundLogs = [];
 
-  function grindTime(now) {
-    return ((now - grindStart) * 1.7);
+  function tick(nextNow) {
+    now = nextNow;
   }
 
-  function timePassed(now) {
+  function grindTime() {
+    return (now - grindStart) * 1.7;
+  }
+
+  function timePassed() {
     if(grindStart) {
-      return grindTime(now) + (grindStart - startTime);
+      return grindTime() + (grindStart - startTime);
     }
     else {
       return now - startTime;
@@ -36,18 +41,18 @@ window.Game = function(touch) {
     }
   }
 
-  function timeRemaining(now) {
-    return allowedTime - timePassed(now);
+  function timeRemaining() {
+    return allowedTime - timePassed();
   }
 
-  function timeRemainingRatio(now) {
-    var time = timeRemaining(now) / allowedTime;
+  function timeRemainingRatio() {
+    var time = timeRemaining() / allowedTime;
     if(time < 0) return 0;
     if(time > 1) return 1;
     return time;
   }
 
-  function roundStarted(now) {
+  function roundStarted() {
     direction = pattern.next();
     startTime = now;
     correct = false;
@@ -56,13 +61,13 @@ window.Game = function(touch) {
     return direction;
   }
 
-  function input(playerDirection, now) {
+  function input(playerDirection) {
     correct = playerDirection == direction;
     if(correct) grindStart = now;
     return correct;
   }
 
-  function grindDuration(now) {
+  function grindDuration() {
     return grindStart ? (now - grindStart) : 0;
   }
 
@@ -78,17 +83,17 @@ window.Game = function(touch) {
     combo = true;
   }
 
-  function delta(now) {
+  function delta() {
     if(!grindStart) return 0;
 
-    var delta = ((initialAllowedTime - reactionTime()) + grindDuration(now)) * Math.max(1, streak / 20);
-    if(timeRemainingRatio(now) <= 0.1) delta *= 2;
-    else if(timeRemainingRatio(now) <= 0.2) delta *= 1.5;
+    var delta = ((initialAllowedTime - reactionTime()) + grindDuration()) * Math.max(1, streak / 20);
+    if(timeRemainingRatio() <= 0.1) delta *= 2;
+    else if(timeRemainingRatio() <= 0.2) delta *= 1.5;
 
     return Math.floor(delta);
   }
 
-  function createLogEntry(now) {
+  function createLogEntry() {
     return {
       allowedTime: allowedTime,
       score: score,
@@ -98,7 +103,7 @@ window.Game = function(touch) {
       combo: combo,
       direction: direction,
       now: now,
-      diff: timePassed(now),
+      diff: timePassed(),
       delta: null
     };
   }
@@ -117,14 +122,14 @@ window.Game = function(touch) {
     }
   }
 
-  function roundEnded(now) {
-    var logEntry = createLogEntry(now);
+  function roundEnded() {
+    var logEntry = createLogEntry();
     roundLogs.push(logEntry);
 
-    if(timePassed(now) > allowedTime) return "timeExceeded";
+    if(E.gt(timePassed(), allowedTime)) return "timeExceeded";
     if(!correct) return "incorrect";
 
-    var dx = delta(now);
+    var dx = delta();
     score += dx;
     logEntry.score = score;
     logEntry.delta = dx;
@@ -155,6 +160,7 @@ window.Game = function(touch) {
     roundLogs: function() {
       return roundLogs;
     },
+    tick: tick,
     roundStarted: roundStarted,
     input: input,
     timeRemaining: timeRemaining,

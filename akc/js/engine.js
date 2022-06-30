@@ -35,7 +35,7 @@ window.engine = function() {
       if(state != "waiting") return;
       transition("playing");
 
-      startRound(timeNow());
+      startRound();
       updateTimeUsed();
     }, 500);
   }
@@ -48,36 +48,38 @@ window.engine = function() {
   function startRound() {
     $stack.style.strokeDasharray = ((1262.92 / game.patternLength()) - 4) + " 4";
     $stackTrack.style.strokeDashoffset = ((game.stack() + 1) / game.patternLength()) * 1262.92;
-    showDirection(game.roundStarted(timeNow()));
+    game.tick(timeNow());
+    showDirection(game.roundStarted());
     currentCode = null;
   }
 
   function updateTimeUsed() {
-    var now = timeNow();
+    game.tick(timeNow());
     timeUsedUpdater = window.requestAnimationFrame(updateTimeUsed);
 
-    $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio(now) * 1482.83));
+    $timeRemainingTrack.style.strokeDashoffset = (1482.83 - (game.timeRemainingRatio() * 1482.83));
 
     if(game.grinding()) document.body.classList.add("grinding");
     else document.body.classList.remove("grinding");
 
-    var newScore = game.score() + game.delta(now);
+    var newScore = game.score() + game.delta();
     $score.textContent = newScore > 0 ? newScore.toLocaleString() : "";
 
-    if(game.timeRemaining(now) < 0) setTimeout(onTimeUsed, 0, now);
+    if(E.lt(game.timeRemaining(), 0)) setTimeout(onTimeUsed, 0);
   }
 
-  function onTimeUsed(now) {
+  function onTimeUsed() {
     if(!game.canCombo()) {
-      endRound(now);
+      endRound();
       return;
     }
 
     var code = currentCode;
-    endRound(game.finishTime());
+    game.tick(game.finishTime());
+    endRound();
     currentCode = code;
 
-    game.input(code, now);
+    game.input(code);
     game.comboed();
    }
 
@@ -88,16 +90,18 @@ window.engine = function() {
     event.preventDefault();
 
     if(!currentCode) {
-      if(!game.input(code, event.timeStamp)) {
-        endRound(event.timeStamp);
+      game.tick(event.timeStamp);
+      if(!game.input(code)) {
+        endRound();
         return;
       }
 
       currentCode = code;
     }
     else if(currentCode != code) {
-      game.input(null, event.timeStamp);
-      endRound(event.timeStamp);
+      game.tick(event.timeStamp);
+      game.input(null);
+      endRound();
     }
   }
 
@@ -112,8 +116,10 @@ window.engine = function() {
     if(state != "playing") return false;
     event.preventDefault();
 
-    if(!currentCode || currentCode != code) game.input(null, event.timeStamp);
-    endRound(event.timeStamp);
+    game.tick(event.timeStamp);
+
+    if(!currentCode || currentCode != code) game.input(null);
+    endRound();
   }
 
   function onKeyDown(event) {
@@ -139,12 +145,12 @@ window.engine = function() {
     onInputEnd(event, realTarget.dataset.direction);
   }
 
-  function endRound(now) {
+  function endRound() {
     currentCode = null;
 
-    var outcome = game.roundEnded(now);
+    var outcome = game.roundEnded();
     if(outcome) gameOver(outcome);
-    else startRound(now);
+    else startRound();
   }
 
   function resetPlayField() {
