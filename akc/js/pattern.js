@@ -8,18 +8,23 @@ window.Pattern = function() {
   }
 
   function addDirection(pattern) {
+    loop:
     while(true) {
       pattern.push(randomDirection());
 
-      var sliced = pattern.slice(-(MAX_DUPE_LENGTH + 1));
-      if(sliced.length < MAX_DUPE_LENGTH) return;
+      if(pattern.length <= MAX_DUPE_LENGTH) return;
 
-      var dupes = sliced.every(function(value) {
-        return value == sliced[0];
-      });
+      for(let i = pattern.length - (MAX_DUPE_LENGTH + 1); i < pattern.length + MAX_DUPE_LENGTH; i++) {
+        const sliced = [];
+        for(let j = i; j < (i + MAX_DUPE_LENGTH + 1); j++) sliced.push(pattern[j % pattern.length]);
 
-      if(dupes) pattern.pop();
-      else return;
+        if(sliced.every(value => value == sliced[0])) {
+          pattern.pop();
+          continue loop;
+        }
+      }
+
+      return;
     }
   }
 
