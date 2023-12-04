@@ -9,9 +9,10 @@ ENV LANG="C.UTF-8" SSL_CERT_DIR="/etc/ssl/certs" RAILS_ENV=production RAILS_LOG_
 #gem ffi -> dependency of sassc
 #gem msgpack -> dependency of bootsnap
 #gem nio4r -> dependency of actioncable
+#gem racc -> dependency of nokogiri
 #gem websocket-driver -> dependency of actioncable
 RUN apk add --no-cache build-base tzdata postgresql-dev nodejs git && \
-    gem install bcrypt:3.1.17 bootsnap:1.11.1 ffi:1.15.5 msgpack:1.5.1 nio4r:2.5.8 nokogiri:1.13.4 pg:1.3.5 puma:4.3.12 sassc:2.4.0 websocket-driver:0.7.5 && \
+    gem install bcrypt:3.1.17 bootsnap:1.11.1 ffi:1.15.5 msgpack:1.5.1 nio4r:2.5.8 nokogiri:1.13.4 pg:1.3.5 puma:4.3.12 racc:1.6.0 sassc:2.4.0 websocket-driver:0.7.5 && \
     apk del build-base
 
 COPY Gemfile Gemfile.lock ./
