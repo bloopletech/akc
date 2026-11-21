@@ -1,2 +1,2 @@
-FROM pierrezemb/gostatic
-COPY dist/ /srv/http/
+FROM nginx:alpine
+COPY dist/ /usr/share/nginx/html
